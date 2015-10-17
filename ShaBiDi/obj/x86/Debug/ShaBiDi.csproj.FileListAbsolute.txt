@@ -1,0 +1,16 @@
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.baml
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.g.cs
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\App.g.cs
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.cache
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.g.resources
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.Properties.Resources.resources
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csproj.GenerateResource.Cache
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.exe
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.pdb
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.exe
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.pdb
+c:\users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.lref
+C:\Users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.baml
+C:\Users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.g.cs
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.exe
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.pdb
