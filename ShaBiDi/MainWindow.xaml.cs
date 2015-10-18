@@ -17,9 +17,7 @@ namespace ShaBiDi
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    
-    // TODO: Corriger pb gestion des onglets
-    // TODO: Gérer le redimensionnement de la fenêtre
+
     public partial class MainWindow : Window
     {
         private List<TabItem> _tabItems;
@@ -27,9 +25,22 @@ namespace ShaBiDi
 
         public MainWindow()
         {
-         
-            InitializeComponent();
-            initializeTabItems();   
+            try
+            {
+                InitializeComponent();
+
+                _tabItems = new List<TabItem>();
+                _tabAdd = new TabItem();
+                _tabAdd.Header = "+";
+                _tabItems.Add(_tabAdd);
+                this.addTabItem();
+                tabMainWindow.DataContext = _tabItems;
+                tabMainWindow.SelectedIndex = 0; 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
@@ -40,45 +51,44 @@ namespace ShaBiDi
         }
 
         #region Managing Tab Items
-
-        private void initializeTabItems()
-        {
-            _tabItems = new List<TabItem>();
-            TabItem tabAdd = new TabItem();
-            tabAdd.Header = "+";
-            _tabItems.Add(tabAdd);
-            this.addTabItem("Test");
-            tabMainWindow.DataContext = _tabItems;
-            tabMainWindow.SelectedIndex = 0;
-        }
-
-        private TabItem addTabItem(string nameTab)
+        private TabItem addTabItem()
         {
             int count = _tabItems.Count;
 
             TabItem tab  = new TabItem();
-            tab.Header = nameTab;
-            tab.Name = nameTab;
+            tab.Header = string.Format("Tab {0}", count);
+            tab.Name = string.Format("tab{0}", count);
             tab.HeaderTemplate = tabMainWindow.FindResource("TabHeader") as DataTemplate;
 
+            tab.MouseDoubleClick += new MouseButtonEventHandler(tabMainWindow_MouseDoubleClick);
+
+            TextBlock message = new TextBlock();
+            message.Text = "Veuillez créer un indicateur";
+            message.HorizontalAlignment = HorizontalAlignment.Center;
+            message.VerticalAlignment = VerticalAlignment.Center;
+            tab.Content = message;
             _tabItems.Insert(count - 1, tab);
             return tab;
+        }
+
+        private void tabMainWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
 
         private void tabMainWindow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TabItem tab = tabMainWindow.SelectedItem as TabItem;
+            if (tab == null) return;
 
-            if (tab != null && tab.Header != null)
+            if (tab.Equals(_tabAdd))
             {
-                if (tab.Header.Equals(_tabAdd))
-                {
-                    tabMainWindow.DataContext = null;
-                    TabItem newTab = this.addTabItem("");
-                    tabMainWindow.DataContext = _tabItems;
-                    tabMainWindow.SelectedItem = newTab;
-                }
+                tabMainWindow.DataContext = null;
+                TabItem newTab = this.addTabItem();
+                tabMainWindow.DataContext = _tabItems;
+                tabMainWindow.SelectedItem = newTab;
             }
+            
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

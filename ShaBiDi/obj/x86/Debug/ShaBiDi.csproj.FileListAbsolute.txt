@@ -14,3 +14,16 @@ C:\Users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\
 C:\Users\gcarayon\documents\visual studio 2010\Projects\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.g.cs
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.exe
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.pdb
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.exe
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.pdb
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csprojResolveAssemblyReference.cache
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.baml
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.g.cs
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.g.cs
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\App.g.cs
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.cache
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.lref
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.baml
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.g.resources
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.Properties.Resources.resources
+D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csproj.GenerateResource.Cache
