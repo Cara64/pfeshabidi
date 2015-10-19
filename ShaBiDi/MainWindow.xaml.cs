@@ -68,12 +68,22 @@ namespace ShaBiDi
             message.VerticalAlignment = VerticalAlignment.Center;
             tab.Content = message;
             _tabItems.Insert(count - 1, tab);
+            
             return tab;
         }
 
         private void tabMainWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            TabItem tab = sender as TabItem;
+            TabNameWindow dlg = new TabNameWindow();
 
+            dlg.txtTitle.Text = tab.Header.ToString();
+
+            if (dlg.ShowDialog() == true)
+            {
+                tab.Header = dlg.txtTitle.Text.Trim();
+            }
+           
         }
 
         private void tabMainWindow_SelectionChanged(object sender, SelectionChangedEventArgs e)

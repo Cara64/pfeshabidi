@@ -27,3 +27,20 @@ D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\De
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.g.resources
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.Properties.Resources.resources
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csproj.GenerateResource.Cache
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.exe
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csprojResolveAssemblyReference.cache
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.baml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\TabNameWindow.baml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.g.cs
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.g.cs
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\TabNameWindow.g.cs
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\App.g.cs
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.cache
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.lref
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.exe
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.baml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.g.resources
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.Properties.Resources.resources
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csproj.GenerateResource.Cache
