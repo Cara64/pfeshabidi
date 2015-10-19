@@ -8,17 +8,17 @@ namespace ShabidiTaux
     public class Observation
     {
         private Image Image { get; set; }
-        private List<Vecteur2> _pointsAttentions;
+        private List<PointAttention> _pointsAttentions;
 
         public Observation(Image image)
         {
             Image = image;
-            _pointsAttentions = new List<Vecteur2>();
+            _pointsAttentions = new List<PointAttention>();
         }
 
-        public void AddVecteur(double a, double b)
+        public void AddPA(double a, double b, double tps)
         {
-            _pointsAttentions.Add(new Vecteur2(a, b));
+            _pointsAttentions.Add(new PointAttention(new Vecteur2(a, b), tps));
         }
     }
 }

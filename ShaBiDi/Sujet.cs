@@ -10,14 +10,14 @@ namespace ShabidiTaux
     {
         public int Position { get; private set; }
 
-        private List<Observation> _observationsPA;
-        private List<Observation> _observationsS;
+        public List<Observation> ObservationsPA { get; private set; }
+        public List<Observation> ObservationsS { get; private set; }
 
         public Sujet(int position)
         {
             Position = position;
-            _observationsPA = new List<Observation>();
-            _observationsS = new List<Observation>();
+            ObservationsPA = new List<Observation>();
+            ObservationsS = new List<Observation>();
         }
 
         public void AddObservation(Observation obs, Modalite mod)
@@ -25,10 +25,10 @@ namespace ShabidiTaux
             switch (mod)
             {
                 case Modalite.PA:
-                    _observationsPA.Add(obs);
+                    ObservationsPA.Add(obs);
                     break;
                 case Modalite.S:
-                    _observationsS.Add(obs);
+                    ObservationsS.Add(obs);
                     break;
                 default:
                     break;
