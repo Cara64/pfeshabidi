@@ -63,7 +63,7 @@ namespace ShabidiTaux
         // Méthode à préciser
 
         private void calculeTaux(Image i, Dictionary<Image, List<double>> dico, List<Observation> listeObs) {
-            int taux;
+            int taux = 0;
             // Aouter ici la méthode pour calculer le taux
 
             //On ajoute _tousLesGroupes taux action la liste

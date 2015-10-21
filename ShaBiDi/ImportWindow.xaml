@@ -4,11 +4,11 @@
         Title="Importer vos fichiers" Height="353" Width="400" ResizeMode="NoResize">
     <StackPanel>
         <Label Content="Importer les fichiers"></Label>
-        <ListBox x:Name="lbImportedFiles" Height="200">
+        <ListBox x:Name="lbImportedFiles" Height="200" ItemsSource="{Binding}">
         </ListBox>
         <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Center">
             <Button x:Name="btnAddFiles" Content="Ajouter des fichiers CSV" Margin="0,0,10,0" Click="btnAddFiles_Click"></Button>
-            <Button x:Name="btnDeleteFiles" Content="Supprimer" Margin="0, 0, 10, 0"></Button>
+            <Button x:Name="btnDeleteFiles" Content="Supprimer" Margin="0, 0, 10, 0" Click="btnDeleteFiles_Click"></Button>
             <Button x:Name="btnClose" Content="Fermer"></Button>
         </StackPanel>
         <StackPanel Orientation="Vertical">
@@ -18,9 +18,9 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label>N° Groupe :</Label>
-                <Label Name="numGroup" Width="10" Margin="0,0,50,0"></Label>
+                <Label Name="lblNumGroup" Width="10" Margin="0,0,50,0"></Label>
                 <Label>Ordre de passage :</Label>
-                <Label Name="ordrePassage" Width="10"/>
+                <Label Name="lblOrdrePassage" Width="10"/>
             </StackPanel>
 
         </StackPanel>
