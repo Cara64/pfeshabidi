@@ -7,7 +7,7 @@ namespace ShaBiDi
 {
     class Indicateur
     {
-        // Paramètres électionnés par l'utilisateur
+        // Paramètres sélectionnés par l'utilisateur
         private List<int> _mesUsers;
         private List<OrdreGroupe> _mesOrdres;
         private bool _pa;
@@ -16,11 +16,12 @@ namespace ShaBiDi
         private List<Groupe> _tousLesGroupes;
         private List<Groupe> _mesGroupes;
 
-        public  Indicateur(List<int> positions, List<Groupe> groupes)
+        public  Indicateur(List<int> positions, List<Groupe> groupes, List<OrdreGroupe> ordres, bool pa, bool s)
         {
             _tousLesGroupes = groupes;
             _mesGroupes = new List<Groupe>();
             _mesGroupes = trouveGroupes();
+            _mesOrdres = ordres;
         }
 
         // On remplit la liste des groupes concernés par l'indicateur
@@ -127,7 +128,7 @@ namespace ShaBiDi
 
 
         // Obtention de la moyenne des taux de recouvrement pour chaque image
-        private Dictionary<Image, double> determineTaux()
+        public Dictionary<Image, double> determineTaux()
         {
 
             // On crée la liste provisoire des observations de chaque image

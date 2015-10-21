@@ -47,6 +47,14 @@ namespace ShaBiDi {
         #line default
         #line hidden
         
+        
+        #line 28 "..\..\..\CreateIndicWindow.xaml"
+        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        internal System.Windows.Controls.Button btnCreateIndic;
+        
+        #line default
+        #line hidden
+        
         private bool _contentLoaded;
         
         /// <summary>
@@ -79,6 +87,15 @@ namespace ShaBiDi {
             {
             case 1:
             this.cbSelectIndic = ((System.Windows.Controls.ComboBox)(target));
+            return;
+            case 2:
+            this.btnCreateIndic = ((System.Windows.Controls.Button)(target));
+            
+            #line 28 "..\..\..\CreateIndicWindow.xaml"
+            this.btnCreateIndic.Click += new System.Windows.RoutedEventHandler(this.btnCreateIndic_Click);
+            
+            #line default
+            #line hidden
             return;
             }
             this._contentLoaded = true;
