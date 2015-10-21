@@ -44,3 +44,5 @@ D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.baml
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.g.resources
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.Properties.Resources.resources
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csproj.GenerateResource.Cache
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\CreateIndicWindow.baml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\CreateIndicWindow.g.cs

@@ -56,12 +56,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreateIndicWindow.xaml.cs">
+      <DependentUpon>CreateIndicWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PointAttention.cs" />
     <Compile Include="Sujet.cs" />
     <Compile Include="TabNameWindow.xaml.cs">
       <DependentUpon>TabNameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vecteur2.cs" />
+    <Page Include="CreateIndicWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

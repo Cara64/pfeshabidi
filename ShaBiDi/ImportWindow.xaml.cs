@@ -45,6 +45,7 @@ namespace ShaBiDi
                     if (!_importFiles.Contains(file)) _importFiles.Add(file);
                 }
             }
+
             lbImportedFiles.ItemsSource = _importFiles;            
       }
 

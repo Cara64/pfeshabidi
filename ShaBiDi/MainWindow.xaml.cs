@@ -133,6 +133,12 @@ namespace ShaBiDi
         }
 
         #endregion
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CreateIndicWindow createIndic = new CreateIndicWindow();
+            createIndic.Show();
+        }
     }
 
 
