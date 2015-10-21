@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShabidiTaux
+namespace ShaBiDi
 {
-    class PointAttention
+    public class PointAttention
     {
         // Il s'agit du temps écoulé (en ms) depuis le début de l'expérience pour l'enregistrment de ce point d'attention
         private double _tempsEcoule;
@@ -46,7 +46,21 @@ namespace ShabidiTaux
         }
 
         // Méthode pour la contribution au taux de recouvrement de ce PA
-        public void contributionTaux() { }
+        // POur l'instant on fait le choix de calculer les taux avec le PA seuls
+        // x en premiers dans le tableau, y en seconds
+
+        public void contributionTaux(bool[,] grille) {
+            if ((_coordPA.A > 0) && (_coordPA.A < grille.GetLength(0)) && (_coordPA.B > 0) && (_coordPA.B < grille.GetLength(1)))
+            {
+                // On met le pixel concerné à true
+                grille[(int)_coordPA.A, (int)_coordPA.B] = true;
+            }
+
+                // Sinon, le PA n'est pas sur l'image
+            else { }
+        
+        }
+
 
         // Méthode pour la contribution à la densité de recouvrement de ce PA
         public void contributionDensité() { }

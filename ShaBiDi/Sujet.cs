@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShabidiTaux
+namespace ShaBiDi
 {
     public enum Modalite { PA, S };
     public class Sujet

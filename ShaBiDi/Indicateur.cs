@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShabidiTaux
+namespace ShaBiDi
 {
     class Indicateur
     {
@@ -60,11 +60,46 @@ namespace ShabidiTaux
 
         // Permet de calculer le taux de recouvrement d'une image
         // Le dictionnaire des taux est en paramètre pour stocker le taux obtenu
-        // Méthode à préciser
-
         private void calculeTaux(Image i, Dictionary<Image, List<double>> dico, List<Observation> listeObs) {
-            int taux = 0;
-            // Aouter ici la méthode pour calculer le taux
+
+            // On fait le choix d'une grille qui fait la taille de l'image
+            bool[,] pixelsImage = new bool[Image.dimensionsImageX, Image.dimensionsImageY];
+
+            for (int j = 0; j < Image.dimensionsImageX; j++)
+            {
+                for (int k = 0; k < Image.dimensionsImageY; k++)
+                {
+                    pixelsImage[j, k] = false;
+                }
+            }
+
+            // Pour chaque observations de l'mage
+            foreach (Observation o in listeObs)
+            {
+                // et pour chaque point d'attention de l'observation
+                
+                foreach (PointAttention pa in o.PointsAttentions)
+                {
+                    pa.contributionTaux(pixelsImage);
+                }
+            }
+
+            // On trouve le nombre de pixels "true"
+            int somme = 0;
+            for (int j = 0; j < Image.dimensionsImageX; j++)
+            {
+                for (int k = 0; k < Image.dimensionsImageY; k++)
+                {
+                    if (pixelsImage[j, k])
+                    {
+                        somme++;
+                    }
+                    else { }
+                }
+            }
+
+            // Puis on calcule le taux
+            double taux = somme * 1100 / pixelsImage.Length;
 
             //On ajoute _tousLesGroupes taux action la liste
             if (dico.ContainsKey(i))
@@ -91,9 +126,8 @@ namespace ShabidiTaux
         }
 
 
-
         // Obtention de la moyenne des taux de recouvrement pour chaque image
-        private void determineTaux()
+        private Dictionary<Image, double> determineTaux()
         {
 
             // On crée la liste provisoire des observations de chaque image
@@ -165,6 +199,7 @@ namespace ShabidiTaux
                 // Calcul de la moyenne de tous les taux de l'image
                 tauxParImage.Add (i, calculeMoyenne(dictionaryTaux[i]));
             }
+            return tauxParImage;
 
         }
         

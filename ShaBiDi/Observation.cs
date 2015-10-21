@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShabidiTaux
+namespace ShaBiDi
 {
     public class Observation
     {
         public Image Image { get; private set; }
-        private List<PointAttention> _pointsAttentions;
+
+        public List<PointAttention> PointsAttentions { get; private set; }
 
         public Observation(Image image)
         {
             Image = image;
-            _pointsAttentions = new List<PointAttention>();
+            PointsAttentions = new List<PointAttention>();
         }
 
-        public void AddPA(double a, double b, double tps)
+        public void AddPA(int a, int b, double tps)
         {
-            _pointsAttentions.Add(new PointAttention(new Vecteur2(a, b), tps));
+            PointsAttentions.Add(new PointAttention(new Vecteur2(a, b), tps));
         }
+
     }
 }
