@@ -1,16 +1,28 @@
-﻿<Window x:Class="ShaBiDi.ImportWindow"
+﻿<Window x:Name="ImportWindow1" x:Class="ShaBiDi.ImportWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ImportWindow" Height="300" Width="300">
+        Title="Importer vos fichiers" Height="353" Width="400" ResizeMode="NoResize">
     <StackPanel>
         <Label Content="Importer les fichiers"></Label>
-        <ListBox Height="200">
+        <ListBox x:Name="lbImportedFiles" Height="200">
         </ListBox>
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Ajouter des fichiers CSV">
-            </Button>
-            <Button Content="Supprimer"></Button>
-            <Button Content="Fermer"></Button>
+        <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Center">
+            <Button x:Name="btnAddFiles" Content="Ajouter des fichiers CSV" Margin="0,0,10,0" Click="btnAddFiles_Click"></Button>
+            <Button x:Name="btnDeleteFiles" Content="Supprimer" Margin="0, 0, 10, 0"></Button>
+            <Button x:Name="btnClose" Content="Fermer"></Button>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label>Fichier(s) sélectionné(s) :</Label>
+                <ComboBox Width="240"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>N° Groupe :</Label>
+                <Label Name="numGroup" Width="10" Margin="0,0,50,0"></Label>
+                <Label>Ordre de passage :</Label>
+                <Label Name="ordrePassage" Width="10"/>
+            </StackPanel>
+
         </StackPanel>
     </StackPanel>
 </Window>

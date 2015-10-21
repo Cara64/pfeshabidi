@@ -1,4 +1,4 @@
-﻿<Window x:Class="ShaBiDi.TabNameWindow"
+﻿<Window x:Name="TabCreationWindow" x:Class="ShaBiDi.TabNameWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Nommer l'onglet" Height="108" Width="300">

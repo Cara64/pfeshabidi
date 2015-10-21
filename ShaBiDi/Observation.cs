@@ -7,7 +7,7 @@ namespace ShabidiTaux
 {
     public class Observation
     {
-        private Image Image { get; set; }
+        public Image Image { get; private set; }
         private List<PointAttention> _pointsAttentions;
 
         public Observation(Image image)

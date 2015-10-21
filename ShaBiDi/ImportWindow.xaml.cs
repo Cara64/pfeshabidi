@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace ShaBiDi
 {
@@ -21,6 +22,19 @@ namespace ShaBiDi
         public ImportWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnAddFiles_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.DefaultExt = ".csv";
+            ofd.Filter = "Document texte (.txt) | *.txt";
+            
+            if (ofd.ShowDialog() == true)
+            {
+               
+            }
         }
     }
 }
