@@ -27,22 +27,36 @@ D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\De
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.g.resources
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.Properties.Resources.resources
 D:\Documents\Drive\PFE\PFE ShaBiDi 2015\tmp\Guillaume\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csproj.GenerateResource.Cache
-D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.exe
-D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.pdb
-D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csprojResolveAssemblyReference.cache
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.exe
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.dll
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.Wpf.dll
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.Xps.dll
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.xml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.Wpf.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.Wpf.xml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.Xps.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.Xps.xml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\CreateIndicWindow.baml
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.baml
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\TabNameWindow.baml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\CreateIndicWindow.g.cs
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ImportWindow.g.cs
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.g.cs
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\TabNameWindow.g.cs
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\TauxRecouvrement.g.cs
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\App.g.cs
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.cache
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi_MarkupCompile.lref
-D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.exe
-D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\ShaBiDi.pdb
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\MainWindow.baml
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\TauxRecouvrement.baml
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.g.resources
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.Properties.Resources.resources
 D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csproj.GenerateResource.Cache
-D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\CreateIndicWindow.baml
-D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\CreateIndicWindow.g.cs
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.exe
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\obj\x86\Debug\ShaBiDi.csprojResolveAssemblyReference.cache
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.WindowsForms.dll
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.WindowsForms.pdb
+D:\Documents\ENSC\3A\PFE\ShaBiDi\ShaBiDi\bin\Debug\OxyPlot.WindowsForms.xml

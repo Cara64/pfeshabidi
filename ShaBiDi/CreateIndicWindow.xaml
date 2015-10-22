@@ -10,22 +10,22 @@
         </ComboBox>
         <StackPanel Orientation="Horizontal">
             <Label Content="User :"></Label>
-            <CheckBox Content="1" Margin="5"></CheckBox>
-            <CheckBox Content="2" Margin="5"></CheckBox>
-            <CheckBox Content="3" Margin="5"></CheckBox>
+            <CheckBox Name="cbUser1" Content="1" Margin="5" Checked="cbUser1_Checked" Unchecked="cbUser1_Unchecked" ></CheckBox>
+            <CheckBox Name="cbUser2" Content="2" Margin="5" Checked="cbUser2_Checked" Unchecked="cbUser2_Unchecked"></CheckBox>
+            <CheckBox Name="cbUser3" Content="3" Margin="5" Checked="cbUser3_Checked" Unchecked="cbUser3_Unchecked"></CheckBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Ordre :"></Label>
-            <CheckBox Content="S-PA" Margin="5"></CheckBox>
-            <CheckBox Content="PA-S" Margin="5"></CheckBox>
+            <CheckBox Name="cbSPA" Content="S-PA" Margin="5" Checked="cbPAS_Unchecked" Unchecked="cbSPA_Unchecked"></CheckBox>
+            <CheckBox Name="cbPAS" Content="PA-S" Margin="5" Checked="cbPAS_Checked" Unchecked="cbPAS_Unchecked"></CheckBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Modalité :"></Label>
-            <CheckBox Content="S" Margin="5"></CheckBox>
-            <CheckBox Content="PA" Margin="5"></CheckBox>
+            <CheckBox Name="cbS" Content="S" Margin="5" Checked="cbS_Checked" Unchecked="cbS_Unchecked"></CheckBox>
+            <CheckBox Name="cbPA" Content="PA" Margin="5" Checked="cbPA_Checked" Unchecked="cbPA_Unchecked"></CheckBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Ok" Margin="10"></Button>
+            <Button x:Name="btnCreateIndic" Content="Ok" Margin="10" Click="btnCreateIndic_Click"></Button>
             <Button Content="Annuler" Margin="10"></Button>
         </StackPanel>
     </StackPanel>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShaBiDi
 {
-    class Indicateur
+    public class Indicateur
     {
         // Paramètres sélectionnés par l'utilisateur
         private List<int> _mesUsers;
