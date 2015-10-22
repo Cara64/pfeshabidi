@@ -80,7 +80,7 @@ namespace ShaBiDi
                 
                 foreach (PointAttention pa in o.PointsAttentions)
                 {
-                    pa.contributionTaux(pixelsImage);
+                    pa.contributionTaux(ref pixelsImage);
                 }
             }
 
@@ -99,7 +99,7 @@ namespace ShaBiDi
             }
 
             // Puis on calcule le taux
-            double taux = somme * 1100 / pixelsImage.Length;
+            double taux = somme * 100 / (pixelsImage.Length * 1.0);
 
             //On ajoute _tousLesGroupes taux action la liste
             if (dico.ContainsKey(i))
@@ -127,7 +127,7 @@ namespace ShaBiDi
 
 
         // Obtention de la moyenne des taux de recouvrement pour chaque image
-        private Dictionary<Image, double> determineTaux()
+        public Dictionary<Image, double> determineTaux()
         {
 
             // On crée la liste provisoire des observations de chaque image
@@ -155,11 +155,11 @@ namespace ShaBiDi
                 {
                     if (_pa)
                     {
-                        obsParGr.Concat(s.ObservationsPA);
+                        obsParGr = obsParGr.Concat(s.ObservationsPA).ToList();
                     }
                     if (_s)
                     {
-                        obsParGr.Concat(s.ObservationsS);
+                        obsParGr = obsParGr.Concat(s.ObservationsS).ToList();
                     }
                 }
                 // Ensuite on va trier les observations par images en les regroupant grâce à leur numéro

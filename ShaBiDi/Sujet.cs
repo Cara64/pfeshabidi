@@ -34,5 +34,41 @@ namespace ShaBiDi
                     break;
             }
         }
+
+        //i est le numéro d el'image concernée
+        public void AddPA(int i, Modalite mod, double x, double y, double tps)
+        {
+            // Il faut trouver le rang de l'observation concernée par l'image donnée
+            int indice = 0;
+
+            // Premier cas, l'observation est en modalité PA
+            if (mod == Modalite.PA)
+            {
+                foreach (Observation o in ObservationsPA)
+                {
+                    if (o.Image.Numero == i)
+                    {
+                        indice = ObservationsPA.IndexOf(o);
+                    }
+                    else { }
+                }
+
+                ObservationsPA[indice].AddPA(x, y, tps);
+            }
+                // Deuxième cas, l'observation est en modalité S
+            else
+            {
+                foreach (Observation o in ObservationsS)
+                {
+                    if (o.Image.Numero == i)
+                    {
+                        indice = ObservationsS.IndexOf(o);
+                    }
+                    else { }
+                }
+
+                ObservationsS[indice].AddPA(x, y, tps);
+            }
+        }
     }
 }
