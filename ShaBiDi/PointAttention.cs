@@ -48,12 +48,15 @@ namespace ShaBiDi
         // Méthode pour la contribution au taux de recouvrement de ce PA
         // POur l'instant on fait le choix de calculer les taux avec le PA seuls
         // x en premiers dans le tableau, y en seconds
+        // On fait le choix des valeurs absolues pour le moment
+        public void contributionTaux(ref bool[,] grille) {
 
-        public void contributionTaux(bool[,] grille) {
-            if ((_coordPA.A > 0) && (_coordPA.A < grille.GetLength(0)) && (_coordPA.B > 0) && (_coordPA.B < grille.GetLength(1)))
+            double newX = Math.Floor(_coordPA.A);
+            double newY = Math.Floor(_coordPA.B);
+            if ((newX > 0) && (newX < grille.GetLength(0)) && (newY > 0) && (newY < grille.GetLength(1)))
             {
                 // On met le pixel concerné à true
-                grille[(int)_coordPA.A, (int)_coordPA.B] = true;
+                grille[(int)newX, (int)newY] = true;
             }
 
                 // Sinon, le PA n'est pas sur l'image

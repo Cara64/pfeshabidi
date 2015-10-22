@@ -7,8 +7,9 @@ namespace ShaBiDi
 {
     public class Image
     {
-        public static int dimensionsImageX;
-        public static int dimensionsImageY;
+        // A voir s'il ne faut pas permettre de modifier les dimansions de l'image
+        public static int dimensionsImageX = 1680;
+        public static int dimensionsImageY = 900;
 
         public int Numero { get; private set;  }
 
