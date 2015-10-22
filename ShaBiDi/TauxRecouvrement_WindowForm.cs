@@ -15,6 +15,7 @@ namespace ShaBiDi
     public partial class TauxRecouvrement_WindowForm : Form
     {
         Random r = new Random();
+       
         public TauxRecouvrement_WindowForm()
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace ShaBiDi
             Plot.Model.TextColor = OxyColor.FromRgb(0, 0, 0);
           
             // Create Line series
-            var s1 = new LineSeries { Title = "LineSeries", StrokeThickness = 1, MarkerType = MarkerType.Circle };
+            var s1 = new LineSeries { Title = "Taux de recouvrement", StrokeThickness = 1, MarkerType = MarkerType.Circle };
             for (int i = 1; i < 31; i++)
             {
                 s1.Points.Add(new DataPoint(i, r.NextDouble()*100.0));
