@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ShaBiDi
 {
-    class Indicateur
+    public class Indicateur
     {
-        // Paramètres électionnés par l'utilisateur
+        // Paramètres sélectionnés par l'utilisateur
         private List<int> _mesUsers;
         private List<OrdreGroupe> _mesOrdres;
         private bool _pa;
@@ -16,11 +16,20 @@ namespace ShaBiDi
         private List<Groupe> _tousLesGroupes;
         private List<Groupe> _mesGroupes;
 
-        public  Indicateur(List<int> positions, List<Groupe> groupes)
+        public  Indicateur(List<int> positions, List<int> mesUsers, List<Groupe> groupes, List<OrdreGroupe> ordres, bool pa, bool s)
         {
+            _mesUsers = new List<int>();
+            _mesUsers = mesUsers;
+            _mesOrdres = new List<OrdreGroupe>();
+            _mesOrdres = ordres;
+
+            _pa = pa;
+            _s = s;
+
             _tousLesGroupes = groupes;
             _mesGroupes = new List<Groupe>();
             _mesGroupes = trouveGroupes();
+
         }
 
         // On remplit la liste des groupes concernés par l'indicateur
