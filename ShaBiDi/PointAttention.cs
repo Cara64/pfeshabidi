@@ -51,9 +51,9 @@ namespace ShaBiDi
         // On fait le choix des valeurs absolues pour le moment
         public void contributionTaux(ref bool[,] grille) {
 
-            double newX = Math.Floor(_coordPA.A);
-            double newY = Math.Floor(_coordPA.B);
-            if ((newX > 0) && (newX < grille.GetLength(0)) && (newY > 0) && (newY < grille.GetLength(1)))
+            double newX = Math.Abs(Math.Floor(_coordPA.A));
+            double newY = Math.Abs(Math.Floor(_coordPA.B));
+            if ((newX > 0) && (newX < grille.GetLength(1)) && (newY > 0) && (newY < grille.GetLength(0)))
             {
                 // On met le pixel concerné à true
                 grille[(int)newX, (int)newY] = true;

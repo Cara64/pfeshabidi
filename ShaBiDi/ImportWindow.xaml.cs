@@ -46,14 +46,17 @@ namespace ShaBiDi
             ofd.Filter = "Document texte|*.txt|Fichier CSV|*.csv";
             
             if (ofd.ShowDialog() == true)
-            {         
+            {  
                 foreach(String file in ofd.FileNames)
                 {
                     if (!_importFiles.Contains(file)) _importFiles.Add(file);
                 }
             }
 
-            lbImportedFiles.ItemsSource = _importFiles;            
+            lbImportedFiles.ItemsSource = _importFiles;
+            
+            remplirClasses();
+
       }
 
         private void btnDeleteFiles_Click(object sender, RoutedEventArgs e)
@@ -105,18 +108,19 @@ namespace ShaBiDi
             Sujet user3 = new Sujet(3);
 
             // On nomme les variables nécessaires pour instancier les objets
-                    double tpsEcoule;
-                    Modalite modalite;
-                    int image;
-                    double x1;
-                    double y1;
-                    double x2;
-                    double y2;
-                    double x3;
-                    double y3;
+            double tpsEcoule;
+            Modalite modalite;
+            int image;
+            double x1;
+            double y1;
+            double x2;
+            double y2;
+            double x3;
+            double y3;
 
             foreach (string file in _importFiles)
             {
+                Console.WriteLine("Importation en cours...");
                 // On "nettoie" tous les sujets
                 user1.ObservationsPA.Clear();
                 user1.ObservationsS.Clear();
@@ -177,7 +181,7 @@ namespace ShaBiDi
                         l++;
                     } // Fin boucle while, changement d'image
 
-                }// Fin boucle for, observations remplies
+                } // Fin boucle for, observations remplies
 
                 // Création du groupe associé
 
@@ -200,6 +204,8 @@ namespace ShaBiDi
                 lesGroupes.Add(groupe);
                 
             } // Fin foreach, changement de fichier (donc de groupe)
+
+        
         }
 
 

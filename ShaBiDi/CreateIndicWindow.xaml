@@ -16,7 +16,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Ordre :"></Label>
-            <CheckBox Name="cbSPA" Content="S-PA" Margin="5" Checked="cbPAS_Unchecked" Unchecked="cbSPA_Unchecked"></CheckBox>
+            <CheckBox Name="cbSPA" Content="S-PA" Margin="5" Checked="cbSPA_Checked" Unchecked="cbSPA_Unchecked"></CheckBox>
             <CheckBox Name="cbPAS" Content="PA-S" Margin="5" Checked="cbPAS_Checked" Unchecked="cbPAS_Unchecked"></CheckBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
@@ -28,5 +28,6 @@
             <Button x:Name="btnCreateIndic" Content="Ok" Margin="10" Click="btnCreateIndic_Click"></Button>
             <Button Content="Annuler" Margin="10"></Button>
         </StackPanel>
+
     </StackPanel>
 </Window>

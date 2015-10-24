@@ -32,7 +32,24 @@ namespace ShaBiDi
         {
            if (cbSelectIndic.Text.Equals("Taux de recouvrement"))
            {
-               TauxRecouvrement_WindowForm tr = new TauxRecouvrement_WindowForm();
+               foreach (int position in positions)
+               {
+                   Console.WriteLine("Position : {0}", position);
+               }
+               foreach(Groupe groupe in ImportWindow.lesGroupes)
+               {
+                   Console.WriteLine("Groupe {0}", groupe.Identifiant);
+               }
+               Console.WriteLine(ordres.Count());
+               Console.WriteLine(modS);
+               Console.WriteLine(modPA);
+
+               Indicateur indic = new Indicateur(positions, ImportWindow.lesGroupes, ordres, modS, modPA);
+               Dictionary<Image, double> dicoTauxMoyen = new Dictionary<Image, double>();
+               dicoTauxMoyen = indic.determineTaux();
+
+
+               TauxRecouvrement_WindowForm tr = new TauxRecouvrement_WindowForm(dicoTauxMoyen);
                tr.Show();
            }
         }

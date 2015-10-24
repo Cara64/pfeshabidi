@@ -16,7 +16,7 @@ namespace ShaBiDi
         private List<Groupe> _tousLesGroupes;
         private List<Groupe> _mesGroupes;
 
-        public  Indicateur(List<int> positions, List<int> mesUsers, List<Groupe> groupes, List<OrdreGroupe> ordres, bool pa, bool s)
+        public  Indicateur(List<int> mesUsers, List<Groupe> groupes, List<OrdreGroupe> ordres, bool pa, bool s)
         {
             _mesUsers = new List<int>();
             _mesUsers = mesUsers;
@@ -29,6 +29,7 @@ namespace ShaBiDi
             _tousLesGroupes = groupes;
             _mesGroupes = new List<Groupe>();
             _mesGroupes = trouveGroupes();
+
 
         }
 
@@ -138,7 +139,7 @@ namespace ShaBiDi
         // Obtention de la moyenne des taux de recouvrement pour chaque image
         public Dictionary<Image, double> determineTaux()
         {
-
+            Console.WriteLine("Détermination du taux");
             // On crée la liste provisoire des observations de chaque image
             List<Observation> obsParGr = new List<Observation>();
 
@@ -155,7 +156,7 @@ namespace ShaBiDi
             foreach (Groupe g in _mesGroupes) {
                 sujParGr.Clear();
                 sujParGr = trouveSujets(g);
-
+               
                 // On nettoie la liste des observations avant dans la remplir, on va y mettre toutes les observations des users concernés du groupe
                 obsParGr.Clear();
 
@@ -189,6 +190,7 @@ namespace ShaBiDi
                     }
                 }
 
+               
                 // Maintenant, toutes les observations sont triées par image, on va alors déterminer le taux par image que l'on va mettre dans la liste des taux
                 // Méthode à réaliser
                 foreach (Image i in dictionary.Keys)
