@@ -20,16 +20,15 @@ namespace ShaBiDi
         {
             InitializeComponent();
 
-            double[] images = new double[30];
-            double[] tauxMoyenParImage = new double[30];
+            Dictionary<int, double> tauxMoyenParImage= new Dictionary<int, double>();
 
-            int i = 0;
             foreach (Image image in dicoTauxMoyen.Keys)
             {
-                images[i] = image.Numero;
-                tauxMoyenParImage[i] = dicoTauxMoyen[image];
-                i++;
+                tauxMoyenParImage[image.Numero] = dicoTauxMoyen[image];
             }
+            
+            var list = tauxMoyenParImage.Keys.ToList();
+            list.Sort();
 
             PlotView Plot = new PlotView();
             Plot.Model = new PlotModel();
@@ -42,11 +41,11 @@ namespace ShaBiDi
           
             // Create Line series
             var s1 = new LineSeries { Title = "Taux de recouvrement", StrokeThickness = 1, MarkerType = MarkerType.Circle };
-            for (int j = 0; j < images.Length; j++)
+            foreach (var key in list)
             {
-                s1.Points.Add(new DataPoint(images[j], tauxMoyenParImage[j]));
-                Console.WriteLine(images[j]);
-                Console.WriteLine(tauxMoyenParImage[j]);
+                s1.Points.Add(new DataPoint(key, tauxMoyenParImage[key]*100));
+                Console.WriteLine(key);
+                Console.WriteLine(tauxMoyenParImage[key]);
             }
 
             // add Series and Axis to plot mode
