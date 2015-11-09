@@ -20,20 +20,17 @@ namespace ShaBiDi
     /// TODO : Implémenter affichage des infos fichiers (sélection, num groupe et ordre)
     public partial class ImportWindow : Window
     {
-        public static List<String> _importFiles;
-        
-        // Liste des images de l'expérience
-        public static List<Image> lesImages;
-        // Liste des groupes de l'expérience
-        public static List<Groupe> lesGroupes;
+        public static List<String> ImportFiles;
+        public static List<Image> ImagesExp; //
+        public static List<Groupe> GroupesExp;
 
         public ImportWindow()
         {
             InitializeComponent();
 
-            _importFiles = new List<String>();
-            lesGroupes = new List<Groupe>();
-            lesImages = new List<Image>();
+            ImportFiles = new List<String>();
+            GroupesExp = new List<Groupe>();
+            ImagesExp = new List<Image>();
         }
 
         private void btnAddFiles_Click(object sender, RoutedEventArgs e)
@@ -49,11 +46,11 @@ namespace ShaBiDi
             {  
                 foreach(String file in ofd.FileNames)
                 {
-                    if (!_importFiles.Contains(file)) _importFiles.Add(file);
+                    if (!ImportFiles.Contains(file)) ImportFiles.Add(file);
                 }
             }
 
-            lbImportedFiles.ItemsSource = _importFiles;
+            lbImportedFiles.ItemsSource = ImportFiles;
             
             remplirClasses();
 
@@ -94,11 +91,11 @@ namespace ShaBiDi
 
             // On crée les images leur nombre est fixe
             // On pourra mettre cette valeur dans une variable
-            lesGroupes.Clear();
-            lesImages.Clear();
+            GroupesExp.Clear();
+            ImagesExp.Clear();
             for(int i = 1; i<=30;i++)
             {
-                lesImages.Add(new Image(i));
+                ImagesExp.Add(new Image(i));
             }
 
             // Il faut penser à "nettoyer" les sujets à chaque début de groupe
@@ -118,7 +115,7 @@ namespace ShaBiDi
             double x3;
             double y3;
 
-            foreach (string file in _importFiles)
+            foreach (string file in ImportFiles)
             {
                 Console.WriteLine("Importation en cours...");
                 // On "nettoie" tous les sujets
@@ -157,9 +154,9 @@ namespace ShaBiDi
                     image = int.Parse(donneesGroupe[l,3]);
 
                     // On initialise la nouvelle observation chez chaque sujet du groupe, puisqu'il y en a une par image
-                    user1.AddObservation(new Observation(lesImages[image-1]), modalite);
-                    user2.AddObservation(new Observation(lesImages[image-1]), modalite);
-                    user3.AddObservation(new Observation(lesImages[image-1]), modalite);
+                    user1.AddObservation(new Observation(ImagesExp[image-1]), modalite);
+                    user2.AddObservation(new Observation(ImagesExp[image-1]), modalite);
+                    user3.AddObservation(new Observation(ImagesExp[image-1]), modalite);
 
                     // On remplit la même liste d'observations tant qu'on ne change ps d'image
                     // Donc on commence par vérifier le numéro de l'image (on convertit la donnée du tableau)
@@ -201,7 +198,7 @@ namespace ShaBiDi
                 groupe.AddSujet(user3);
 
                 // Puis on ajoute le groupe à la liste
-                lesGroupes.Add(groupe);
+                GroupesExp.Add(groupe);
                 
             } // Fin foreach, changement de fichier (donc de groupe)
 
