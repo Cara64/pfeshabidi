@@ -12,23 +12,21 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" HorizontalAlignment="Left" Name="btnImport" Background="#00000000" BorderBrush="#00000000" Height="60" ToolTip="{x:Static local:Resources.toolTipImport}" Click="btnImport_Click">
+            <Button Grid.Column="0" HorizontalAlignment="Left" Name="btnImport" Background="#00000000" BorderBrush="#00000000" Height="60" Click="btnImport_Click">
                 <Image Source="/ShaBiDi;component/Resources/box-in.png"></Image>
             </Button>
-            <Button Grid.Column="1" HorizontalAlignment="Left" Name="btnSave" Background="#00000000" BorderBrush="#00000000" Height="60" ToolTip="{x:Static local:Resources.toolTipSave}">
+            <Button Grid.Column="1" HorizontalAlignment="Left" Name="btnSave" Background="#00000000" BorderBrush="#00000000" Height="60">
                 <Image Source="/ShaBiDi;component/Resources/floppy.png"></Image>
             </Button>
-            <Label Grid.Column="2" Content="{x:Static local:Resources.mainTitle}" FontFamily="Arial" FontSize="40" VerticalContentAlignment="Stretch" Margin="10,0,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
-            <Button Grid.Column="3"  Name="btnNotes" Background="#00000000" BorderBrush="#00000000" Height="60" ToolTip="{x:Static local:Resources.toolTipNotes1}">
+            <Label Grid.Column="2" Content="ShaBiDi" FontFamily="Arial" FontSize="40" VerticalContentAlignment="Stretch" Margin="10,0,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Button Grid.Column="3"  Name="btnNotes" Background="#00000000" BorderBrush="#00000000" Height="60">
                 <Image Source="/ShaBiDi;component/Resources/notepad.png"></Image>
             </Button>
-            <Button Grid.Column="4" Name="btnAdd" Background="#00000000" BorderBrush="#00000000" Height="60" ToolTip="{x:Static local:Resources.toolTipAdd}" Click="btnAdd_Click">
+            <Button Grid.Column="4" Name="btnAdd" Background="#00000000" BorderBrush="#00000000" Height="60" Click="btnAdd_Click">
                 <Image Source="/ShaBiDi;component/Resources/sign-add.png"></Image>
             </Button>
-
-
         </Grid>
-        <TabControl Name="tabMainWindow" ItemsSource="{Binding}" SelectionChanged="tabMainWindow_SelectionChanged">
+        <TabControl Name="tabMainWindow" ItemsSource="{Binding}" SelectionChanged="tabMainWindow_SelectionChanged" Height="1000">
             <TabControl.Resources>
                 <DataTemplate x:Key="TabHeader" DataType="TabItem">
                     <DockPanel>
@@ -38,8 +36,6 @@
                         <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=Header}" FontFamily="Arial"/>
                     </DockPanel>
                 </DataTemplate>
-                <Style TargetType="TextBox">
-                </Style>
             </TabControl.Resources>
         </TabControl>
     </StackPanel>

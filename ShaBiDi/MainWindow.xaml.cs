@@ -23,19 +23,20 @@ namespace ShaBiDi
         private List<TabItem> _tabItems;
         private TabItem _tabAdd;
 
+        public static TabItem SelectedTab;
+
         public MainWindow()
         {
             try
             {
                 InitializeComponent();
-
                 _tabItems = new List<TabItem>();
                 _tabAdd = new TabItem();
                 _tabAdd.Header = "+";
                 _tabItems.Add(_tabAdd);
                 this.addTabItem();
                 tabMainWindow.DataContext = _tabItems;
-                tabMainWindow.SelectedIndex = 0; 
+                tabMainWindow.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -44,13 +45,10 @@ namespace ShaBiDi
         }
 
 
-        private void btnImport_Click(object sender, RoutedEventArgs e)
-        {
-            ImportWindow import = new ImportWindow();
-            import.Show();
-        }
 
-        #region Managing Tab Items
+
+
+        #region Gestion des onglets
         private TabItem addTabItem()
         {
             int count = _tabItems.Count;
@@ -62,11 +60,9 @@ namespace ShaBiDi
 
             tab.MouseDoubleClick += new MouseButtonEventHandler(tabMainWindow_MouseDoubleClick);
 
-            TextBlock message = new TextBlock();
-            message.Text = "Veuillez créer un indicateur";
-            message.HorizontalAlignment = HorizontalAlignment.Center;
-            message.VerticalAlignment = VerticalAlignment.Center;
-            tab.Content = message;
+           // TextBlock message = new TextBlock();
+           // message.Text = "Veuillez créer un indicateur";
+           // tab.Content = message;
             _tabItems.Insert(count - 1, tab);
             
             return tab;
@@ -89,6 +85,7 @@ namespace ShaBiDi
         private void tabMainWindow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TabItem tab = tabMainWindow.SelectedItem as TabItem;
+            
             if (tab == null) return;
 
             if (tab.Equals(_tabAdd))
@@ -97,8 +94,11 @@ namespace ShaBiDi
                 TabItem newTab = this.addTabItem();
                 tabMainWindow.DataContext = _tabItems;
                 tabMainWindow.SelectedItem = newTab;
+  
             }
-            
+
+            SelectedTab = tabMainWindow.SelectedItem as TabItem;
+            Console.WriteLine(SelectedTab.Header);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -134,11 +134,22 @@ namespace ShaBiDi
 
         #endregion
 
+
+        #region Bouton menu principal
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             CreateIndicWindow createIndic = new CreateIndicWindow();
             createIndic.Show();
         }
+
+        private void btnImport_Click(object sender, RoutedEventArgs e)
+        {
+            ImportWindow import = new ImportWindow();
+            import.Show();
+        }
+
+        #endregion
     }
 
 

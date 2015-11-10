@@ -18,10 +18,10 @@ namespace ShaBiDi
     /// </summary>
     public partial class CreateIndicWindow : Window
     {
-        public List<int> positions = new List<int>();
-        public List<OrdreGroupe> ordres = new List<OrdreGroupe>();
-        public bool modS = false;
-        public bool modPA = false;
+        public static List<int> Positions = new List<int>();
+        public static List<OrdreGroupe> Ordres = new List<OrdreGroupe>();
+        public static bool ModS = false;
+        public static bool ModPA = false;
 
         public CreateIndicWindow()
         {
@@ -32,96 +32,82 @@ namespace ShaBiDi
         {
            if (cbSelectIndic.Text.Equals("Taux de recouvrement"))
            {
-               foreach (int position in positions)
-               {
-                   Console.WriteLine("Position : {0}", position);
-               }
-               foreach(Groupe groupe in ImportWindow.lesGroupes)
-               {
-                   Console.WriteLine("Groupe {0}", groupe.Identifiant);
-               }
-               Console.WriteLine(ordres.Count());
-               Console.WriteLine(modS);
-               Console.WriteLine(modPA);
+               TauxRecouvrement tr = new TauxRecouvrement();
+               Grid gr = new Grid();
+               gr.Children.Add(tr);
+               MainWindow.SelectedTab.Content = gr;
 
-               Indicateur indic = new Indicateur(positions, ImportWindow.lesGroupes, ordres, modS, modPA);
-               Dictionary<Image, double> dicoTauxMoyen = new Dictionary<Image, double>();
-               dicoTauxMoyen = indic.determineTaux();
-
-
-               TauxRecouvrement_WindowForm tr = new TauxRecouvrement_WindowForm(dicoTauxMoyen);
-               tr.Show();
            }
         }
 
         private void cbUser1_Checked(object sender, RoutedEventArgs e)
         {
-            positions.Add(1);
+            Positions.Add(1);
         }
 
         private void cbUser1_Unchecked(object sender, RoutedEventArgs e)
         {
-            positions.Remove(1);
+            Positions.Remove(1);
         }
 
         private void cbUser2_Checked(object sender, RoutedEventArgs e)
         {
-            positions.Add(2);
+            Positions.Add(2);
         }
 
         private void cbUser2_Unchecked(object sender, RoutedEventArgs e)
         {
-            positions.Remove(2);
+            Positions.Remove(2);
         }
 
         private void cbUser3_Checked(object sender, RoutedEventArgs e)
         {
-            positions.Add(3);
+            Positions.Add(3);
         }
 
         private void cbUser3_Unchecked(object sender, RoutedEventArgs e)
         {
-            positions.Remove(3);
+            Positions.Remove(3);
         }
 
         private void cbSPA_Unchecked(object sender, RoutedEventArgs e)
         {
-            ordres.Remove(OrdreGroupe.SPA);
+            Ordres.Remove(OrdreGroupe.SPA);
         }
 
         private void cbSPA_Checked(object sender, RoutedEventArgs e)
         {
-            ordres.Add(OrdreGroupe.SPA);
+            Ordres.Add(OrdreGroupe.SPA);
         }
 
         private void cbPAS_Checked(object sender, RoutedEventArgs e)
         {
-            ordres.Add(OrdreGroupe.PAS);
+            Ordres.Add(OrdreGroupe.PAS);
         }
 
         private void cbPAS_Unchecked(object sender, RoutedEventArgs e)
         {
-            ordres.Remove(OrdreGroupe.PAS);
+            Ordres.Remove(OrdreGroupe.PAS);
         }
 
         private void cbS_Checked(object sender, RoutedEventArgs e)
         {
-            modS = true;
+            ModS = true;
         }
 
         private void cbS_Unchecked(object sender, RoutedEventArgs e)
         {
-            modS = false;
+            ModS = false;
         }
 
         private void cbPA_Checked(object sender, RoutedEventArgs e)
         {
-            modPA = true;
+            ModPA = true;
         }
 
         private void cbPA_Unchecked(object sender, RoutedEventArgs e)
         {
-            modPA = false;
+            ModPA = false;
         }
 
 
