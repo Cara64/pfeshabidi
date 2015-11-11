@@ -87,9 +87,6 @@
     <Compile Include="TauxRecouvrement.xaml.cs">
       <DependentUpon>TauxRecouvrement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TauxRecouvrementWPF.xaml.cs">
-      <DependentUpon>TauxRecouvrementWPF.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vecteur2.cs" />
     <Compile Include="ViewModels\TauxRecouvrementModel.cs" />
     <Page Include="CreateIndicWindow.xaml">
@@ -123,10 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TauxRecouvrement.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TauxRecouvrementWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

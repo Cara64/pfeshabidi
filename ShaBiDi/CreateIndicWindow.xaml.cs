@@ -22,6 +22,7 @@ namespace ShaBiDi
         public static List<OrdreGroupe> Ordres = new List<OrdreGroupe>();
         public static bool ModS = false;
         public static bool ModPA = false;
+    
 
         public CreateIndicWindow()
         {
@@ -36,7 +37,6 @@ namespace ShaBiDi
                Grid gr = new Grid();
                gr.Children.Add(tr);
                MainWindow.SelectedTab.Content = gr;
-
            }
         }
 
@@ -109,13 +109,6 @@ namespace ShaBiDi
         {
             ModPA = false;
         }
-
-
-
-
-
-
-
 
     }
 }
