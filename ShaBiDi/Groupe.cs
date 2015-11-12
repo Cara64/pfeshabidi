@@ -12,11 +12,14 @@ namespace ShaBiDi
         public OrdreGroupe Ordre { get; private set; }
         public List<Sujet> MesSujets { get; private set; }
 
+        public Groupe()
+        {
+            MesSujets = new List<Sujet>();
+        }
         public Groupe(int identifiant, OrdreGroupe ordre)
         {
             Identifiant = identifiant;
             Ordre = ordre;
-
             MesSujets = new List<Sujet>();
         }
 
