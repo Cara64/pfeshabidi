@@ -16,11 +16,11 @@ namespace ShaBiDi
         {
             MesSujets = new List<Sujet>();
         }
-        public Groupe(int identifiant, OrdreGroupe ordre)
+
+        public Groupe(int identifiant, OrdreGroupe ordre) : this()
         {
             Identifiant = identifiant;
             Ordre = ordre;
-            MesSujets = new List<Sujet>();
         }
 
         public void AddSujet(Sujet s)
