@@ -12,24 +12,69 @@ namespace ShaBiDi.ViewModels
 {
     public class TauxRecouvrementModel
     {
+        #region Attributs
 
         private PlotModel plotModel;
+        private List<int> positions;
+        private List<OrdreGroupe> ordres;
+        private List<Groupe> groupes;
+        private bool modS;
+        private bool modPA;
+
+        #endregion
+
+
+        #region Propriétés
+
         public PlotModel PlotModel
         {
             get { return plotModel; }
             set { plotModel = value; }
         }
 
+        public List<int> Positions
+        {
+            get { return positions; }
+            set { positions = value; }
+        }
+
+        public List<OrdreGroupe> Ordres
+        {
+            get { return ordres; }
+            set { ordres = value; }
+        }
+
+        public List<Groupe> Groupes
+        {
+            get { return groupes; }
+            set { groupes = value; }
+        }
+
+        public bool ModS
+        {
+            get { return modS; }
+            set { modS = value; }
+        }
+
+        public bool ModPA
+        {
+            get { return modPA; }
+            set { modPA = value; }
+        }
+
+        #endregion
+
         public TauxRecouvrementModel()
         {
             PlotModel = new PlotModel();
-            SetUpModel();
             GetData();
+            SetUpModel();
             LoadData();
         }
 
         private void SetUpModel()
         {
+            PlotModel.Title = setPlotTitle();
             PlotModel.LegendTitle = "Légende";
             PlotModel.LegendOrientation = LegendOrientation.Horizontal;
             PlotModel.LegendPlacement = LegendPlacement.Outside;
@@ -41,7 +86,9 @@ namespace ShaBiDi.ViewModels
             { 
                 Position = AxisPosition.Bottom, 
                 Minimum = 0.0, 
-                Maximum = 30.0, 
+                Maximum = 31.0,
+                MinorStep = 1.0,
+                MajorStep = 1.0,
                 Title="N° de l'image" 
             };
             PlotModel.Axes.Add(imageAxis);
@@ -82,7 +129,13 @@ namespace ShaBiDi.ViewModels
         // Normalise les données selon les critères sélectionnés
         private Dictionary<int, double> GetData()
         {
-            Indicateur indic = new Indicateur(CreateIndicWindow.Positions, ImportWindow.GroupesExp, CreateIndicWindow.Ordres, CreateIndicWindow.ModS, CreateIndicWindow.ModPA);
+            Positions = CreateIndicWindow.Positions;
+            Groupes = ImportWindow.GroupesExp;
+            Ordres = CreateIndicWindow.Ordres;
+            ModS = CreateIndicWindow.ModS;
+            ModPA = CreateIndicWindow.ModPA;
+
+            Indicateur indic = new Indicateur(Positions, Groupes, Ordres, ModS, ModPA);
             var dicoTauxMoyen = indic.determineTaux();
 
             Dictionary<int, double> data = new Dictionary<int, double>();
@@ -91,11 +144,27 @@ namespace ShaBiDi.ViewModels
                 data[image.Numero] = dicoTauxMoyen[image];
             }
             return data;
-
         }
 
-        
+        private string setPlotTitle()
+        {
+            string res = "IND1_GR";
+            foreach (Groupe groupe in Groupes) 
+                res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U" ;
+            foreach (int pos in Positions) 
+                res += (!pos.Equals(Positions.Last())) ? pos + "-": pos + "_ORD" ;
+            foreach (OrdreGroupe ordre in Ordres)
+                res += (!ordre.Equals(Ordres.Last())) ? ordre.ToString() + "-" : ordre.ToString() + "_MOD";
+            if (modS && modPA)
+                res += "S-PA";
+            else
+                if (modS) res += "S";
+                else res += "PA";
 
+            return res;
+        }
+
+          
     }
 
 }
