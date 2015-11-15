@@ -18,15 +18,20 @@ namespace ShaBiDi
     /// </summary>
     public partial class CreateIndicWindow : Window
     {
-        public static List<int> Positions = new List<int>();
-        public static List<OrdreGroupe> Ordres = new List<OrdreGroupe>();
-        public static bool ModS = false;
-        public static bool ModPA = false;
+        public static List<int> Positions;
+        public static List<OrdreGroupe> Ordres;
+        public static List<Groupe> Groupes;
+        public static bool ModS;
+        public static bool ModPA;
     
 
         public CreateIndicWindow()
         {
             InitializeComponent();
+            Positions = new List<int>();
+            Ordres = new List<OrdreGroupe>();
+            ModS = false;
+            ModPA = false;
         }
 
         private void btnCreateIndic_Click(object sender, RoutedEventArgs e)
