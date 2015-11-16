@@ -59,7 +59,6 @@ namespace ShaBiDi
                     indicateurs.Add(new TauxRecouvrement());
                     break;
                 default: break;
-
             }
         }
 

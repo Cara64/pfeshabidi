@@ -79,6 +79,8 @@
     <Compile Include="CreateIndicWindow.xaml.cs">
       <DependentUpon>CreateIndicWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="I_DensiteRecouvrement.cs" />
+    <Compile Include="I_TauxRecouvrement.cs" />
     <Compile Include="PointAttention.cs" />
     <Compile Include="Sujet.cs" />
     <Compile Include="TabNameWindow.xaml.cs">
