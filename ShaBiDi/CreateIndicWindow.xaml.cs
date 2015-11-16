@@ -18,12 +18,22 @@ namespace ShaBiDi
     /// </summary>
     public partial class CreateIndicWindow : Window
     {
+        // Affichage maximum de 4 indicateurs pour des raisons de visibilité
+        private const int MAX_INDIC_IN_TAB = 4;
+
         public static List<int> Positions;
         public static List<OrdreGroupe> Ordres;
         public static List<Groupe> Groupes;
         public static bool ModS;
         public static bool ModPA;
-    
+
+        private List<UserControl> indicateurs;
+        public List<UserControl> Indicateurs
+        {
+            get { return indicateurs; }
+            set { indicateurs = value; }
+        }
+       
 
         public CreateIndicWindow()
         {
@@ -32,18 +42,34 @@ namespace ShaBiDi
             Ordres = new List<OrdreGroupe>();
             ModS = false;
             ModPA = false;
+            Indicateurs = new List<UserControl>(MAX_INDIC_IN_TAB);
         }
 
         private void btnCreateIndic_Click(object sender, RoutedEventArgs e)
         {
-           if (cbSelectIndic.Text.Equals("Taux de recouvrement"))
-           {
-               TauxRecouvrement tr = new TauxRecouvrement();
-               Grid gr = new Grid();
-               gr.Children.Add(tr);
-               MainWindow.SelectedTab.Content = gr;
-           }
+            creerIndicateur(cbSelectIndic.SelectedItem.ToString());
         }
+
+
+        private void creerIndicateur(string typeIndicateur)
+        {
+            switch (typeIndicateur)
+            {
+                case "Taux de recouvrement":
+                    indicateurs.Add(new TauxRecouvrement());
+                    break;
+                default: break;
+
+            }
+        }
+
+        private void gestionGrille()
+        {
+
+        }
+
+
+        #region Gestion des éléments d'interface
 
         private void cbUser1_Checked(object sender, RoutedEventArgs e)
         {
@@ -114,6 +140,8 @@ namespace ShaBiDi
         {
             ModPA = false;
         }
+
+        #endregion
 
     }
 }
