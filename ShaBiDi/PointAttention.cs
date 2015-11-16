@@ -56,7 +56,7 @@ namespace ShaBiDi
             if ((newX > 0) && (newX < grille.GetLength(0)) && (newY > 0) && (newY < grille.GetLength(1)))
             {
                 // On met le pixel concerné à true
-                grille[(int)newX, (int)newY] = true;
+                grille[(int)newY, (int)newX] = true;
             }
 
                 // Sinon, le PA n'est pas sur l'image
