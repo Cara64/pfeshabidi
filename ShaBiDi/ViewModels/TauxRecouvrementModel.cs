@@ -135,7 +135,7 @@ namespace ShaBiDi.ViewModels
             ModS = CreateIndicWindow.ModS;
             ModPA = CreateIndicWindow.ModPA;
 
-            Indicateur indic = new Indicateur(Positions, Groupes, Ordres, ModS, ModPA);
+            I_TauxRecouvrement indic = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
             var dicoTauxMoyen = indic.determineTaux();
 
             Dictionary<int, double> data = new Dictionary<int, double>();
