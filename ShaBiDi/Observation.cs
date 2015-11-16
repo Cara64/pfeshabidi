@@ -17,9 +17,9 @@ namespace ShaBiDi
             PointsAttentions = new List<PointAttention>();
         }
 
-        public void AddPA(double a, double b, double tps)
+        public void AddPA(double a, double b, double z, double tps, double tpsP, double tpsS)
         {
-            PointsAttentions.Add(new PointAttention(new Vecteur2(a, b), tps));
+            PointsAttentions.Add(new PointAttention(new Vecteur2(a, b), z, tps, tpsP, tpsS));
         }
 
     }
