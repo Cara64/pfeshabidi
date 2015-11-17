@@ -148,7 +148,7 @@ namespace ShaBiDi.ViewModels
 
         private string setPlotTitle()
         {
-            string res = "IND1_GR";
+            string res = "TauxRecouvrement_GR";
             foreach (Groupe groupe in Groupes) 
                 res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U" ;
             foreach (int pos in Positions) 

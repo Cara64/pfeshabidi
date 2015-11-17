@@ -24,12 +24,14 @@ namespace ShaBiDi
         private TabItem _tabAdd;
 
         public static TabItem SelectedTab;
+        public CreateIndicWindow createIndic;
 
         public MainWindow()
         {
             try
             {
                 InitializeComponent();
+                createIndic = new CreateIndicWindow();
                 _tabItems = new List<TabItem>();
                 _tabAdd = new TabItem();
                 _tabAdd.Header = "+";
@@ -43,9 +45,6 @@ namespace ShaBiDi
                 MessageBox.Show(ex.Message);
             }
         }
-
-
-
 
 
         #region Gestion des onglets
@@ -94,7 +93,6 @@ namespace ShaBiDi
                 TabItem newTab = this.addTabItem();
                 tabMainWindow.DataContext = _tabItems;
                 tabMainWindow.SelectedItem = newTab;
-  
             }
 
             SelectedTab = tabMainWindow.SelectedItem as TabItem;
@@ -139,7 +137,6 @@ namespace ShaBiDi
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            CreateIndicWindow createIndic = new CreateIndicWindow();
             createIndic.Show();
         }
 
