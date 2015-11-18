@@ -5,9 +5,15 @@ using System.Text;
 
 namespace ShaBiDi
 {
-    class I_TauxRecouvrement : Indicateur
+    public class I_TauxRecouvrement : Indicateur
     {
-        public I_TauxRecouvrement(List<int> mesUsers, List<OrdreGroupe> ordres, bool pa, bool s, List<Groupe> groupes) : base(mesUsers, ordres, pa, s, groupes) { }
+        public Dictionary<Image, double> _monDico;
+
+        public I_TauxRecouvrement(List<int> mesUsers, List<OrdreGroupe> ordres, bool pa, bool s, List<Groupe> groupes)
+            : base(mesUsers, ordres, pa, s, groupes)
+        {
+            _monDico = new Dictionary<Image, double>();
+        }
 
         // Permet de calculer le taux de recouvrement d'une image
         // Le dictionnaire des taux est en paramètre pour stocker le taux obtenu
@@ -151,8 +157,129 @@ namespace ShaBiDi
                 // Calcul de la moyenne de tous les taux de l'image
                 tauxParImage.Add(i, calculeMoyenne(dictionaryTaux[i]));
             }
+            _monDico = tauxParImage;
             return tauxParImage;
 
         }
+
+        // Méthode de comparaison
+        public I_TauxRecouvrement compareTaux(TypeComp type, I_TauxRecouvrement i1, I_TauxRecouvrement i2)
+        {
+            // Création du nouvel indicateur de comparaison
+            I_TauxRecouvrement indicCompare = new I_TauxRecouvrement(fusionUsers(i1, i2), fusionOrdres(i1, i2), fusionPa(i1, i2), fusionS(i1, i2), fusionGroupes(i1, i2));
+
+            // On cherche à comparer les deux dictionnaires
+            Dictionary<Image, List<double>> dico = new Dictionary<Image,List<double>>();
+
+            // On remplit le dictionnaire avec les données du premier indicateur
+            foreach (Image i in i1._monDico.Keys)
+                {
+                    if (dico.ContainsKey(i))
+                    {
+                        dico[i].Add(i1._monDico[i]);
+                    }
+                    else
+                    {
+                        dico.Add(i, new List<double>());
+                        dico[i].Add(i1._monDico[i]);
+
+                    }
+                }
+            // On remplit le dictionnaire avec les données du second indicateur
+            foreach (Image i in i2._monDico.Keys)
+                {
+                    if (dico.ContainsKey(i))
+                    {
+                        dico[i].Add(i2._monDico[i]);
+                    }
+                    else
+                    {
+                        dico.Add(i, new List<double>());
+                        dico[i].Add(i2._monDico[i]);
+
+                    }
+                }
+            //Puis on procède à la comparaison voulue
+            // Ne pas oublier de remplir le dico de l'indicateur à chaque étape
+            if (type == TypeComp.add)
+            {
+                indicCompare._monDico = additionner(dico);
+            }
+            else if (type == TypeComp.sous)
+            {
+                indicCompare._monDico = soustraire(dico);
+            }
+            else
+            {
+                indicCompare._monDico = moyenner(dico);
+            }
+            return indicCompare;
+        }
+
+        private Dictionary<Image, double> additionner(Dictionary<Image, List<double>> dico)
+        {
+            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+
+            foreach (Image i in dico.Keys)
+            {
+
+                // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable
+                // Il faut prévoir le cas où il n'y a qu'une composante
+                if (dico[i].Count == 2)
+                {
+                    dicoCompare.Add(i, dico[i][0] + dico[i][1]);
+                }
+                else
+                {
+                    dicoCompare.Add(i, dico[i][0]);
+                }
+                
+            }
+            return dicoCompare;
+        }
+        private Dictionary<Image, double> soustraire(Dictionary<Image, List<double>> dico)
+        {
+            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+
+            foreach (Image i in dico.Keys)
+            {
+
+                // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable
+                // Il faut prévoir le cas où il n'y a qu'une composante
+                if (dico[i].Count == 2)
+                {
+                    dicoCompare.Add(i, dico[i][0] - dico[i][1]);
+                }
+                else
+                {
+                    dicoCompare.Add(i, dico[i][0]);
+                }
+
+            }
+            return dicoCompare;
+        }
+        private Dictionary<Image, double> moyenner(Dictionary<Image, List<double>> dico)
+        {
+            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+
+            foreach (Image i in dico.Keys)
+            {
+
+                // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable
+                // Il faut prévoir le cas où il n'y a qu'une composante
+                if (dico[i].Count == 2)
+                {
+                    dicoCompare.Add(i, (dico[i][0] + dico[i][1])/2);
+                }
+                else
+                {
+                    dicoCompare.Add(i, dico[i][0]);
+                }
+
+            }
+            return dicoCompare;
+        }
+
+
     }
 }

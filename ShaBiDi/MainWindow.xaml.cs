@@ -147,7 +147,13 @@ namespace ShaBiDi
         }
 
         #endregion
+
+        private void btnCompare_Click(object sender, RoutedEventArgs e)
+        {
+            CompareIndicWindow compIndicWindow = new CompareIndicWindow();
+            compIndicWindow.Show();
+        }
     }
 
-
+    
 }

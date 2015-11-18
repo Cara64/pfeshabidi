@@ -36,11 +36,16 @@ namespace ShaBiDi
             set { indicateurs = value; }
         }
 
+        
+
       
         public CreateIndicWindow()
         {
             InitializeComponent();
             Positions = new List<int>();
+            Positions.Add(1);
+            Positions.Add(2);
+            Positions.Add(3);
             Ordres = new List<OrdreGroupe>();
             ModS = false;
             ModPA = false;
@@ -72,11 +77,12 @@ namespace ShaBiDi
             switch (typeIndicateur)
             {
                 case "Taux de recouvrement":
-                    Indicateurs.Add(new TauxRecouvrement());
+                    CreateIndicWindow.Indicateurs.Add(new TauxRecouvrement());
                     Console.WriteLine("Ajout du taux de recouvrement");
                     break;
                 default: break;
             }
+
         }
 
         private void gererGrille()
@@ -99,9 +105,7 @@ namespace ShaBiDi
                     Console.WriteLine("Mise en place de la grille pour un indicateur");
                     break;
                 case 2 :
-                    gr.ColumnDefinitions.Add(colDef1);
                     gr.ColumnDefinitions.Add(colDef2);
-                    gr.RowDefinitions.Add(rowDef1);
                     Grid.SetRow(Indicateurs[0], 0);
                     Grid.SetColumn(Indicateurs[0], 0);
                     Grid.SetRow(Indicateurs[1], 0);

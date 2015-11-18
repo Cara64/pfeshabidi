@@ -5,13 +5,16 @@ using System.Text;
 
 namespace ShaBiDi
 {
-    class Indicateur
+    public enum TypeComp { add, sous, moy };
+    public class Indicateur
     {
         // Paramètres sélectionnés par l'utilisateur
         protected List<int> _mesUsers;
         protected List<OrdreGroupe> _mesOrdres;
         protected bool _pa;
         protected bool _s;
+
+ 
 
         protected List<Groupe> _tousLesGroupes;
         protected List<Groupe> _mesGroupes;
@@ -72,10 +75,68 @@ namespace ShaBiDi
             return liste;
         }
 
-
-
-
-        
+        // Méthodes pour fusionner les différents attributs de deux indicateurs
+        protected List<int> fusionUsers(Indicateur i1, Indicateur i2)
+        {
+            List<int> newlist = new List<int>();
+            foreach (int i in i1._mesUsers)
+            {
+                if (!newlist.Contains(i))
+                {
+                    newlist.Add(i);
+                }
+                else { }
+            }
+            return newlist;
+        }
+        protected List<OrdreGroupe> fusionOrdres(Indicateur i1, Indicateur i2)
+        {
+            List<OrdreGroupe> newlist = new List<OrdreGroupe>();
+            foreach (OrdreGroupe o in i1._mesOrdres)
+            {
+                if (!newlist.Contains(o))
+                {
+                    newlist.Add(o);
+                }
+                else { }
+            }
+            return newlist;
+        }
+        protected List<Groupe> fusionGroupes(Indicateur i1, Indicateur i2)
+        {
+            List<Groupe> newlist = new List<Groupe>();
+            foreach (Groupe g in i1._mesGroupes)
+            {
+                if (!newlist.Contains(g))
+                {
+                    newlist.Add(g);
+                }
+                else { }
+            }
+            return newlist;
+        }
+        protected bool fusionPa(Indicateur i1, Indicateur i2)
+        {
+            if ((i1._pa) || (i2._pa))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        protected bool fusionS(Indicateur i1, Indicateur i2)
+        {
+            if ((i1._s) || (i2._s))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 

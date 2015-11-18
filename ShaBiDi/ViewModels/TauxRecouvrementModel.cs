@@ -70,6 +70,8 @@ namespace ShaBiDi.ViewModels
             GetData();
             SetUpModel();
             LoadData();
+            CompareIndicWindow.nomIndicateurs.Add(setPlotTitle());
+
         }
 
         private void SetUpModel()

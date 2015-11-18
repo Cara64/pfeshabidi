@@ -1,0 +1,30 @@
+﻿<Window x:Class="ShaBiDi.CompareIndicWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CompareIndicWindow" Height="300" Width="300" Loaded="Window_Loaded">
+    <StackPanel>
+        <Label Content="Sélectionnez le premier indicateur :" />
+        <ComboBox Margin="10,0,10,0" Name="cbSelectIndic1">
+        </ComboBox>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Sélectionnez le deuxième indicateur :" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <ComboBox Margin="10,0,10,0" Name="cbSelectIndic2" Width="271">
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Mode comparaison :" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Checked="cbAdd_Checked" Content="Additionner" Margin="5" Name="cbAdd" Unchecked="cbAdd_Unchecked" />
+            <CheckBox Checked="cbSous_Checked" Content="Soustraire" Margin="5" Name="cbSous" Unchecked="cbSous_Unchecked" />
+            <CheckBox Checked="cbMoy_Checked" Content="Moyenner" Margin="5" Name="cbMoy" Unchecked="cbMoy_Unchecked" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"></StackPanel>
+        <StackPanel HorizontalAlignment="Right" Margin="10" Orientation="Horizontal">
+            <Button Click="btnCreateCompareIndic_Click" Content="Ok" Margin="10" Name="btnCreateCompareIndic" />
+            <Button Content="Annuler" Margin="10" />
+        </StackPanel>
+    </StackPanel>
+</Window>

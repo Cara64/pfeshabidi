@@ -18,21 +18,21 @@ namespace ShaBiDi
     /// <summary>
     /// Logique d'interaction pour TauxRecouvrement.xaml
     /// </summary>
-    public partial class TauxRecouvrement : UserControl
+    public partial class CompTauxRecouvrement : UserControl
     {
 
-        private TauxRecouvrementModel viewModel;
+        private CompTauxRecouvrementModel viewModel;
 
-        public TauxRecouvrementModel ViewModel
+        public CompTauxRecouvrementModel ViewModel
         {
             get { return viewModel; }
             set { viewModel = value; }
         }
 
 
-        public TauxRecouvrement()
+        public CompTauxRecouvrement()
         {
-            ViewModel = new TauxRecouvrementModel();
+            ViewModel = new CompTauxRecouvrementModel();
             DataContext = ViewModel;
             InitializeComponent();
 

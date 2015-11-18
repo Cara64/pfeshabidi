@@ -76,12 +76,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CompareIndicWindow.xaml.cs">
+      <DependentUpon>CompareIndicWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CompTauxRecouvrement.xaml.cs">
+      <DependentUpon>CompTauxRecouvrement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateIndicWindow.xaml.cs">
       <DependentUpon>CreateIndicWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="I_DensiteRecouvrement.cs" />
     <Compile Include="I_TauxRecouvrement.cs" />
     <Compile Include="PointAttention.cs" />
+    <Compile Include="ResComparaison.xaml.cs">
+      <DependentUpon>ResComparaison.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sujet.cs" />
     <Compile Include="TabNameWindow.xaml.cs">
       <DependentUpon>TabNameWindow.xaml</DependentUpon>
@@ -90,7 +99,16 @@
       <DependentUpon>TauxRecouvrement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vecteur2.cs" />
+    <Compile Include="ViewModels\CompTauxRecouvrementModel.cs" />
     <Compile Include="ViewModels\TauxRecouvrementModel.cs" />
+    <Page Include="CompareIndicWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CompTauxRecouvrement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateIndicWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +135,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ResComparaison.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TabNameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
