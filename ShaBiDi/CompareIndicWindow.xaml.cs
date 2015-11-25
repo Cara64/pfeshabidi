@@ -17,7 +17,6 @@ namespace ShaBiDi
     /// Logique d'interaction pour CompareIndicWindow.xaml
     /// </summary>
     /// 
-    // TODO : Modifier les Checkbox en Combobox
     public partial class CompareIndicWindow : Window
     {
 
