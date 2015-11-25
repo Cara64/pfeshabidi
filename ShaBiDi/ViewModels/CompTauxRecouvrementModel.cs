@@ -118,7 +118,7 @@ namespace ShaBiDi.ViewModels
             int i = 0;
             var listMesures = GetData();
             string[] titleData = { NomsIndicateurs[0], NomsIndicateurs[1], "Comparaison" };
-            MarkerType[] markers = { MarkerType.Circle, MarkerType.Cross, MarkerType.Square };
+            MarkerType[] markers = { MarkerType.Circle, MarkerType.Cross, MarkerType.Plus };
             foreach (Dictionary<int, double> mesures in listMesures)
             {
                 var data = mesures.Keys.ToList();
@@ -176,14 +176,7 @@ namespace ShaBiDi.ViewModels
             }
 
             // Calcul du résultat
-            TypeComp typeComp;
-            if (CompareIndicWindow.compAdd) typeComp = TypeComp.add;
-            else
-            {
-                if (CompareIndicWindow.compSous) typeComp = TypeComp.sous;
-                else typeComp = TypeComp.moy;
-            }
-
+            TypeComp typeComp = CompareIndicWindow.typeComp;
             indicTR[2] = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
             indicTR[2] = indicTR[2].compareTaux(typeComp, indicTR[0], indicTR[1]);
             dicoTauxMoyen = indicTR[2]._monDico;
