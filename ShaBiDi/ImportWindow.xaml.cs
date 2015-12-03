@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using System.Threading;
+using System.ComponentModel;
 
 namespace ShaBiDi
 {
@@ -41,11 +43,32 @@ namespace ShaBiDi
             SelectedFiles = "";
         }
 
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            remplirClasses(sender);
+        }
+
+        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            pbImportFiles.Value = e.ProgressPercentage;
+        }
+
         private void btnAddFiles_Click(object sender, RoutedEventArgs e)
         {
             ajouterFichiers();
-            remplirClasses();
+            pbImportFiles.Maximum = ImportedFiles.Count();
+            
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+
+            worker.RunWorkerAsync();
+            //ajouterFichiers();
+            //remplirClasses();
         }
+
 
         private void btnDeleteFiles_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +83,7 @@ namespace ShaBiDi
         }
 
         // On remplit les classes à partir des fichiers de données
-        private void remplirClasses()
+        private void remplirClasses(object sender)
         {
             // Variables nécessaires de l'entête
             double tpsEcoule;       // colonne 00 de l'entête
@@ -68,16 +91,18 @@ namespace ShaBiDi
             double tpsSuiv;
             Groupe groupe;          // colonne 01 de l'entête
             Modalite modalite;      // colonne 02 de l'entête
-            int image;                // colonne 03 de l'entête  
+            int image;              // colonne 03 de l'entête  
             double x1;              // colonne 10 de l'entête
             double y1;              // colonne 11 de l'entête
-            double z1;
+            double z1;              
             double x2;              // colonne 18 de l'entête
             double y2;              // colonne 19 de l'entête
             double z2;
             double x3;              // colonne 26 de l'entête
             double y3;              // colonne 27 de l'entête
             double z3;
+
+            int counterFiles = 0;
 
             // On crée les images leur nombre est fixe
             // On pourra mettre cette valeur dans une variable
@@ -93,8 +118,11 @@ namespace ShaBiDi
             Sujet user2 = new Sujet(2);
             Sujet user3 = new Sujet(3);
 
+
+
             foreach (string file in ImportedFiles)
             {
+
                 Console.WriteLine("Importation en cours...");
                 // On "nettoie" tous les sujets
                 user1.ObservationsPA.Clear();
@@ -121,8 +149,7 @@ namespace ShaBiDi
                 }
 
                 // Toutes les données sont rangées dans le tableau. On peut alors créer les classes
-
-                // On ralise une boucle while pour faire défiler les lignes
+                // On réalise une boucle while pour faire défiler les lignes
                 // l est le nuéro de la ligne
                 int l = 0;
 
@@ -185,9 +212,13 @@ namespace ShaBiDi
 
                 // Puis on ajoute le groupe à la liste
                 GroupesExp.Add(groupe);
+
+                counterFiles++;
+                (sender as BackgroundWorker).ReportProgress(counterFiles);
                 
             } // Fin foreach, changement de fichier (donc de groupe)
 
+            MessageBox.Show("Importation réussie", "Fin de l'importation", MessageBoxButton.OK, MessageBoxImage.Information);
         
         }
 
@@ -218,7 +249,6 @@ namespace ShaBiDi
 
         private void supprimerFichier()
         {
-            // TODO : Corriger le bug...
             lbImportedFiles.ItemsSource = null;
             Console.WriteLine("Suppression fichiers");
             ImportedFiles.Remove(SelectedFiles);

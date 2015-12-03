@@ -18,7 +18,7 @@
                 <Label>Ordre de passage :</Label>
                 <Label Name="lblOrdrePassage" Width="10"/>
             </StackPanel>
-            <ProgressBar Height="20" Margin="10,10,10,10"></ProgressBar>
+            <ProgressBar Name="pbImportFiles" Height="20" Margin="10,10,10,10" Minimum="0"></ProgressBar>
 
         </StackPanel>
     </StackPanel>
