@@ -35,7 +35,6 @@ namespace ShaBiDi
             ViewModel = new CompTauxRecouvrementModel();
             DataContext = ViewModel;
             InitializeComponent();
-
         }
     }
 }

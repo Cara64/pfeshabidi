@@ -29,13 +29,16 @@ namespace ShaBiDi
             set { viewModel = value; }
         }
 
-
         public TauxRecouvrement()
         {
             ViewModel = new TauxRecouvrementModel();
             DataContext = ViewModel;
             InitializeComponent();
+        }
 
+        public override string ToString()
+        {
+            return ViewModel.ToString();
         }
     }
 }
