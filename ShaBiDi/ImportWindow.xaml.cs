@@ -19,7 +19,6 @@ namespace ShaBiDi
     /// <summary>
     /// Logique d'interaction pour ImportWindow.xaml
     /// </summary>
-    /// TODO : Implémenter affichage des infos fichiers (sélection, num groupe et ordre)
     public partial class ImportWindow : Window
     {
         public static List<String> ImportedFiles;     // fichiers importés
@@ -70,7 +69,7 @@ namespace ShaBiDi
 
         private void btnDeleteFiles_Click(object sender, RoutedEventArgs e)
         {
-            // TODO : Corriger bug de suppression
+            // TODO : Implémenter la suppression
             supprimerFichier();
             // viderClasses();
         }
@@ -185,7 +184,7 @@ namespace ShaBiDi
 
         private void lbImportedFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //TODO
+            // TODO : Implémenter affichage infos fichiers
         }
 
 
