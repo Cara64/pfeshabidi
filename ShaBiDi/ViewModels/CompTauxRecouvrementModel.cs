@@ -22,13 +22,8 @@ namespace ShaBiDi.ViewModels
         }
 
         public CompTauxRecouvrementModel() : base()
-        {
- 
-            Data = new List<Dictionary<Image, double>>();
+        {}
             
-
-        }
-
         protected override void SetUpModel()
         {
             PlotModel.Title = this.ToString();
@@ -73,7 +68,7 @@ namespace ShaBiDi.ViewModels
                 
                 var lineSerie = new LineSeries
                 {
-                    Title = (i != 2) ? "Comparaison" : indic.ToString(),
+                    Title = (i != 2) ? indic.ToString() : "Comparaison",
                     StrokeThickness = 1,
                     MarkerType = markers[i]
                 };
@@ -90,6 +85,7 @@ namespace ShaBiDi.ViewModels
         // Normalise les données selon les critères sélectionnés
         protected override void GetData()
         {
+            Data = new List<Dictionary<Image, double>>();
             TauxRecouvrement indic1 = CompareIndicWindow.IndicateursSelectionnes[0] as TauxRecouvrement;
             TauxRecouvrement indic2 = CompareIndicWindow.IndicateursSelectionnes[1] as TauxRecouvrement;
 
@@ -98,10 +94,8 @@ namespace ShaBiDi.ViewModels
             Data.Add(dataIndic1);
             Data.Add(dataIndic2);
 
-            I_TauxRecouvrement indic3 = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
-            indic3 = indic3.compareTaux(CompareIndicWindow.TypeComparaison,
-                new I_TauxRecouvrement(indic1.ViewModel.Positions, indic1.ViewModel.Ordres, indic1.ViewModel.ModPA, indic1.ViewModel.ModS, indic2.ViewModel.Groupes),
-                new I_TauxRecouvrement(indic2.ViewModel.Positions, indic2.ViewModel.Ordres, indic2.ViewModel.ModPA, indic2.ViewModel.ModS, indic2.ViewModel.Groupes));
+            I_TauxRecouvrement indic3 = new I_TauxRecouvrement(CreateIndicWindow.Positions, CreateIndicWindow.Ordres, CreateIndicWindow.ModPA, CreateIndicWindow.ModS, CreateIndicWindow.Groupes);
+            indic3 = indic3.compareTaux(CompareIndicWindow.TypeComparaison, indic1.ViewModel.Indic, indic2.ViewModel.Indic);
             
             Dictionary<Image, double> dataRes = indic3._monDico;
             Data.Add(dataRes);
@@ -109,6 +103,7 @@ namespace ShaBiDi.ViewModels
 
         public override string ToString()
         {
+            // TODO: Ajouter les titres des indicateurs comparés
             string res = "CompTauxRecouvrement_";
             //res+=NomsIndicateurs[0] + "_";
             //res+=NomsIndicateurs[1];

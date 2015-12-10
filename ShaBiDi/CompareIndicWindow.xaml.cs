@@ -19,7 +19,6 @@ namespace ShaBiDi
 
     public partial class CompareIndicWindow : Window
     {
-        // TODO : Corriger bug affichage fenêtre
         public List<UserControl> Indicateurs;
         
         public static List<UserControl> IndicateursSelectionnes;
@@ -28,7 +27,8 @@ namespace ShaBiDi
         public CompareIndicWindow()
         {
             InitializeComponent();
-            Indicateurs = new List<UserControl>();  
+            Indicateurs = new List<UserControl>();
+            IndicateursSelectionnes = new List<UserControl>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -40,22 +40,25 @@ namespace ShaBiDi
                 foreach (UserControl uc in listUC)
                 {
                     Console.WriteLine(uc.GetType());
+                    Indicateurs.Add(uc);
                     if (uc is TauxRecouvrement)
                     {
-                        cbSelectIndic1.Items.Add(uc as TauxRecouvrement);
-                        cbSelectIndic2.Items.Add(uc as TauxRecouvrement);
+                        cbSelectIndic1.Items.Add((uc as TauxRecouvrement).ToString());
+                        cbSelectIndic2.Items.Add((uc as TauxRecouvrement).ToString());
                     }
                 }
             }
         }
 
-        
-
         private void btnCreateCompareIndic_Click(object sender, RoutedEventArgs e)
         {
-            IndicateursSelectionnes.Add(cbSelectIndic1.SelectedItem as UserControl);
-            IndicateursSelectionnes.Add(cbSelectIndic2.SelectedItem as UserControl);
-            TypeComparaison = convert(cbSelectModeComp.SelectedItem as string);
+            int indexSelec1 = cbSelectIndic1.SelectedIndex;
+            int indexSelec2 = cbSelectIndic2.SelectedIndex;
+            
+            IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec1));
+            IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec2));
+            Console.WriteLine(cbSelectModeComp.SelectedItem);
+            TypeComparaison = convert(cbSelectModeComp.SelectedValue.ToString());
 
             CompTauxRecouvrement comp = new CompTauxRecouvrement();
             ResComparaison res = new ResComparaison();
@@ -65,13 +68,15 @@ namespace ShaBiDi
 
         private TypeComp convert(string s)
         {
+            TypeComp res;
             switch (s)
             {
-                case "Addition" : return TypeComp.add;
-                case "Soustraction" : return TypeComp.sous;
-                case "Moyenne": return TypeComp.moy;
-                default: throw new Exception();
+                case "Addition": res = TypeComp.add; break;
+                case "Soustraction": res = TypeComp.sous; break;
+                case "Moyenne": res = TypeComp.moy; break;
+                default: throw new Exception(); break;
             }
+            return res;
         }
     }
 }

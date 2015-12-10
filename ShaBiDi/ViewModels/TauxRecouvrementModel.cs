@@ -14,6 +14,7 @@ namespace ShaBiDi.ViewModels
     {
 
         private Dictionary<Image, double> data;
+        private I_TauxRecouvrement indic;
 
         public Dictionary<Image, double> Data
         {
@@ -21,11 +22,15 @@ namespace ShaBiDi.ViewModels
             set { data = value; }
         }
 
+        public I_TauxRecouvrement Indic
+        {
+            get { return indic; }
+            set { indic = value; }
+        }
+       
         public TauxRecouvrementModel()
             : base()
-        {
-            Data = new Dictionary<Image, double>();
-        }
+        {}
 
         protected override void SetUpModel()
         {
@@ -81,13 +86,15 @@ namespace ShaBiDi.ViewModels
         // Normalise les données selon les critères sélectionnés
         protected override void GetData()
         {
+            Data = new Dictionary<Image, double>();
+
             Positions = CreateIndicWindow.Positions;
             Groupes = CreateIndicWindow.Groupes;
             Ordres = CreateIndicWindow.Ordres;
             ModS = CreateIndicWindow.ModS;
             ModPA = CreateIndicWindow.ModPA;
 
-            I_TauxRecouvrement indic = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
+            indic = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
             Data = indic.determineTaux();
         }
 

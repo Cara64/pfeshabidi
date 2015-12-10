@@ -22,23 +22,33 @@ namespace ShaBiDi
     {
         private List<TabItem> _tabItems;
         private TabItem _tabAdd;
-
+        
         public static TabItem SelectedTab;
-        public CreateIndicWindow createIndic;
+        public static List<TabItem> TabItems;
+        public static List<List<UserControl>> Indicateurs;
+        public static List<Grid> Grids;
 
+        public ImportWindow import;
+        public CreateIndicWindow createIndic;
+        public CompareIndicWindow compareIndic;
+        public ExtractWindow extract;
+
+      
         public MainWindow()
         {
             try
             {
                 InitializeComponent();
+                Indicateurs = new List<List<UserControl>>();
+                Grids = new List<Grid>();
+                TabItems = new List<TabItem>();
+                initTab();
+
+                import = new ImportWindow();
                 createIndic = new CreateIndicWindow();
-                _tabItems = new List<TabItem>();
-                _tabAdd = new TabItem();
-                _tabAdd.Header = "+";
-                _tabItems.Add(_tabAdd);
-                this.addTabItem();
-                tabMainWindow.DataContext = _tabItems;
-                tabMainWindow.SelectedIndex = 0;
+                compareIndic = new CompareIndicWindow();
+                extract = new ExtractWindow();
+
             }
             catch (Exception ex)
             {
@@ -46,8 +56,20 @@ namespace ShaBiDi
             }
         }
 
-
         #region Gestion des onglets
+
+        private void initTab()
+        {
+            _tabItems = new List<TabItem>();
+            _tabAdd = new TabItem();
+            _tabAdd.Header = "+";
+            _tabItems.Add(_tabAdd);
+            this.addTabItem();
+            tabMainWindow.DataContext = _tabItems;
+            tabMainWindow.SelectedIndex = 0;
+            TabItems = _tabItems;
+        }
+
         private TabItem addTabItem()
         {
             int count = _tabItems.Count;
@@ -59,11 +81,12 @@ namespace ShaBiDi
 
             tab.MouseDoubleClick += new MouseButtonEventHandler(tabMainWindow_MouseDoubleClick);
 
-           // TextBlock message = new TextBlock();
-           // message.Text = "Veuillez créer un indicateur";
-           // tab.Content = message;
             _tabItems.Insert(count - 1, tab);
-            
+
+            Indicateurs.Add(new List<UserControl>());
+            Grids.Add(new Grid());
+
+            TabItems = _tabItems;
             return tab;
         }
 
@@ -128,6 +151,8 @@ namespace ShaBiDi
                     tabMainWindow.SelectedItem = selectedTab;
                 }
             }
+
+            TabItems = _tabItems;
         }
 
         #endregion
@@ -142,17 +167,22 @@ namespace ShaBiDi
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
-            ImportWindow import = new ImportWindow();
             import.Show();
+        }
+
+        private void btnCompare_Click(object sender, RoutedEventArgs e)
+        {
+            compareIndic.Show();
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            extract.Show();
         }
 
         #endregion
 
-        private void btnCompare_Click(object sender, RoutedEventArgs e)
-        {
-            CompareIndicWindow compIndicWindow = new CompareIndicWindow();
-            compIndicWindow.Show();
-        }
+
     }
 
     

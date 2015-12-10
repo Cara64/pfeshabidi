@@ -9,7 +9,7 @@
         <Label Content="Sélectionnez le deuxième indicateur :" />
         <ComboBox Margin="10,0,10,0" Name="cbSelectIndic2"></ComboBox>
         <Label Content="Mode comparaison :" />
-        <ComboBox Margin="10,0,10,0" Name="cbSelectModeComp">
+        <ComboBox Margin="10,0,10,0" Name="cbSelectModeComp" SelectedValuePath="Content">
             <ComboBoxItem Content="Addition"></ComboBoxItem>
             <ComboBoxItem Content="Soustraction"></ComboBoxItem>
             <ComboBoxItem Content="Moyenne"></ComboBoxItem>
