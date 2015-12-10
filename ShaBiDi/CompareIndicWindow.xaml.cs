@@ -19,70 +19,59 @@ namespace ShaBiDi
 
     public partial class CompareIndicWindow : Window
     {
-
-        public static List<UserControl> Indicateurs;
-
-        public static List<String> nomIndicateurs = new List<String>();
-
-        public static bool compAdd;
-        public static bool compSous;
-        public static bool compMoy;
-
-        public static string[] indicateurSelected;
+        // TODO : Corriger bug affichage fenêtre
+        public List<UserControl> Indicateurs;
+        
+        public static List<UserControl> IndicateursSelectionnes;
+        public static TypeComp TypeComparaison;
 
         public CompareIndicWindow()
         {
             InitializeComponent();
-            cbSelectIndic1.ItemsSource = nomIndicateurs;
-            cbSelectIndic2.ItemsSource = nomIndicateurs;
-            compAdd = compSous = compMoy = false;
-            indicateurSelected = new string[2];
+            Indicateurs = new List<UserControl>();  
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("CountUC = " + MainWindow.Indicateurs.Count());
+            foreach (List<UserControl> listUC in MainWindow.Indicateurs)
+            {
+                Console.WriteLine(listUC.Count());
+                foreach (UserControl uc in listUC)
+                {
+                    Console.WriteLine(uc.GetType());
+                    if (uc is TauxRecouvrement)
+                    {
+                        cbSelectIndic1.Items.Add(uc as TauxRecouvrement);
+                        cbSelectIndic2.Items.Add(uc as TauxRecouvrement);
+                    }
+                }
+            }
         }
 
-        private void cbSous_Checked(object sender, RoutedEventArgs e)
-        {
-            compSous = true;
-        }
-
-        private void cbAdd_Checked(object sender, RoutedEventArgs e)
-        {
-            compAdd = true;
-        }
-
-        private void cbMoy_Checked(object sender, RoutedEventArgs e)
-        {
-            compMoy = true;
-        }
-
-        private void cbAdd_Unchecked(object sender, RoutedEventArgs e)
-        {
-            compAdd = false;
-        }
-
-        private void cbSous_Unchecked(object sender, RoutedEventArgs e)
-        {
-            compSous = false;
-        }
-
-        private void cbMoy_Unchecked(object sender, RoutedEventArgs e)
-        {
-            compMoy = false;
-        }
+        
 
         private void btnCreateCompareIndic_Click(object sender, RoutedEventArgs e)
         {
-            indicateurSelected[0] = cbSelectIndic1.SelectedItem as string;
-            indicateurSelected[1] = cbSelectIndic2.SelectedItem as string;
+            IndicateursSelectionnes.Add(cbSelectIndic1.SelectedItem as UserControl);
+            IndicateursSelectionnes.Add(cbSelectIndic2.SelectedItem as UserControl);
+            TypeComparaison = convert(cbSelectModeComp.SelectedItem as string);
 
-            Console.WriteLine(nomIndicateurs[0]);
             CompTauxRecouvrement comp = new CompTauxRecouvrement();
             ResComparaison res = new ResComparaison();
             res.Content = comp;
             res.Show();
+        }
+
+        private TypeComp convert(string s)
+        {
+            switch (s)
+            {
+                case "Addition" : return TypeComp.add;
+                case "Soustraction" : return TypeComp.sous;
+                case "Moyenne": return TypeComp.moy;
+                default: throw new Exception();
+            }
         }
     }
 }
