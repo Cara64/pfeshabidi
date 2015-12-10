@@ -19,9 +19,6 @@ namespace ShaBiDi
     public partial class CreateIndicWindow : Window
     {
         // TODO : Améliorer l'affichage des ancrages
-        // TODO : Augmenter le nombre d'indicateurs visibles
-        // Affichage maximum de 4 indicateurs pour des raisons de visibilité
-        // private const int MAX_INDIC_IN_TAB = 4;
 
         public static List<int> Positions = new List<int>();
         public static List<OrdreGroupe> Ordres;
