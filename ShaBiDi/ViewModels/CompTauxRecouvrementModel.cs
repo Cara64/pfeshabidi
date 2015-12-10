@@ -10,81 +10,28 @@ using OxyPlot.Axes;
 
 namespace ShaBiDi.ViewModels
 {
-    public class CompTauxRecouvrementModel
+    public class CompTauxRecouvrementModel : Model
     {
-        #region Attributs
-
-        private PlotModel plotModel;
-        private List<int> positions;
-        private List<OrdreGroupe> ordres;
-        private List<Groupe> groupes;
-        private bool modS;
-        private bool modPA;
-        private string[] nomsIndicateurs = new string[3];
-
-        #endregion
-
-        #region Propriétés
-
-        public PlotModel PlotModel
+       
+        private List<Dictionary<Image, double>> data;
+       
+        public List<Dictionary<Image, double>> Data
         {
-            get { return plotModel; }
-            set { plotModel = value; }
+            get { return data; }
+            set { data = value;}
         }
 
-        public List<int> Positions
-        {
-            get { return positions; }
-            set { positions = value; }
-        }
-
-        public List<OrdreGroupe> Ordres
-        {
-            get { return ordres; }
-            set { ordres = value; }
-        }
-
-        public List<Groupe> Groupes
-        {
-            get { return groupes; }
-            set { groupes = value; }
-        }
-
-        public bool ModS
-        {
-            get { return modS; }
-            set { modS = value; }
-        }
-
-        public bool ModPA
-        {
-            get { return modPA; }
-            set { modPA = value; }
-        }
-
-        public string[] NomsIndicateurs
-        {
-            get { return nomsIndicateurs; }
-            set { nomsIndicateurs = value;}
-        }
-
-        #endregion
-
-        public CompTauxRecouvrementModel()
+        public CompTauxRecouvrementModel() : base()
         {
  
-            for (int i = 0; i < CompareIndicWindow.indicateurSelected.Count(); i++) NomsIndicateurs[i] = CompareIndicWindow.indicateurSelected[i];
-            PlotModel = new PlotModel();
-            GetData();
-            SetUpModel();
-            LoadData();
-            CompareIndicWindow.nomIndicateurs.Add(setPlotTitle());
+            Data = new List<Dictionary<Image, double>>();
+            
 
         }
 
-        private void SetUpModel()
+        protected override void SetUpModel()
         {
-            PlotModel.Title = setPlotTitle();
+            PlotModel.Title = this.ToString();
             PlotModel.LegendTitle = "Légende";
             PlotModel.LegendOrientation = LegendOrientation.Horizontal;
             PlotModel.LegendPlacement = LegendPlacement.Outside;
@@ -113,96 +60,58 @@ namespace ShaBiDi.ViewModels
             PlotModel.Axes.Add(valueAxis);
         }
 
-        private void LoadData()
+        protected override void LoadData()
         {
             int i = 0;
-            var listMesures = GetData();
-            string[] titleData = { NomsIndicateurs[0], NomsIndicateurs[1], "Comparaison" };
+            TauxRecouvrement indic = new TauxRecouvrement();
             MarkerType[] markers = { MarkerType.Circle, MarkerType.Cross, MarkerType.Square };
-            foreach (Dictionary<int, double> mesures in listMesures)
+            foreach(Dictionary<Image, double> dico in Data)
             {
-                var data = mesures.Keys.ToList();
-                data.Sort();
+                var mesures = dico.Keys.OrderBy(o=>o.Numero).ToList();
+                
+                if (i != 2) indic = CompareIndicWindow.IndicateursSelectionnes[i] as TauxRecouvrement;
+                
                 var lineSerie = new LineSeries
                 {
-                    Title = titleData[i],
+                    Title = (i != 2) ? "Comparaison" : indic.ToString(),
                     StrokeThickness = 1,
                     MarkerType = markers[i]
                 };
 
-                foreach (var key in data)
-                    lineSerie.Points.Add(new DataPoint(key, mesures[key] * 100));
+                foreach (var key in mesures)
+                    lineSerie.Points.Add(new DataPoint(key.Numero, dico[key]*100));
 
                 PlotModel.Series.Add(lineSerie);
                 i++;
-            }    
+            }
         }
 
 
         // Normalise les données selon les critères sélectionnés
-        private List<Dictionary<int, double>> GetData()
+        protected override void GetData()
         {
-            // Pour démonstration.
-            // TODO : Modifier de sorte à ce que les indicateurs correspondent réellement à ceux sélectionnés
+            TauxRecouvrement indic1 = CompareIndicWindow.IndicateursSelectionnes[0] as TauxRecouvrement;
+            TauxRecouvrement indic2 = CompareIndicWindow.IndicateursSelectionnes[1] as TauxRecouvrement;
 
-            // Recalcul des deux indicateurs
-            TauxRecouvrement indic;
-            I_TauxRecouvrement[] indicTR = new I_TauxRecouvrement[3];
-            Dictionary<Image, double> dicoTauxMoyen;
+            Dictionary<Image, double> dataIndic1 = indic1.ViewModel.Data;
+            Dictionary<Image, double> dataIndic2 = indic2.ViewModel.Data;
+            Data.Add(dataIndic1);
+            Data.Add(dataIndic2);
 
-            Dictionary<int, double> dataInd1  = new Dictionary<int,double>();
-            Dictionary<int, double> dataInd2  = new Dictionary<int,double>();
-            Dictionary<int, double> dataComp  = new Dictionary<int,double>();
-
-            List<Dictionary<int, double>> data = new List<Dictionary<int, double>>();
-
-            for (int i = 0; i < CreateIndicWindow.Indicateurs.Count; i++)
-            {
-                indic = CreateIndicWindow.Indicateurs[i] as TauxRecouvrement;
-
-                Positions = indic.ViewModel.Positions;
-                Groupes = indic.ViewModel.Groupes;
-                Ordres = indic.ViewModel.Ordres;
-                ModS = indic.ViewModel.ModS;
-                ModPA = indic.ViewModel.ModPA;
-
-                indicTR[i] = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
-                dicoTauxMoyen = indicTR[i].determineTaux();
-                foreach (Image image in dicoTauxMoyen.Keys)
-                {
-                    if (i == 0) dataInd1[image.Numero] = dicoTauxMoyen[image];
-                    else dataInd2[image.Numero] = dicoTauxMoyen[image];
-                }
-            }
-
-            // Calcul du résultat
-            TypeComp typeComp;
-            if (CompareIndicWindow.compAdd) typeComp = TypeComp.add;
-            else
-            {
-                if (CompareIndicWindow.compSous) typeComp = TypeComp.sous;
-                else typeComp = TypeComp.moy;
-            }
-
-            indicTR[2] = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
-            indicTR[2] = indicTR[2].compareTaux(typeComp, indicTR[0], indicTR[1]);
-            dicoTauxMoyen = indicTR[2]._monDico;
-            foreach (Image image in dicoTauxMoyen.Keys)
-            {
-                dataComp[image.Numero]= dicoTauxMoyen[image];
-            }
-
-            data.Add(dataInd1);
-            data.Add(dataInd2);
-            data.Add(dataComp);
-            return data;
+            I_TauxRecouvrement indic3 = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
+            indic3 = indic3.compareTaux(CompareIndicWindow.TypeComparaison,
+                new I_TauxRecouvrement(indic1.ViewModel.Positions, indic1.ViewModel.Ordres, indic1.ViewModel.ModPA, indic1.ViewModel.ModS, indic2.ViewModel.Groupes),
+                new I_TauxRecouvrement(indic2.ViewModel.Positions, indic2.ViewModel.Ordres, indic2.ViewModel.ModPA, indic2.ViewModel.ModS, indic2.ViewModel.Groupes));
+            
+            Dictionary<Image, double> dataRes = indic3._monDico;
+            Data.Add(dataRes);
         }
 
-        private string setPlotTitle()
+        public override string ToString()
         {
             string res = "CompTauxRecouvrement_";
-            res+=NomsIndicateurs[0] + "_";
-            res+=NomsIndicateurs[1];
+            //res+=NomsIndicateurs[0] + "_";
+            //res+=NomsIndicateurs[1];
 
             return res;
         }

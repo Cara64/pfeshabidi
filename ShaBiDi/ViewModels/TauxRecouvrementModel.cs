@@ -10,73 +10,26 @@ using OxyPlot.Series;
 
 namespace ShaBiDi.ViewModels
 {
-    public class TauxRecouvrementModel
+    public class TauxRecouvrementModel : Model
     {
-        #region Attributs
 
-        private PlotModel plotModel;
-        private List<int> positions;
-        private List<OrdreGroupe> ordres;
-        private List<Groupe> groupes;
-        private bool modS;
-        private bool modPA;
+        private Dictionary<Image, double> data;
 
-        #endregion
-
-
-        #region Propriétés
-
-        public PlotModel PlotModel
+        public Dictionary<Image, double> Data
         {
-            get { return plotModel; }
-            set { plotModel = value; }
+            get { return data; }
+            set { data = value; }
         }
-
-        public List<int> Positions
-        {
-            get { return positions; }
-            set { positions = value; }
-        }
-
-        public List<OrdreGroupe> Ordres
-        {
-            get { return ordres; }
-            set { ordres = value; }
-        }
-
-        public List<Groupe> Groupes
-        {
-            get { return groupes; }
-            set { groupes = value; }
-        }
-
-        public bool ModS
-        {
-            get { return modS; }
-            set { modS = value; }
-        }
-
-        public bool ModPA
-        {
-            get { return modPA; }
-            set { modPA = value; }
-        }
-
-        #endregion
 
         public TauxRecouvrementModel()
+            : base()
         {
-            PlotModel = new PlotModel();
-            GetData();
-            SetUpModel();
-            LoadData();
-            CompareIndicWindow.nomIndicateurs.Add(setPlotTitle());
-
+            Data = new Dictionary<Image, double>();
         }
 
-        private void SetUpModel()
+        protected override void SetUpModel()
         {
-            PlotModel.Title = setPlotTitle();
+            PlotModel.Title = this.ToString();
             PlotModel.LegendTitle = "Légende";
             PlotModel.LegendOrientation = LegendOrientation.Horizontal;
             PlotModel.LegendPlacement = LegendPlacement.Outside;
@@ -84,33 +37,30 @@ namespace ShaBiDi.ViewModels
             PlotModel.LegendBackground = OxyColor.FromAColor(200, OxyColors.White);
             PlotModel.LegendBorder = OxyColors.Black;
 
-            var imageAxis = new LinearAxis 
-            { 
-                Position = AxisPosition.Bottom, 
-                Minimum = 0.0, 
+            var imageAxis = new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Minimum = 0.0,
                 Maximum = 31.0,
                 MinorStep = 1.0,
                 MajorStep = 1.0,
-                Title="N° de l'image" 
+                Title = "N° de l'image"
             };
             PlotModel.Axes.Add(imageAxis);
 
-            var valueAxis = new LinearAxis 
-            { 
-                Position = AxisPosition.Left, 
-                Minimum = 0.0, 
-                Maximum = 100.0, 
-                Title = "Taux de recouvrement" 
+            var valueAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Minimum = 0.0,
+                Maximum = 100.0,
+                Title = "Taux de recouvrement"
             };
             PlotModel.Axes.Add(valueAxis);
         }
 
-        private void LoadData()
+        protected override void LoadData()
         {
-            var mesures = GetData();
-            
-            var data = mesures.Keys.ToList();
-            data.Sort();
+            var mesures = data.Keys.OrderBy(o => o.Numero).ToList();
 
             var lineSerie = new LineSeries
             {
@@ -119,9 +69,9 @@ namespace ShaBiDi.ViewModels
                 MarkerType = MarkerType.Circle
             };
 
-            foreach (var key in data)
+            foreach (var key in mesures)
             {
-                lineSerie.Points.Add(new DataPoint(key, mesures[key] * 100));
+                lineSerie.Points.Add(new DataPoint(key.Numero, data[key] * 100));
             }
 
             PlotModel.Series.Add(lineSerie);
@@ -129,44 +79,39 @@ namespace ShaBiDi.ViewModels
 
 
         // Normalise les données selon les critères sélectionnés
-        private Dictionary<int, double> GetData()
+        protected override void GetData()
         {
             Positions = CreateIndicWindow.Positions;
-            Groupes = ImportWindow.GroupesExp;
+            Groupes = CreateIndicWindow.Groupes;
             Ordres = CreateIndicWindow.Ordres;
             ModS = CreateIndicWindow.ModS;
             ModPA = CreateIndicWindow.ModPA;
 
             I_TauxRecouvrement indic = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
-            var dicoTauxMoyen = indic.determineTaux();
-
-            Dictionary<int, double> data = new Dictionary<int, double>();
-            foreach (Image image in dicoTauxMoyen.Keys)
-            {
-                data[image.Numero] = dicoTauxMoyen[image];
-            }
-            return data;
+            Data = indic.determineTaux();
         }
 
-        private string setPlotTitle()
+        public override string ToString()
         {
             string res = "TauxRecouvrement_GR";
-            foreach (Groupe groupe in Groupes) 
-                res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U" ;
-            foreach (int pos in Positions) 
-                res += (!pos.Equals(Positions.Last())) ? pos + "-": pos + "_ORD" ;
+            foreach (Groupe groupe in Groupes)
+                res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U";
+            foreach (int pos in Positions)
+                res += (!pos.Equals(Positions.Last())) ? pos + "-" : pos + "_ORD";
             foreach (OrdreGroupe ordre in Ordres)
                 res += (!ordre.Equals(Ordres.Last())) ? ordre.ToString() + "-" : ordre.ToString() + "_MOD";
-            if (modS && modPA)
+            if (ModS && ModPA)
                 res += "S-PA";
             else
-                if (modS) res += "S";
+                if (ModS) res += "S";
                 else res += "PA";
 
             return res;
         }
 
-          
     }
+
+          
+ 
 
 }
