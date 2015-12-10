@@ -10,7 +10,6 @@ namespace ShaBiDi
     {
         public int Identifiant { get; private set; }
         public OrdreGroupe Ordre { get; private set; }
-
         public List<Sujet> MesSujets { get; private set; }
 
         public Groupe(int identifiant, OrdreGroupe ordre)
@@ -31,5 +30,10 @@ namespace ShaBiDi
             MesSujets[index].AddObservation(obs, mod);
         }
 
+
+        public override string ToString()
+        {
+            return "Groupe " + Identifiant;
+        }
     }
 }

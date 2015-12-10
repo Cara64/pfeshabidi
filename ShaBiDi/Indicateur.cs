@@ -14,8 +14,6 @@ namespace ShaBiDi
         protected bool _pa;
         protected bool _s;
 
- 
-
         protected List<Groupe> _tousLesGroupes;
         protected List<Groupe> _mesGroupes;
         public List<Groupe> MesGroupes
