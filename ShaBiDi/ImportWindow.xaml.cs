@@ -65,7 +65,6 @@ namespace ShaBiDi
             worker.ProgressChanged += worker_ProgressChanged;
 
             worker.RunWorkerAsync();
-
         }
 
 
