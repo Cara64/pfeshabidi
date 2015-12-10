@@ -10,9 +10,9 @@
         </ComboBox>
         <StackPanel Orientation="Horizontal">
             <Label Content="User :"></Label>
-            <CheckBox Name="cbUser1" Content="1" Margin="5" Checked="cbUser1_Checked" Unchecked="cbUser1_Unchecked" ></CheckBox>
-            <CheckBox Name="cbUser2" Content="2" Margin="5" Checked="cbUser2_Checked" Unchecked="cbUser2_Unchecked"></CheckBox>
-            <CheckBox Name="cbUser3" Content="3" Margin="5" Checked="cbUser3_Checked" Unchecked="cbUser3_Unchecked"></CheckBox>
+            <CheckBox Name="cbUser1" Content="1" Margin="5" Checked="cbUser1_Checked" Unchecked="cbUser1_Unchecked" IsChecked="True" ></CheckBox>
+            <CheckBox Name="cbUser2" Content="2" Margin="5" Checked="cbUser2_Checked" Unchecked="cbUser2_Unchecked" IsChecked="True"></CheckBox>
+            <CheckBox Name="cbUser3" Content="3" Margin="5" Checked="cbUser3_Checked" Unchecked="cbUser3_Unchecked" IsChecked="True"></CheckBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Ordre :"></Label>
@@ -26,7 +26,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Groupe :"></Label>
-            <ListBox Width="300" Height="100" ItemsSource="{Binding}"></ListBox>
+            <ListBox Name ="lbGroup" Width="300" Height="100" ItemsSource="{Binding}" SelectionMode="Multiple" SelectionChanged="lbGroup_SelectionChanged"></ListBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button x:Name="btnCreateIndic" Content="Ok" Margin="10" Click="btnCreateIndic_Click"></Button>

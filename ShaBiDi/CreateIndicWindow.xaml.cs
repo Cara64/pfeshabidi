@@ -18,139 +18,99 @@ namespace ShaBiDi
     /// </summary>
     public partial class CreateIndicWindow : Window
     {
+        // TODO : Améliorer l'affichage des ancrages
+        // TODO : Augmenter le nombre d'indicateurs visibles
         // Affichage maximum de 4 indicateurs pour des raisons de visibilité
-        private const int MAX_INDIC_IN_TAB = 4;
+        // private const int MAX_INDIC_IN_TAB = 4;
 
-        public static List<int> Positions;
+        public static List<int> Positions = new List<int>();
         public static List<OrdreGroupe> Ordres;
         public static List<Groupe> Groupes;
         public static bool ModS;
         public static bool ModPA;
-
-        public static Grid gr;
-
-        private static List<UserControl> indicateurs;
-        public static List<UserControl> Indicateurs
-        {
-            get { return indicateurs; }
-            set { indicateurs = value; }
-        }
-
-        
-
       
         public CreateIndicWindow()
         {
             InitializeComponent();
-            Positions = new List<int>();
+    
             Positions.Add(1);
             Positions.Add(2);
             Positions.Add(3);
+
             Ordres = new List<OrdreGroupe>();
             ModS = false;
             ModPA = false;
-            Indicateurs = new List<UserControl>(MAX_INDIC_IN_TAB);
-            gr = new Grid();
+
+            Groupes = ImportWindow.GroupesExp;
+            lbGroup.ItemsSource = Groupes;
+            lbGroup.SelectAll();
+           
         }
 
         private void btnCreateIndic_Click(object sender, RoutedEventArgs e)
         {
             ComboBoxItem typeItem = (ComboBoxItem) cbSelectIndic.SelectedItem;
             string typeIndicateur = typeItem.Content.ToString();
-
-            if (Indicateurs.Count < MAX_INDIC_IN_TAB)
-            {
-                creerIndicateur(typeIndicateur);
-                Console.WriteLine("Il y a {0} indicateurs", Indicateurs.Count);
-                gererGrille();
-            } 
-            else 
-            {
-                MessageBox.Show("Le nombre d'indicateur est limité à 4 pour un onglet !", "Nombre d'indicateurs trop grand", MessageBoxButton.OK
-                    , MessageBoxImage.Exclamation);
-            }
+            creerIndicateur(typeIndicateur);
+            gererGrille();
         }
 
 
         private void creerIndicateur(string typeIndicateur)
         {
+            int indexTab = MainWindow.TabItems.IndexOf(MainWindow.SelectedTab);
             switch (typeIndicateur)
             {
                 case "Taux de recouvrement":
-                    CreateIndicWindow.Indicateurs.Add(new TauxRecouvrement());
-                    Console.WriteLine("Ajout du taux de recouvrement");
+                    MainWindow.Indicateurs[indexTab].Add(new TauxRecouvrement());
                     break;
                 default: break;
             }
-
         }
 
         private void gererGrille()
         {
+            int indexTab = MainWindow.TabItems.IndexOf(MainWindow.SelectedTab); // index du tab courant
+            int ucLength = MainWindow.Indicateurs[indexTab].Count;  // nombre d'UC dans le tab courant
 
-            gr.Children.Clear();
-
-            ColumnDefinition colDef1 = new ColumnDefinition();
-            ColumnDefinition colDef2 = new ColumnDefinition();
-            RowDefinition rowDef1 = new RowDefinition();
-            RowDefinition rowDef2 = new RowDefinition();
+            MainWindow.Grids[indexTab].Children.Clear();
+            Console.WriteLine("ucLength = " + ucLength);
             
-            switch (Indicateurs.Count)
-            {
-                case 1 : 
-                    gr.ColumnDefinitions.Add(colDef1);
-                    gr.RowDefinitions.Add(rowDef1);
-                    Grid.SetRow(Indicateurs[0], 0);
-                    Grid.SetColumn(Indicateurs[0], 0);
-                    Console.WriteLine("Mise en place de la grille pour un indicateur");
-                    break;
-                case 2 :
-                    gr.ColumnDefinitions.Add(colDef2);
-                    Grid.SetRow(Indicateurs[0], 0);
-                    Grid.SetColumn(Indicateurs[0], 0);
-                    Grid.SetRow(Indicateurs[1], 0);
-                    Grid.SetColumn(Indicateurs[1], 1);
-                    Console.WriteLine("Mise en place de la grille pour deux indicateurs");
-                    break;
-                case 3 :
-                    gr.ColumnDefinitions.Add(colDef1);
-                    gr.ColumnDefinitions.Add(colDef2);
-                    gr.RowDefinitions.Add(rowDef1);
-                    gr.RowDefinitions.Add(rowDef2);
-                    Grid.SetRow(Indicateurs[0], 0);
-                    Grid.SetColumn(Indicateurs[0], 0);
-                    Grid.SetRow(Indicateurs[1], 0);
-                    Grid.SetColumn(Indicateurs[1], 1);
-                    Grid.SetRow(Indicateurs[2], 1);
-                    break;
-                case 4 :
-                    gr.ColumnDefinitions.Add(colDef1);
-                    gr.ColumnDefinitions.Add(colDef2);
-                    gr.RowDefinitions.Add(rowDef1);
-                    gr.RowDefinitions.Add(rowDef2);
-                    Grid.SetRow(Indicateurs[0], 0);
-                    Grid.SetColumn(Indicateurs[0], 0);
-                    Grid.SetRow(Indicateurs[1], 0);
-                    Grid.SetColumn(Indicateurs[1], 1);
-                    Grid.SetRow(Indicateurs[2], 1);
-                    Grid.SetColumn(Indicateurs[2], 0);
-                    Grid.SetRow(Indicateurs[3], 1);
-                    Grid.SetColumn(Indicateurs[3], 1);
-                    break;
+            MainWindow.Grids[indexTab].ColumnDefinitions.Add(new ColumnDefinition());
+            MainWindow.Grids[indexTab].RowDefinitions.Add(new RowDefinition());
+            if (ucLength == 2) MainWindow.Grids[indexTab].ColumnDefinitions.Add(new ColumnDefinition());
+            if (ucLength == 3) MainWindow.Grids[indexTab].RowDefinitions.Add(new RowDefinition());
 
+            switch (ucLength)
+            {
+                case 4 :
+                    Grid.SetRow(MainWindow.Indicateurs[indexTab][3], 1);
+                    Grid.SetColumn(MainWindow.Indicateurs[indexTab][3], 1);
+                    goto case 3;
+                case 3 :
+                    Grid.SetRow(MainWindow.Indicateurs[indexTab][2], 1);
+                    // Grid.SetColumn(MainWindow.Indicateurs[indexTab][2], 0);
+                    Grid.SetColumnSpan(MainWindow.Indicateurs[indexTab][2], 2);
+                    goto case 2;
+                case 2 :
+                    Grid.SetRow(MainWindow.Indicateurs[indexTab][1], 0);
+                    Grid.SetColumn(MainWindow.Indicateurs[indexTab][1], 1);
+                    goto case 1;
+                case 1 :
+                    Grid.SetRow(MainWindow.Indicateurs[indexTab][0], 0);
+                    Grid.SetColumn(MainWindow.Indicateurs[indexTab][0], 0);
+                    break;
                 default: break;
             }
 
-            
-            for (int i = 0; i < Indicateurs.Count; i++ )
-            {
-                gr.Children.Add(Indicateurs[i]);
-                Console.WriteLine("Ajout de l'indicateur {0}", i);
-            }
+            foreach (UserControl uc in MainWindow.Indicateurs[indexTab])
+                MainWindow.Grids[indexTab].Children.Add(uc);
 
-            MainWindow.SelectedTab.Content = gr;
-            Console.WriteLine("Mise en place dans l'onglet");
-        }
+            MainWindow.SelectedTab.Content = MainWindow.Grids[indexTab];     
+       }
+
+
+        
 
 
         #region Gestion des éléments d'interface
@@ -226,6 +186,15 @@ namespace ShaBiDi
         }
 
         #endregion
+
+        private void lbGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Groupes.Clear();
+            foreach (Groupe groupe in lbGroup.SelectedItems)
+            {
+                Groupes.Add(groupe);
+            }
+        }
 
     }
 }
