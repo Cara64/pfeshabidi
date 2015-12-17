@@ -234,7 +234,40 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\ImagesExp\1_bigbang.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImagesExp\10_bigbigbang.jpg" />
+    <Resource Include="Resources\ImagesExp\11_bureaudésordre.jpg" />
+    <Resource Include="Resources\ImagesExp\12_japaneeseTags.jpg" />
+    <Resource Include="Resources\ImagesExp\13_messyDirty.jpg" />
+    <Resource Include="Resources\ImagesExp\14_bureauordi.jpg" />
+    <Resource Include="Resources\ImagesExp\15_DirtyRoom.jpg" />
+    <Resource Include="Resources\ImagesExp\16_frenchNuage.jpg" />
+    <Resource Include="Resources\ImagesExp\17_dirtyfloor.jpg" />
+    <Resource Include="Resources\ImagesExp\18_DirtyTable.jpg" />
+    <Resource Include="Resources\ImagesExp\19_bureauwindows.jpg" />
+    <Resource Include="Resources\ImagesExp\20_DirtyDesk.png" />
+    <Resource Include="Resources\ImagesExp\21_frenchTags.jpg" />
+    <Resource Include="Resources\ImagesExp\22_GarageOutils.jpg" />
+    <Resource Include="Resources\ImagesExp\23_mess.jpg" />
+    <Resource Include="Resources\ImagesExp\24_DirtyWall.jpg" />
+    <Resource Include="Resources\ImagesExp\25_englishNuage.jpg" />
+    <Resource Include="Resources\ImagesExp\26_messyRoom.jpg" />
+    <Resource Include="Resources\ImagesExp\27_DirtyBibli.jpg" />
+    <Resource Include="Resources\ImagesExp\28_latinTags.jpg" />
+    <Resource Include="Resources\ImagesExp\29_room.jpg" />
+    <Resource Include="Resources\ImagesExp\2_blueRoom.jpg" />
+    <Resource Include="Resources\ImagesExp\30_Workspace.jpg" />
+    <Resource Include="Resources\ImagesExp\3_chineeseTags.jpg" />
+    <Resource Include="Resources\ImagesExp\4_messy-office3d.jpg" />
+    <Resource Include="Resources\ImagesExp\5_dirty.jpg" />
+    <Resource Include="Resources\ImagesExp\6_englishTags.jpg" />
+    <Resource Include="Resources\ImagesExp\7_marchefruits.jpg" />
+    <Resource Include="Resources\ImagesExp\8_formescolores.jpg" />
+    <Resource Include="Resources\ImagesExp\9_villequebec.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
