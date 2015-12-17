@@ -49,7 +49,7 @@ namespace ShaBiDi.Logic
                 foreach (PointAttention pa in o.PointsAttentions)
                 {
                     // Si les coordonnées sont diféfrentes alors on effectue le traitement sur tout le laps de temps concerné
-                    if ((enCours.CoordPA.A != pa.CoordPA.A) || (enCours.CoordPA.A != pa.CoordPA.A))
+                    if ((enCours.CoordPA.A != pa.CoordPA.A) || (enCours.CoordPA.B != pa.CoordPA.B))
                     {
                         enCours.contributionTaux2(ref pixelsImage);
 
@@ -59,7 +59,7 @@ namespace ShaBiDi.Logic
                     // Si on est face au dernier élément de la liste, il faut faire le traitement quand même
                     if (pa == o.PointsAttentions[o.PointsAttentions.Count - 1])
                     {
-                        enCours.contributionTaux1(ref pixelsImage);
+                        enCours.contributionTaux2(ref pixelsImage);
                     }
                     
                 }

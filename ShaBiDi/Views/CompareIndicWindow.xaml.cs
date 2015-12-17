@@ -37,36 +37,61 @@ namespace ShaBiDi.Views
             foreach (UserControl uc in MainWindow.Indicateurs)
             {
                 Indicateurs.Add(uc);
+
                 if (uc is TauxRecouvrementUC)
                 {
                     cbSelectIndic1.Items.Add((uc as TauxRecouvrementUC).ToString());
                     cbSelectIndic2.Items.Add((uc as TauxRecouvrementUC).ToString());
                 }
+
+                if (uc is DensiteRecouvrementUC)
+                {
+                    cbSelectIndic1.Items.Add((uc as DensiteRecouvrementUC).ToString());
+                    cbSelectIndic2.Items.Add((uc as DensiteRecouvrementUC).ToString());
+                }
+
+
             }
         }
 
         private void btnCreateCompareIndic_Click(object sender, RoutedEventArgs e)
         {
+            IndicateursSelectionnes.Clear();
+
             int indexSelec1 = cbSelectIndic1.SelectedIndex;
             int indexSelec2 = cbSelectIndic2.SelectedIndex;
             
             IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec1));
             IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec2));
 
+            Console.WriteLine(IndicateursSelectionnes[0].GetType());
+            Console.WriteLine(IndicateursSelectionnes[1].GetType());
             if (IndicateursSelectionnes[0].GetType().Equals(IndicateursSelectionnes[1].GetType()))
             {
                 TypeComparaison = convert(cbSelectModeComp.SelectedValue.ToString());
-                
+                ResultWindow res = new ResultWindow();
+
                 if (IndicateursSelectionnes[0].GetType().Equals(typeof(TauxRecouvrementUC)))
                 {
-                    CompTauxRecouvrementUC comp = new CompTauxRecouvrementUC();
-                    ResultWindow res = new ResultWindow();
-                    res.Content = comp;
+                    CompTauxRecouvrementUC compTR = new CompTauxRecouvrementUC();
+                    res.Content = compTR;
                 }
 
                 if (IndicateursSelectionnes[0].GetType().Equals(typeof(DensiteRecouvrementUC)))
                 {
-                    // 
+                    DensiteRecouvrementUC indDR1 = IndicateursSelectionnes[0] as DensiteRecouvrementUC;
+                    DensiteRecouvrementUC indDR2 = IndicateursSelectionnes[1] as DensiteRecouvrementUC;
+                    if (indDR1.Mode.Equals(indDR2.Mode))
+                    {
+                        CompDensiteRecouvrementUC compDR = new CompDensiteRecouvrementUC(indDR1.Mode);
+                        res.Content = compDR;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Vous devez comparer deux indicateurs du même type", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                    res.Show();
                 }
 
             } 

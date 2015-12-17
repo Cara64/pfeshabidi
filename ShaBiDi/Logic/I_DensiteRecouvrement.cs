@@ -8,12 +8,18 @@ namespace ShaBiDi.Logic
 {
     public class I_DensiteRecouvrement : Indicateur
     {
-        Dictionary<Image, double[,]> _monDico;
+        private Dictionary<Image, double[,]> data;
+
+        public Dictionary<Image, double[,]> Data
+        {
+            get { return data; }
+            set { data = value; }
+        }
 
         public I_DensiteRecouvrement(List<int> mesUsers, List<OrdreGroupe> ordres, bool pa, bool s, List<Groupe> groupes)
             : base(mesUsers, ordres, pa, s, groupes)
         {
-            _monDico = new Dictionary<Image, double[,]>();
+            Data = new Dictionary<Image, double[,]>();
         }
 
         // Permet de calculer la densité de recouvrement d'une image
@@ -46,7 +52,7 @@ namespace ShaBiDi.Logic
                 foreach (PointAttention pa in o.PointsAttentions)
                 {
                     // Si les coordonnées sont differentes alors on effectue le traitement sur tout le laps de temps concerné
-                    if ((enCours.CoordPA.A != pa.CoordPA.A) || (enCours.CoordPA.A != pa.CoordPA.A))
+                    if ((enCours.CoordPA.A != pa.CoordPA.A) || (enCours.CoordPA.B != pa.CoordPA.B))
                     {
                         temps = pa.TempsEcoule - enCours.TempsEcoule;
                         enCours.contributionDensite(ref pixelsImage, temps);
@@ -186,14 +192,14 @@ namespace ShaBiDi.Logic
                 // Calcul de la moyenne de tous les temps de chaque pixel de l'image
                 densiteParImage.Add(i, calculeMoyenne(dictionaryDensite[i]));
             }
-            _monDico = densiteParImage;
+            Data = densiteParImage;
 
             return densiteParImage;
 
         }
 
         // Méthode de comparaison
-        public I_DensiteRecouvrement compareDensite(TypeComp type, I_DensiteRecouvrement i)
+        public Dictionary<Image, double[,]> compareDensite(TypeComp type, I_DensiteRecouvrement i)
         {
             // Création du nouvel indicateur de comparaison
             I_DensiteRecouvrement indicCompare = new I_DensiteRecouvrement(fusionUsers(this, i), fusionOrdres(this, i), fusionPa(this, i), fusionS(this, i), fusionGroupes(this, i));
@@ -202,30 +208,30 @@ namespace ShaBiDi.Logic
             Dictionary<Image, List<double[,]>> dico = new Dictionary<Image, List<double[,]>>();
 
             // On remplit le dictionnaire avec les données du premier indicateur
-            foreach (Image img in this._monDico.Keys)
+            foreach (Image img in this.Data.Keys)
             {
                 if (dico.ContainsKey(img))
                 {
-                    dico[img].Add(this._monDico[img]);
+                    dico[img].Add(this.Data[img]);
                 }
                 else
                 {
                     dico.Add(img, new List<double[,]>());
-                    dico[img].Add(this._monDico[img]);
+                    dico[img].Add(this.Data[img]);
 
                 }
             }
             // On remplit le dictionnaire avec les données du second indicateur
-            foreach (Image img in i._monDico.Keys)
+            foreach (Image img in i.Data.Keys)
             {
                 if (dico.ContainsKey(img))
                 {
-                    dico[img].Add(i._monDico[img]);
+                    dico[img].Add(i.Data[img]);
                 }
                 else
                 {
                     dico.Add(img, new List<double[,]>());
-                    dico[img].Add(i._monDico[img]);
+                    dico[img].Add(i.Data[img]);
 
                 }
             }
@@ -233,17 +239,17 @@ namespace ShaBiDi.Logic
             // Ne pas oublier de remplir le dico de l'indicateur à chaque étape
             if (type == TypeComp.add)
             {
-                indicCompare._monDico = additionner(dico);
+                indicCompare.Data = additionner(dico);
             }
             else if (type == TypeComp.sous)
             {
-                indicCompare._monDico = soustraire(dico);
+                indicCompare.Data = soustraire(dico);
             }
             else
             {
-                indicCompare._monDico = moyenner(dico);
+                indicCompare.Data = moyenner(dico);
             }
-            return indicCompare;
+            return indicCompare.Data;
         }
 
        // travailler, il faudraf faire des foreach pour balayer toutes les valeurs du travaux

@@ -64,6 +64,8 @@ namespace ShaBiDi.Views
 
         private void btnCompare_Click(object sender, RoutedEventArgs e)
         {
+
+            // TODO: Corriger bug d'affichage
             compareIndic.Show();
         }
 

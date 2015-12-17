@@ -94,8 +94,11 @@
     <Compile Include="Views\CompareIndicWindow.xaml.cs">
       <DependentUpon>CompareIndicWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CompTauxRecouvrement.xaml.cs">
-      <DependentUpon>CompTauxRecouvrement.xaml</DependentUpon>
+    <Compile Include="Views\CompDensiteRecouvrementUC.xaml.cs">
+      <DependentUpon>CompDensiteRecouvrementUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CompTauxRecouvrementUC.xaml.cs">
+      <DependentUpon>CompTauxRecouvrementUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateIndicWindow.xaml.cs">
       <DependentUpon>CreateIndicWindow.xaml</DependentUpon>
@@ -124,7 +127,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CompTauxRecouvrement.xaml">
+    <Page Include="Views\CompDensiteRecouvrementUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CompTauxRecouvrementUC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
