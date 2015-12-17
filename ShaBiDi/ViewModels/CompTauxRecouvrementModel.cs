@@ -125,7 +125,7 @@ namespace ShaBiDi.ViewModels
            
             string res = "CompTauxRecouvrement_";
             res += IndicSelect[0].ViewModel.ToString() + "_";
-            res += IndicSelect[1].ViewModel.ToString() + "_";
+            res += IndicSelect[1].ViewModel.ToString();
    
             return res;
         }
