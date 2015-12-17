@@ -66,12 +66,12 @@ namespace ShaBiDi.Logic
 
         // Méthode qui permet de déterminer les pixels qui sont dans une ellipse de centre le point d'attention de référence
         // L'ellipse étant la zone d'attention
-        public void pixelsEllipse(double screenDistance, double logicalHeight, double logicalWidth, double physicalHeight, double physicalWidth, double userZ)
+        public void pixelsEllipse(double screenDistance, double logicalHeight, double logicalWidth, double physicalHeight, double physicalWidth, double userY)
         {
             // Le PA avec lequel on fait le calcul devient el PA de référence :
             PAref = this._coordPA;
             //Largeur (première coordonnée) et hauteur (seconde coordonnée) de l'ellipse (à calculer dans le constructeur)
-            dimEllipse = trouveEllipse(screenDistance, logicalHeight, logicalWidth, physicalHeight, physicalWidth, userZ);
+            dimEllipse = trouveEllipse(screenDistance, logicalHeight, logicalWidth, physicalHeight, physicalWidth, userY);
 
             // Recherche de la liste des pixels associés
             List<Vecteur2> laListe = new List<Vecteur2>();
