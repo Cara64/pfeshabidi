@@ -14,18 +14,13 @@ using System.Windows.Shapes;
 namespace ShaBiDi
 {
     /// <summary>
-    /// Logique d'interaction pour TabNameWindow.xaml
+    /// Logique d'interaction pour ResComparaison.xaml
     /// </summary>
-    public partial class TabNameWindow : Window
+    public partial class ResultWindow : Window
     {
-        public TabNameWindow()
+        public ResultWindow()
         {
             InitializeComponent();
-        }
-
-        private void btnOK_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
         }
     }
 }
