@@ -1,4 +1,4 @@
-﻿<UserControl x:Name="CompTauxRecouvrementUC" x:Class="ShaBiDi.Views.CompTauxRecouvrement"
+﻿<UserControl x:Name="CompTauxRecouvrement" x:Class="ShaBiDi.Views.CompTauxRecouvrementUC"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

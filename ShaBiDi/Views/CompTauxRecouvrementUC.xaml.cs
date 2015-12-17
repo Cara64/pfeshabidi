@@ -18,7 +18,7 @@ namespace ShaBiDi.Views
     /// <summary>
     /// Logique d'interaction pour TauxRecouvrement.xaml
     /// </summary>
-    public partial class CompTauxRecouvrement : UserControl
+    public partial class CompTauxRecouvrementUC : UserControl
     {
 
         private CompTauxRecouvrementModel viewModel;
@@ -30,7 +30,7 @@ namespace ShaBiDi.Views
         }
 
 
-        public CompTauxRecouvrement()
+        public CompTauxRecouvrementUC()
         {
             ViewModel = new CompTauxRecouvrementModel();
             DataContext = ViewModel;

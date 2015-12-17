@@ -52,13 +52,30 @@ namespace ShaBiDi.Views
             
             IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec1));
             IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec2));
-            Console.WriteLine(cbSelectModeComp.SelectedItem);
-            TypeComparaison = convert(cbSelectModeComp.SelectedValue.ToString());
 
-            CompTauxRecouvrement comp = new CompTauxRecouvrement();
-            ResultWindow res = new ResultWindow();
-            res.Content = comp;
-            res.Show();
+            if (IndicateursSelectionnes[0].GetType().Equals(IndicateursSelectionnes[1].GetType()))
+            {
+                TypeComparaison = convert(cbSelectModeComp.SelectedValue.ToString());
+                
+                if (IndicateursSelectionnes[0].GetType().Equals(typeof(TauxRecouvrementUC)))
+                {
+                    CompTauxRecouvrementUC comp = new CompTauxRecouvrementUC();
+                    ResultWindow res = new ResultWindow();
+                    res.Content = comp;
+                }
+
+                if (IndicateursSelectionnes[0].GetType().Equals(typeof(DensiteRecouvrementUC)))
+                {
+                    // 
+                }
+
+            } 
+            else
+            {
+                MessageBox.Show("Vous devez comparer deux indicateurs de même type", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+   
+
         }
 
         private TypeComp convert(string s)
