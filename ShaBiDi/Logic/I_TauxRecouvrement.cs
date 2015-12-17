@@ -7,12 +7,18 @@ namespace ShaBiDi.Logic
 {
     public class I_TauxRecouvrement : Indicateur
     {
-        public Dictionary<Image, double> _monDico;
+        private Dictionary<Image, double> data;
+
+        public Dictionary<Image, double> Data
+        {
+            get { return data; }
+            set { data = value; }
+        }
 
         public I_TauxRecouvrement(List<int> mesUsers, List<OrdreGroupe> ordres, bool pa, bool s, List<Groupe> groupes)
             : base(mesUsers, ordres, pa, s, groupes)
         {
-            _monDico = new Dictionary<Image, double>();
+            Data = new Dictionary<Image, double>();
         }
 
         // Permet de calculer le taux de recouvrement d'une image
@@ -21,32 +27,49 @@ namespace ShaBiDi.Logic
         {
 
             // On fait le choix d'une grille qui fait la taille de l'image
-            bool[,] pixelsImage = new bool[Image.dimensionsImageX, Image.dimensionsImageY];
+            bool[,] pixelsImage = new bool[Image.dimensionsImageLignes, Image.dimensionsImageCol];
 
-            for (int j = 0; j < Image.dimensionsImageX; j++)
+            for (int j = 0; j < Image.dimensionsImageLignes; j++)
             {
-                for (int k = 0; k < Image.dimensionsImageY; k++)
+                for (int k = 0; k < Image.dimensionsImageCol; k++)
                 {
                     pixelsImage[j, k] = false;
                 }
             }
 
+            PointAttention enCours;
+
             // Pour chaque observations de l'mage
             foreach (Observation o in listeObs)
             {
                 // et pour chaque point d'attention de l'observation
+                // On stocke le premier point d'attention pour pouvoir comparer sa valeur
+                enCours = o.PointsAttentions[0];
 
                 foreach (PointAttention pa in o.PointsAttentions)
                 {
-                    pa.contributionTaux1(ref pixelsImage);
+                    // Si les coordonnées sont diféfrentes alors on effectue le traitement sur tout le laps de temps concerné
+                    if ((enCours.CoordPA.A != pa.CoordPA.A) || (enCours.CoordPA.A != pa.CoordPA.A))
+                    {
+                        enCours.contributionTaux2(ref pixelsImage);
+
+                        // On change le PA en cours
+                        enCours = pa;
+                    }
+                    // Si on est face au dernier élément de la liste, il faut faire le traitement quand même
+                    if (pa == o.PointsAttentions[o.PointsAttentions.Count - 1])
+                    {
+                        enCours.contributionTaux1(ref pixelsImage);
+                    }
+                    
                 }
             }
 
             // On trouve le nombre de pixels "true"
             int somme = 0;
-            for (int j = 0; j < Image.dimensionsImageX; j++)
+            for (int j = 0; j < Image.dimensionsImageLignes; j++)
             {
-                for (int k = 0; k < Image.dimensionsImageY; k++)
+                for (int k = 0; k < Image.dimensionsImageCol; k++)
                 {
                     if (pixelsImage[j, k])
                     {
@@ -157,45 +180,45 @@ namespace ShaBiDi.Logic
                 // Calcul de la moyenne de tous les taux de l'image
                 tauxParImage.Add(i, calculeMoyenne(dictionaryTaux[i]));
             }
-            _monDico = tauxParImage;
+            Data = tauxParImage;
             return tauxParImage;
 
         }
 
         // Méthode de comparaison
-        public I_TauxRecouvrement compareTaux(TypeComp type, I_TauxRecouvrement i1, I_TauxRecouvrement i2)
+        public Dictionary<Image, double> compareTaux(TypeComp type, I_TauxRecouvrement i)
         {
             // Création du nouvel indicateur de comparaison
-            I_TauxRecouvrement indicCompare = new I_TauxRecouvrement(fusionUsers(i1, i2), fusionOrdres(i1, i2), fusionPa(i1, i2), fusionS(i1, i2), fusionGroupes(i1, i2));
+            I_TauxRecouvrement indicCompare = new I_TauxRecouvrement(fusionUsers(this, i), fusionOrdres(this, i), fusionPa(this, i), fusionS(this, i), fusionGroupes(this, i));
 
             // On cherche à comparer les deux dictionnaires
             Dictionary<Image, List<double>> dico = new Dictionary<Image,List<double>>();
 
             // On remplit le dictionnaire avec les données du premier indicateur
-            foreach (Image i in i1._monDico.Keys)
+            foreach (Image img in this.Data.Keys)
                 {
-                    if (dico.ContainsKey(i))
+                    if (dico.ContainsKey(img))
                     {
-                        dico[i].Add(i1._monDico[i]);
+                        dico[img].Add(this.Data[img]);
                     }
                     else
                     {
-                        dico.Add(i, new List<double>());
-                        dico[i].Add(i1._monDico[i]);
+                        dico.Add(img, new List<double>());
+                        dico[img].Add(this.Data[img]);
 
                     }
                 }
             // On remplit le dictionnaire avec les données du second indicateur
-            foreach (Image i in i2._monDico.Keys)
+            foreach (Image img in i.Data.Keys)
                 {
-                    if (dico.ContainsKey(i))
+                    if (dico.ContainsKey(img))
                     {
-                        dico[i].Add(i2._monDico[i]);
+                        dico[img].Add(i.Data[img]);
                     }
                     else
                     {
-                        dico.Add(i, new List<double>());
-                        dico[i].Add(i2._monDico[i]);
+                        dico.Add(img, new List<double>());
+                        dico[img].Add(i.Data[img]);
 
                     }
                 }
@@ -203,17 +226,17 @@ namespace ShaBiDi.Logic
             // Ne pas oublier de remplir le dico de l'indicateur à chaque étape
             if (type == TypeComp.add)
             {
-                indicCompare._monDico = additionner(dico);
+                indicCompare.Data = additionner(dico);
             }
             else if (type == TypeComp.sous)
             {
-                indicCompare._monDico = soustraire(dico);
+                indicCompare.Data = soustraire(dico);
             }
             else
             {
-                indicCompare._monDico = moyenner(dico);
+                indicCompare.Data = moyenner(dico);
             }
-            return indicCompare;
+            return indicCompare.Data ;
         }
 
         private Dictionary<Image, double> additionner(Dictionary<Image, List<double>> dico)
@@ -248,7 +271,7 @@ namespace ShaBiDi.Logic
                 // Il faut prévoir le cas où il n'y a qu'une composante
                 if (dico[i].Count == 2)
                 {
-                    dicoCompare.Add(i, dico[i][0] - dico[i][1]);
+                    dicoCompare.Add(i, Math.Abs( dico[i][0] - dico[i][1]));
                 }
                 else
                 {

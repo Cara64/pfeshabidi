@@ -9,13 +9,13 @@ using OxyPlot.Axes;
 using ShaBiDi.Views;
 using ShaBiDi.Logic;
 
-
 namespace ShaBiDi.ViewModels
 {
     public class CompTauxRecouvrementModel : Model
     {
        
         private List<Dictionary<Image, double>> data;
+        private List<TauxRecouvrement> indicSelect;
        
         public List<Dictionary<Image, double>> Data
         {
@@ -23,8 +23,18 @@ namespace ShaBiDi.ViewModels
             set { data = value;}
         }
 
+        public List<TauxRecouvrement> IndicSelect
+        {
+            get { return indicSelect; }
+            set { indicSelect = value; }
+        }
+
         public CompTauxRecouvrementModel() : base()
-        {}
+        {
+            IndicSelect = new List<TauxRecouvrement>();
+            foreach (System.Windows.Controls.UserControl uc in CompareIndicWindow.IndicateursSelectionnes)
+                IndicSelect.Add(uc as TauxRecouvrement);
+        }
             
         protected override void SetUpModel()
         {
@@ -88,28 +98,35 @@ namespace ShaBiDi.ViewModels
         protected override void GetData()
         {
             Data = new List<Dictionary<Image, double>>();
-            TauxRecouvrement indic1 = CompareIndicWindow.IndicateursSelectionnes[0] as TauxRecouvrement;
-            TauxRecouvrement indic2 = CompareIndicWindow.IndicateursSelectionnes[1] as TauxRecouvrement;
+            
+            // Récupération des données des deux indicateurs
+           
 
-            Dictionary<Image, double> dataIndic1 = indic1.ViewModel.Data;
-            Dictionary<Image, double> dataIndic2 = indic2.ViewModel.Data;
+            TauxRecouvrementModel indic1Model = IndicSelect[0].ViewModel;
+            TauxRecouvrementModel indic2Model = IndicSelect[1].ViewModel;
+
+            Dictionary<Image, double> dataIndic1 = indic1Model.Data;
+            Dictionary<Image, double> dataIndic2 = indic2Model.Data;
+            
             Data.Add(dataIndic1);
             Data.Add(dataIndic2);
 
-            I_TauxRecouvrement indic3 = new I_TauxRecouvrement(CreateIndicWindow.Positions, CreateIndicWindow.Ordres, CreateIndicWindow.ModPA, CreateIndicWindow.ModS, CreateIndicWindow.Groupes);
-            indic3 = indic3.compareTaux(CompareIndicWindow.TypeComparaison, indic1.ViewModel.Indic, indic2.ViewModel.Indic);
+ 
+            I_TauxRecouvrement indic1 = new I_TauxRecouvrement(indic1Model.Positions, indic1Model.Ordres, indic1Model.ModPA, indic1Model.ModS, indic1Model.Groupes);
+            I_TauxRecouvrement indic2 = new I_TauxRecouvrement(indic2Model.Positions, indic2Model.Ordres, indic2Model.ModPA, indic2Model.ModS, indic2Model.Groupes);
+           
+            Dictionary<Image, double> dataRes = indic1.compareTaux(CompareIndicWindow.TypeComparaison, indic2);
             
-            Dictionary<Image, double> dataRes = indic3._monDico;
             Data.Add(dataRes);
         }
 
         public override string ToString()
         {
-            // TODO: Ajouter les titres des indicateurs comparés
+           
             string res = "CompTauxRecouvrement_";
-            //res+=NomsIndicateurs[0] + "_";
-            //res+=NomsIndicateurs[1];
-
+            res += IndicSelect[0].ViewModel.ToString() + "_";
+            res += IndicSelect[1].ViewModel.ToString() + "_";
+   
             return res;
         }
     }
