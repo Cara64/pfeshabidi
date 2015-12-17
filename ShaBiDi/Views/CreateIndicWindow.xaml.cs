@@ -60,12 +60,32 @@ namespace ShaBiDi.Views
             {
                 case "Taux de recouvrement":
 
-                    TauxRecouvrement indic = new TauxRecouvrement();
-                    MainWindow.Indicateurs.Add(indic);
+                    TauxRecouvrementUC tr = new TauxRecouvrementUC();
+                    MainWindow.Indicateurs.Add(tr);
 
-                    res.Title = indic.ViewModel.ToString();
-                    res.Content = indic;
+                    res.Title = tr.ViewModel.ToString();
+                    res.Content = tr;
                     break;
+
+                case "Densité de recouvrement (transparence)":
+                    DensiteRecouvrementUC drTransparent = new DensiteRecouvrementUC("gris");
+                    MainWindow.Indicateurs.Add(drTransparent);
+
+                    res.Title = drTransparent.ToString();
+                    res.Content = drTransparent;
+                    break;
+
+                case "Densité de recouvrement (couleur)":
+                    DensiteRecouvrementUC drCouleur = new DensiteRecouvrementUC("couleur");
+                    MainWindow.Indicateurs.Add(drCouleur);
+
+                    res.Title = drCouleur.ToString();
+                    res.Content = drCouleur;
+
+                    break;
+
+
+
                 default: break;
             }
 

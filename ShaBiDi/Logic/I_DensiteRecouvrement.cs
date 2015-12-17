@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ShaBiDi.Logic
 {
-    class I_DensiteRecouvrement : Indicateur
+    public class I_DensiteRecouvrement : Indicateur
     {
         Dictionary<Image, double[,]> _monDico;
 

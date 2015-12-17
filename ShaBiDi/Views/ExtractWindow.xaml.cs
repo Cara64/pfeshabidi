@@ -32,9 +32,9 @@ namespace ShaBiDi.Views
             foreach (UserControl uc in MainWindow.Indicateurs)
             {
                 Indicateurs.Add(uc);
-                if (uc is TauxRecouvrement)
+                if (uc is TauxRecouvrementUC)
                 {
-                    cbSelectIndicateur.Items.Add((uc as TauxRecouvrement).ToString());
+                    cbSelectIndicateur.Items.Add((uc as TauxRecouvrementUC).ToString());
                 }
             }      
         }
@@ -46,9 +46,9 @@ namespace ShaBiDi.Views
 
             IndicateurSelectionne = Indicateurs.ElementAt(indexSelect);
 
-            if (IndicateurSelectionne is TauxRecouvrement)
+            if (IndicateurSelectionne is TauxRecouvrementUC)
             {
-                TauxRecouvrement tr = IndicateurSelectionne as TauxRecouvrement;
+                TauxRecouvrementUC tr = IndicateurSelectionne as TauxRecouvrementUC;
                 Dictionary<ShaBiDi.Logic.Image,double> data = tr.ViewModel.Data;
                 
                 var mesures = data.Keys.OrderBy(o => o.Numero).ToList();

@@ -100,6 +100,9 @@
     <Compile Include="Views\CreateIndicWindow.xaml.cs">
       <DependentUpon>CreateIndicWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DensiteRecouvrementUC.xaml.cs">
+      <DependentUpon>DensiteRecouvrementUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExtractWindow.xaml.cs">
       <DependentUpon>ExtractWindow.xaml</DependentUpon>
     </Compile>
@@ -110,8 +113,8 @@
       <DependentUpon>ResultWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logic\Sujet.cs" />
-    <Compile Include="Views\TauxRecouvrement.xaml.cs">
-      <DependentUpon>TauxRecouvrement.xaml</DependentUpon>
+    <Compile Include="Views\TauxRecouvrementUC.xaml.cs">
+      <DependentUpon>TauxRecouvrementUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logic\Vecteur2.cs" />
     <Compile Include="ViewModels\CompTauxRecouvrementModel.cs" />
@@ -126,6 +129,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CreateIndicWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DensiteRecouvrementUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,7 +166,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TauxRecouvrement.xaml">
+    <Page Include="Views\TauxRecouvrementUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

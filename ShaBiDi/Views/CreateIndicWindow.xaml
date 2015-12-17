@@ -7,6 +7,8 @@
         </Label>
         <ComboBox Name="cbSelectIndic" Margin="10,0,10,0">
             <ComboBoxItem IsSelected="True">Taux de recouvrement</ComboBoxItem>
+            <ComboBoxItem>Densité de recouvrement (transparence)</ComboBoxItem>
+            <ComboBoxItem>Densité de recouvrement (couleur)</ComboBoxItem>
         </ComboBox>
         <StackPanel Orientation="Horizontal">
             <Label Content="User :"></Label>
