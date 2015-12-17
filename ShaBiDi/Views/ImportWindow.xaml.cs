@@ -22,11 +22,18 @@ namespace ShaBiDi.Views
     /// </summary>
     public partial class ImportWindow : Window
     {
-        public static List<String> ImportedFiles;     // fichiers importés
-        public static List<ShaBiDi.Logic.Image> ImagesExp;          // images de l'expérience
-        public static List<Groupe> GroupesExp;        // totalité des groupes ayant passé l'expérience
 
-        private string selectedFiles;                 // fichiers sélectionnés
+        private const double SCREEN_DISTANCE = 3.833;
+        private const double LOGICAL_HEIGHT = 1050;
+        private const double LOGICAL_WIDTH = 1680;
+        private const double PHYSICAL_HEIGHT = 1.61;
+        private const double PHYSICAL_WIDTH = 2.63;
+        
+        public static List<String> ImportedFiles;                   // fichiers importés
+        public static List<ShaBiDi.Logic.Image> ImagesExp;          // images de l'expérience
+        public static List<Groupe> GroupesExp;                      // totalité des groupes ayant passé l'expérience
+
+        private string selectedFiles;                               // fichiers sélectionnés
         public string SelectedFiles
         {
             get { return selectedFiles; }
@@ -83,7 +90,7 @@ namespace ShaBiDi.Views
         // On remplit les classes à partir des fichiers de données
         private void remplirClasses(object sender)
         {
-            Console.WriteLine("Initialisation des variables");
+            bool refFaite = false;
             double tpsEcoule = 0.0;             // colonne 00 de l'entête
             
             Groupe groupe;                      // colonne 01 de l'entête
@@ -102,8 +109,15 @@ namespace ShaBiDi.Views
             GroupesExp.Clear();
             ImagesExp.Clear();
 
-            for(int i = 1; i<=30;i++) ImagesExp.Add(new ShaBiDi.Logic.Image(i));
-            for (int i = 0; i < users.Length; i++) users[i] = new Sujet(i + 1);
+            string[] img = System.IO.Directory.GetFiles(@"..\..\Resources\ImagesExp");
+
+            for (int i = 1; i <= img.Length; i++)
+            {
+                ImagesExp.Add(new ShaBiDi.Logic.Image(i));
+                ImagesExp[i - 1].Acces = img[i - 1];
+            }
+            
+                for (int i = 0; i < users.Length; i++) users[i] = new Sujet(i + 1);
            
             foreach (string file in ImportedFiles)
             {
@@ -125,10 +139,7 @@ namespace ShaBiDi.Views
                 {
                     string[] ligneDecoupee = lignes[i].Split(';');
 
-                    for (int j = 0; j < ligneDecoupee.Length; j++)
-                    {
-                        donneesGroupe[i, j] = ligneDecoupee[j];
-                    }
+                    for (int j = 0; j < ligneDecoupee.Length; j++) donneesGroupe[i, j] = ligneDecoupee[j]; 
                 }
 
                 int l = 0;
@@ -152,6 +163,14 @@ namespace ShaBiDi.Views
                         {
                             x[i] = double.Parse(donneesGroupe[l, colEntetes[0]]);
                             y[i] = double.Parse(donneesGroupe[l, colEntetes[1]]);
+                            
+                            if (!refFaite)
+                            {
+                                PointAttention PA1 = new PointAttention(new Vecteur2(x[i], y[i]), tpsEcoule);
+                                PA1.pixelsEllipse(SCREEN_DISTANCE, LOGICAL_HEIGHT, LOGICAL_WIDTH, PHYSICAL_HEIGHT, PHYSICAL_WIDTH, y[i] = double.Parse(donneesGroupe[l, 6]));
+                                refFaite = true;
+                            }
+
                             for (int j = 0; j < colEntetes.Length; j++) colEntetes[j] += 8;
                             users[i].AddPA(image, modalite, x[i], y[i], tpsEcoule);    
                         }
@@ -166,9 +185,7 @@ namespace ShaBiDi.Views
                 foreach (Sujet user in users) groupe.AddSujet(user);
 
                 GroupesExp.Add(groupe);
-                
-                counterFiles++;
-                Console.WriteLine("Counter files = " + counterFiles);
+      
                 (sender as BackgroundWorker).ReportProgress(counterFiles);
                 
             } // Fin foreach, changement de fichier (donc de groupe)
