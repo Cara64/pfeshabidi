@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShaBiDi.Logic
+namespace TraitementImageWPF
 {
     public class Observation
     {
@@ -17,9 +17,9 @@ namespace ShaBiDi.Logic
             PointsAttentions = new List<PointAttention>();
         }
 
-        public void AddPA(double a, double b, double z, double tps, double tpsP, double tpsS)
+        public void AddPA(double a, double b, double tps)
         {
-            PointsAttentions.Add(new PointAttention(new Vecteur2(a, b), z, tps, tpsP, tpsS));
+            PointsAttentions.Add(new PointAttention(new Vecteur2(a, b),tps));
         }
 
     }

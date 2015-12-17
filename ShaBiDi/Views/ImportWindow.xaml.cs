@@ -85,8 +85,6 @@ namespace ShaBiDi.Views
         {
             Console.WriteLine("Initialisation des variables");
             double tpsEcoule = 0.0;             // colonne 00 de l'entête
-            double tpsPrec = 0.0;
-            double tpsSuiv = 0.0 ;
             
             Groupe groupe;                      // colonne 01 de l'entête
             Modalite modalite;                  // colonne 02 de l'entête
@@ -94,7 +92,6 @@ namespace ShaBiDi.Views
             int image = 0;                      // colonne 03 de l'entête  
             double[] x = new double[3];         // colonnes 10, 18 et 26 de l'entête
             double[] y = new double[3];         // colonnes 11, 19 et 27 de l'entête
-            double[] z = new double[3];         // colonnes 6, 14 et 22 de l'entête
 
             Sujet[] users = new Sujet[3];
 
@@ -148,18 +145,15 @@ namespace ShaBiDi.Views
                     while ((l < lignes.Length) && (int.Parse(donneesGroupe[l, 3]) == image))
                     {
                         tpsEcoule = double.Parse(donneesGroupe[l, 0]);
-                        tpsPrec = (l != 0) ? double.Parse(donneesGroupe[l - 1, 0]) : 0;
-                        tpsSuiv = (l != lignes.Length - 1) ? double.Parse(donneesGroupe[l + 1, 0]) : double.Parse(donneesGroupe[l, 0]);
-
+                       
                         image = int.Parse(donneesGroupe[l, 3]);
-                        int[] colEntetes = { 10, 11, 6 };
+                        int[] colEntetes = { 10, 11 };
                         for (int i = 0; i < x.Length; i++)
                         {
                             x[i] = double.Parse(donneesGroupe[l, colEntetes[0]]);
                             y[i] = double.Parse(donneesGroupe[l, colEntetes[1]]);
-                            z[i] = double.Parse(donneesGroupe[l, colEntetes[2]]);
                             for (int j = 0; j < colEntetes.Length; j++) colEntetes[j] += 8;
-                            users[i].AddPA(image, modalite, x[i], y[i], z[i], tpsEcoule, tpsPrec, tpsSuiv);    
+                            users[i].AddPA(image, modalite, x[i], y[i], tpsEcoule);    
                         }
                         l++;
                     } // Fin boucle while, changement d'image

@@ -3,15 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShaBiDi.Logic
+namespace TraitementImageWPF
 {
     public class Image
     {
         // A voir s'il ne faut pas permettre de modifier les dimansions de l'image
-        public static int dimensionsImageX = 1680;
-        public static int dimensionsImageY = 900;
+        // C'est ici qu'il faut intervenir si les dimensions changent
+        public static int dimensionsImageCol = 1680;
+        public static int dimensionsImageLignes = 900;
+
+        public static int dimensionsBandeauCol = 1680;
+        public static int dimensionsBandeauLignes = 150;
 
         public int Numero { get; private set;  }
+
+        private string acces;
+        public string Acces
+        {
+            get { return acces; }
+            set { acces = value; }
+        }
+
+        // ex pour remplir l'accès : .jpg
 
         public Image(int numero)
         {

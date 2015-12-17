@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShaBiDi.Logic
+namespace TraitementImageWPF
 {
     public enum Modalite { PA, S };
     public class Sujet
@@ -36,7 +36,7 @@ namespace ShaBiDi.Logic
         }
 
         //i est le numéro d el'image concernée
-        public void AddPA(int i, Modalite mod, double x, double y, double z, double tps, double tpsP, double tpsS)
+        public void AddPA(int i, Modalite mod, double x, double y, double tps)
         {
             // Il faut trouver le rang de l'observation concernée par l'image donnée
             int indice = 0;
@@ -53,7 +53,7 @@ namespace ShaBiDi.Logic
                     else { }
                 }
 
-                ObservationsPA[indice].AddPA(x, y, z, tps, tpsP, tpsS);
+                ObservationsPA[indice].AddPA(x, y, tps);
             }
             // Deuxième cas, l'observation est en modalité S
             else
@@ -67,7 +67,7 @@ namespace ShaBiDi.Logic
                     else { }
                 }
 
-                ObservationsS[indice].AddPA(x, y, z, tps, tpsP, tpsS);
+                ObservationsS[indice].AddPA(x, y, tps);
             }
         }
     }
