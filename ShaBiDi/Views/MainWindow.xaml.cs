@@ -22,6 +22,7 @@ namespace ShaBiDi.Views
     {
 
         public static List<UserControl> Indicateurs;
+        public static List<UserControl> Comparateurs;
 
         public ImportWindow import;
         public CreateIndicWindow createIndic;

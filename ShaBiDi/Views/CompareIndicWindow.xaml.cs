@@ -74,6 +74,7 @@ namespace ShaBiDi.Views
                 if (IndicateursSelectionnes[0].GetType().Equals(typeof(TauxRecouvrementUC)))
                 {
                     CompTauxRecouvrementUC compTR = new CompTauxRecouvrementUC();
+                    MainWindow.Comparateurs.Add(compTR);
                     res.Content = compTR;
                 }
 
@@ -84,6 +85,7 @@ namespace ShaBiDi.Views
                     if (indDR1.Mode.Equals(indDR2.Mode))
                     {
                         CompDensiteRecouvrementUC compDR = new CompDensiteRecouvrementUC(indDR1.Mode);
+                        MainWindow.Comparateurs.Add(compDR);
                         res.Content = compDR;
                     }
                     else
