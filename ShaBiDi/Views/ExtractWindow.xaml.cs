@@ -54,7 +54,9 @@ namespace ShaBiDi.Views
                 var mesures = data.Keys.OrderBy(o => o.Numero).ToList();
                 var csv = new StringBuilder();
 
-                string filePath = System.IO.Directory.GetCurrentDirectory() + "/testoutput.csv";
+                string currentDir = tbSelectedPath.Text;
+                string title = tr.ViewModel.ToString();
+                string filePath = currentDir + "/" + title + "_OUTPUT.csv";
                 string delimiter = ";";
 
                 csv.AppendLine(string.Join(delimiter, "Image", "Taux de recouvrement"));

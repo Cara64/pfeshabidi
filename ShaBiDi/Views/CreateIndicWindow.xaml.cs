@@ -41,7 +41,7 @@ namespace ShaBiDi.Views
             Groupes = ImportWindow.GroupesExp;
             lbGroup.ItemsSource = Groupes;
             lbGroup.SelectAll();
-           
+
         }
 
         private void btnCreateIndic_Click(object sender, RoutedEventArgs e)
