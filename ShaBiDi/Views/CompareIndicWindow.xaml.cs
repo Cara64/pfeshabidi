@@ -37,10 +37,10 @@ namespace ShaBiDi.Views
             foreach (UserControl uc in MainWindow.Indicateurs)
             {
                 Indicateurs.Add(uc);
-                if (uc is TauxRecouvrement)
+                if (uc is TauxRecouvrementUC)
                 {
-                    cbSelectIndic1.Items.Add((uc as TauxRecouvrement).ToString());
-                    cbSelectIndic2.Items.Add((uc as TauxRecouvrement).ToString());
+                    cbSelectIndic1.Items.Add((uc as TauxRecouvrementUC).ToString());
+                    cbSelectIndic2.Items.Add((uc as TauxRecouvrementUC).ToString());
                 }
             }
         }

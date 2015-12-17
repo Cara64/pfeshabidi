@@ -15,7 +15,7 @@ namespace ShaBiDi.ViewModels
     {
        
         private List<Dictionary<Image, double>> data;
-        private List<TauxRecouvrement> indicSelect;
+        private List<TauxRecouvrementUC> indicSelect;
        
         public List<Dictionary<Image, double>> Data
         {
@@ -23,7 +23,7 @@ namespace ShaBiDi.ViewModels
             set { data = value;}
         }
 
-        public List<TauxRecouvrement> IndicSelect
+        public List<TauxRecouvrementUC> IndicSelect
         {
             get { return indicSelect; }
             set { indicSelect = value; }
@@ -31,9 +31,9 @@ namespace ShaBiDi.ViewModels
 
         public CompTauxRecouvrementModel() : base()
         {
-            IndicSelect = new List<TauxRecouvrement>();
+            IndicSelect = new List<TauxRecouvrementUC>();
             foreach (System.Windows.Controls.UserControl uc in CompareIndicWindow.IndicateursSelectionnes)
-                IndicSelect.Add(uc as TauxRecouvrement);
+                IndicSelect.Add(uc as TauxRecouvrementUC);
         }
             
         protected override void SetUpModel()
@@ -70,13 +70,13 @@ namespace ShaBiDi.ViewModels
         protected override void LoadData()
         {
             int i = 0;
-            TauxRecouvrement indic = new TauxRecouvrement();
+            TauxRecouvrementUC indic = new TauxRecouvrementUC();
             MarkerType[] markers = { MarkerType.Circle, MarkerType.Cross, MarkerType.Square };
             foreach(Dictionary<Image, double> dico in Data)
             {
                 var mesures = dico.Keys.OrderBy(o=>o.Numero).ToList();
                 
-                if (i != 2) indic = CompareIndicWindow.IndicateursSelectionnes[i] as TauxRecouvrement;
+                if (i != 2) indic = CompareIndicWindow.IndicateursSelectionnes[i] as TauxRecouvrementUC;
                 
                 var lineSerie = new LineSeries
                 {
