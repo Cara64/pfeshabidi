@@ -1,4 +1,4 @@
-﻿<Window x:Class="ShaBiDi.CreateIndicWindow"
+﻿<Window x:Class="ShaBiDi.Views.CreateIndicWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Création d'indicateur" Height="372" Width="400">

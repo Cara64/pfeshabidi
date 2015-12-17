@@ -15,6 +15,21 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <PublishUrl>publier\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -76,48 +91,53 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CompareIndicWindow.xaml.cs">
+    <Compile Include="Views\CompareIndicWindow.xaml.cs">
       <DependentUpon>CompareIndicWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CompTauxRecouvrement.xaml.cs">
+    <Compile Include="Views\CompTauxRecouvrement.xaml.cs">
       <DependentUpon>CompTauxRecouvrement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateIndicWindow.xaml.cs">
+    <Compile Include="Views\CreateIndicWindow.xaml.cs">
       <DependentUpon>CreateIndicWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="I_DensiteRecouvrement.cs" />
-    <Compile Include="I_TauxRecouvrement.cs" />
-    <Compile Include="PointAttention.cs" />
-    <Compile Include="ResComparaison.xaml.cs">
-      <DependentUpon>ResComparaison.xaml</DependentUpon>
+    <Compile Include="Views\ExtractWindow.xaml.cs">
+      <DependentUpon>ExtractWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sujet.cs" />
-    <Compile Include="TabNameWindow.xaml.cs">
-      <DependentUpon>TabNameWindow.xaml</DependentUpon>
+    <Compile Include="Logic\I_DensiteRecouvrement.cs" />
+    <Compile Include="Logic\I_TauxRecouvrement.cs" />
+    <Compile Include="Logic\PointAttention.cs" />
+    <Compile Include="Views\ResultWindow.xaml.cs">
+      <DependentUpon>ResultWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TauxRecouvrement.xaml.cs">
+    <Compile Include="Logic\Sujet.cs" />
+    <Compile Include="Views\TauxRecouvrement.xaml.cs">
       <DependentUpon>TauxRecouvrement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vecteur2.cs" />
+    <Compile Include="Logic\Vecteur2.cs" />
     <Compile Include="ViewModels\CompTauxRecouvrementModel.cs" />
+    <Compile Include="ViewModels\Model.cs" />
     <Compile Include="ViewModels\TauxRecouvrementModel.cs" />
-    <Page Include="CompareIndicWindow.xaml">
+    <Page Include="Views\CompareIndicWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CompTauxRecouvrement.xaml">
+    <Page Include="Views\CompTauxRecouvrement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateIndicWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CreateIndicWindow.xaml">
+    <Page Include="Views\ExtractWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ImportWindow.xaml">
+    <Page Include="Views\ImportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -125,31 +145,27 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Groupe.cs" />
-    <Compile Include="Image.cs" />
-    <Compile Include="ImportWindow.xaml.cs">
+    <Compile Include="Logic\Groupe.cs" />
+    <Compile Include="Logic\Image.cs" />
+    <Compile Include="Views\ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Indicateur.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Logic\Indicateur.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ResComparaison.xaml">
+    <Page Include="Views\ResultWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TabNameWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TauxRecouvrement.xaml">
+    <Page Include="Views\TauxRecouvrement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Observation.cs" />
+    <Compile Include="Logic\Observation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -196,6 +212,29 @@
   <ItemGroup>
     <Resource Include="Resources\filter.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

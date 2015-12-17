@@ -1,0 +1,15 @@
+﻿<Window x:Class="ShaBiDi.Views.ExtractWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Extraction des données d'un indicateur" Height="250" Width="300" Loaded="Window_Loaded">
+    <StackPanel>
+        <Label Content="Sélectionner un indicateur : "></Label>
+        <ComboBox Name="cbSelectIndicateur" Margin="10,10,10,10"></ComboBox>
+        <Label Content="Sélectionner l'emplacement du fichier : "></Label>
+        <StackPanel Orientation="Horizontal">
+            <TextBox Name="tbSelectedPath" Margin="10,10,0,10" Width="180"></TextBox>
+            <Button Content="Sélectionner" Margin="10,10,10,10" x:Name="btnSelectFiles" Click="btnSelectFiles_Click"/>
+        </StackPanel>
+        <Button x:Name="btnExtract" Content="Extraire" Margin="10,10,10,10" Click="btnExtract_Click"/>
+    </StackPanel>
+</Window>

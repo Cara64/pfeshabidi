@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShaBiDi
+namespace ShaBiDi.Logic
 {
     public enum OrdreGroupe { PAS, SPA };
     public class Groupe

@@ -10,8 +10,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ShaBiDi.Logic;
 
-namespace ShaBiDi
+namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour CompareIndicWindow.xaml
@@ -33,19 +34,13 @@ namespace ShaBiDi
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("CountUC = " + MainWindow.Indicateurs.Count());
-            foreach (List<UserControl> listUC in MainWindow.Indicateurs)
+            foreach (UserControl uc in MainWindow.Indicateurs)
             {
-                Console.WriteLine(listUC.Count());
-                foreach (UserControl uc in listUC)
+                Indicateurs.Add(uc);
+                if (uc is TauxRecouvrement)
                 {
-                    Console.WriteLine(uc.GetType());
-                    Indicateurs.Add(uc);
-                    if (uc is TauxRecouvrement)
-                    {
-                        cbSelectIndic1.Items.Add((uc as TauxRecouvrement).ToString());
-                        cbSelectIndic2.Items.Add((uc as TauxRecouvrement).ToString());
-                    }
+                    cbSelectIndic1.Items.Add((uc as TauxRecouvrement).ToString());
+                    cbSelectIndic2.Items.Add((uc as TauxRecouvrement).ToString());
                 }
             }
         }
@@ -61,7 +56,7 @@ namespace ShaBiDi
             TypeComparaison = convert(cbSelectModeComp.SelectedValue.ToString());
 
             CompTauxRecouvrement comp = new CompTauxRecouvrement();
-            ResComparaison res = new ResComparaison();
+            ResultWindow res = new ResultWindow();
             res.Content = comp;
             res.Show();
         }

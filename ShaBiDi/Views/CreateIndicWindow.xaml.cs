@@ -10,8 +10,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ShaBiDi.Logic;
 
-namespace ShaBiDi
+namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour CreateIndic.xaml

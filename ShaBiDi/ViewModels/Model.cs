@@ -6,6 +6,7 @@ using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Series;
 using OxyPlot.Axes;
+using ShaBiDi.Logic;
 
 namespace ShaBiDi.ViewModels
 {

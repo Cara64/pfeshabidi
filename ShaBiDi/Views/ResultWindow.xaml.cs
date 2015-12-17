@@ -11,14 +11,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ShaBiDi
+namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour ResComparaison.xaml
     /// </summary>
-    public partial class ResComparaison : Window
+    public partial class ResultWindow : Window
     {
-        public ResComparaison()
+        public ResultWindow()
         {
             InitializeComponent();
         }

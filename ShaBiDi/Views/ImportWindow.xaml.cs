@@ -13,8 +13,9 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Threading;
 using System.ComponentModel;
+using ShaBiDi.Logic;
 
-namespace ShaBiDi
+namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour ImportWindow.xaml
@@ -22,7 +23,7 @@ namespace ShaBiDi
     public partial class ImportWindow : Window
     {
         public static List<String> ImportedFiles;     // fichiers importés
-        public static List<Image> ImagesExp;          // images de l'expérience
+        public static List<ShaBiDi.Logic.Image> ImagesExp;          // images de l'expérience
         public static List<Groupe> GroupesExp;        // totalité des groupes ayant passé l'expérience
 
         private string selectedFiles;                 // fichiers sélectionnés
@@ -38,7 +39,7 @@ namespace ShaBiDi
 
             ImportedFiles = new List<String>();
             GroupesExp = new List<Groupe>();
-            ImagesExp = new List<Image>();
+            ImagesExp = new List<ShaBiDi.Logic.Image>();
             SelectedFiles = "";
         }
 
@@ -104,7 +105,7 @@ namespace ShaBiDi
             GroupesExp.Clear();
             ImagesExp.Clear();
 
-            for(int i = 1; i<=30;i++) ImagesExp.Add(new Image(i));
+            for(int i = 1; i<=30;i++) ImagesExp.Add(new ShaBiDi.Logic.Image(i));
             for (int i = 0; i < users.Length; i++) users[i] = new Sujet(i + 1);
            
             foreach (string file in ImportedFiles)

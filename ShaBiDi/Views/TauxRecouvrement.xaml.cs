@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ShaBiDi.ViewModels;
 
-namespace ShaBiDi
+namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour TauxRecouvrement.xaml
