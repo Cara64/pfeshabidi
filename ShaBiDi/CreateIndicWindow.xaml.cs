@@ -49,66 +49,29 @@ namespace ShaBiDi
             ComboBoxItem typeItem = (ComboBoxItem) cbSelectIndic.SelectedItem;
             string typeIndicateur = typeItem.Content.ToString();
             creerIndicateur(typeIndicateur);
-            gererGrille();
         }
 
 
         private void creerIndicateur(string typeIndicateur)
         {
-            int indexTab = MainWindow.TabItems.IndexOf(MainWindow.SelectedTab);
+            ResultWindow res = new ResultWindow();
+
             switch (typeIndicateur)
             {
                 case "Taux de recouvrement":
-                    MainWindow.Indicateurs[indexTab].Add(new TauxRecouvrement());
+
+                    TauxRecouvrement indic = new TauxRecouvrement();
+                    MainWindow.Indicateurs.Add(indic);
+
+                    res.Title = indic.ViewModel.ToString();
+                    res.Content = indic;
                     break;
                 default: break;
             }
+
+            res.Show();
+                   
         }
-
-        private void gererGrille()
-        {
-            int indexTab = MainWindow.TabItems.IndexOf(MainWindow.SelectedTab); // index du tab courant
-            int ucLength = MainWindow.Indicateurs[indexTab].Count;  // nombre d'UC dans le tab courant
-
-            MainWindow.Grids[indexTab].Children.Clear();
-            Console.WriteLine("ucLength = " + ucLength);
-            
-            MainWindow.Grids[indexTab].ColumnDefinitions.Add(new ColumnDefinition());
-            MainWindow.Grids[indexTab].RowDefinitions.Add(new RowDefinition());
-            if (ucLength == 2) MainWindow.Grids[indexTab].ColumnDefinitions.Add(new ColumnDefinition());
-            if (ucLength == 3) MainWindow.Grids[indexTab].RowDefinitions.Add(new RowDefinition());
-
-            switch (ucLength)
-            {
-                case 4 :
-                    Grid.SetRow(MainWindow.Indicateurs[indexTab][3], 1);
-                    Grid.SetColumn(MainWindow.Indicateurs[indexTab][3], 1);
-                    goto case 3;
-                case 3 :
-                    Grid.SetRow(MainWindow.Indicateurs[indexTab][2], 1);
-                    // Grid.SetColumn(MainWindow.Indicateurs[indexTab][2], 0);
-                    Grid.SetColumnSpan(MainWindow.Indicateurs[indexTab][2], 2);
-                    goto case 2;
-                case 2 :
-                    Grid.SetRow(MainWindow.Indicateurs[indexTab][1], 0);
-                    Grid.SetColumn(MainWindow.Indicateurs[indexTab][1], 1);
-                    goto case 1;
-                case 1 :
-                    Grid.SetRow(MainWindow.Indicateurs[indexTab][0], 0);
-                    Grid.SetColumn(MainWindow.Indicateurs[indexTab][0], 0);
-                    break;
-                default: break;
-            }
-
-            foreach (UserControl uc in MainWindow.Indicateurs[indexTab])
-                MainWindow.Grids[indexTab].Children.Add(uc);
-
-            MainWindow.SelectedTab.Content = MainWindow.Grids[indexTab];     
-       }
-
-
-        
-
 
         #region Gestion des éléments d'interface
 

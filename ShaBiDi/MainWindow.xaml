@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ShaBiDi.Properties"
-        Title="ShaBiDi - Exploitation / Visualisation / Analyse de données" Name="WelcomeWindow" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" WindowState="Maximized">
+        Title="ShaBiDi - Exploitation / Visualisation / Analyse de données" Name="WelcomeWindow" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <StackPanel Name="spMainMenu">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -14,37 +14,43 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="ShaBiDi" FontFamily="Arial" FontSize="40" VerticalContentAlignment="Stretch" Margin="10,10,100,10" HorizontalAlignment="Left" HorizontalContentAlignment="Left"/>
-            <Button Grid.Column="1" HorizontalAlignment="Right" HorizontalContentAlignment="Right" x:Name="btnImport" Background="#00000000" BorderBrush="#00000000" Height="60" Click="btnImport_Click" Margin="10,10,10,10">
-                <Image Source="/ShaBiDi;component/Resources/box-in.png"/>
+            <Label Grid.Column="0" Content="ShaBiDi" FontFamily="Arial" FontSize="40" VerticalContentAlignment="Stretch" Margin="10,20,10,10" HorizontalAlignment="Left" HorizontalContentAlignment="Left"/>
+            <Button Grid.Column="1" HorizontalAlignment="Right" HorizontalContentAlignment="Right" x:Name="btnImport" Background="#00000000" BorderBrush="#00000000" Click="btnImport_Click" Margin="10,10,10,10">
+                <StackPanel Height="Auto">
+                    <Image Source="/ShaBiDi;component/Resources/box-in.png" Height="50" />
+                    <TextBlock HorizontalAlignment="Center" FontSize="15">Importer</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Grid.Column="2" HorizontalAlignment="Right" x:Name="btnSave" Background="#00000000" BorderBrush="#00000000" Height="60" Margin="10,10,10,10">
-                <Image Source="/ShaBiDi;component/Resources/floppy.png"/>
+            <Button Grid.Column="2" HorizontalAlignment="Right" HorizontalContentAlignment="Right" x:Name="btnSave" Background="#00000000" BorderBrush="#00000000" Margin="10,10,10,10">
+                <StackPanel Height="Auto">
+                    <Image Source="/ShaBiDi;component/Resources/floppy.png" Height="50" />
+                    <TextBlock HorizontalAlignment="Center" FontSize="15">Sauvegarder</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Grid.Column="3" HorizontalAlignment="Right" x:Name="btnExport" Background="#00000000" BorderBrush="#00000000" Height="60" Margin="10,10,10,10" Click="btnExport_Click">
-                <Image Source="/ShaBiDi;component/Resources/file-excel.png"/>
+            <Button Grid.Column="3" HorizontalAlignment="Right" x:Name="btnExport" Background="#00000000" BorderBrush="#00000000" Margin="10,10,10,10" Click="btnExport_Click">
+                <StackPanel Height="Auto">
+                    <Image Source="/ShaBiDi;component/Resources/file-excel.png" Height="50"/>
+                    <TextBlock HorizontalAlignment="Center" FontSize="15">Extraire</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Grid.Column="4"  x:Name="btnNotes" Background="#00000000" BorderBrush="#00000000" Height="60" Margin="10,10,10,10">
-                <Image Source="/ShaBiDi;component/Resources/notepad.png"/>
+            <Button Grid.Column="4"  x:Name="btnNotes" Background="#00000000" BorderBrush="#00000000" Margin="10,10,10,10">
+                <StackPanel Height="Auto">
+                    <Image Source="/ShaBiDi;component/Resources/notepad.png" Height="50"/>
+                    <TextBlock HorizontalAlignment="Center" FontSize="15">Commenter</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Grid.Column="5" x:Name="btnCompare" Background="#00000000" BorderBrush="#00000000" Height="60" Margin="10,10,10,10" Click="btnCompare_Click">
-                <Image Source="/ShaBiDi;component/Resources/filter.png"/>
+            <Button Grid.Column="5" x:Name="btnCompare" Background="#00000000" BorderBrush="#00000000" Margin="10,10,10,10" Click="btnCompare_Click">
+                <StackPanel Height="Auto">
+                    <Image Source="/ShaBiDi;component/Resources/filter.png" Height="50"/>
+                    <TextBlock HorizontalAlignment="Center" FontSize="15">Comparer</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Grid.Column="6" x:Name="btnAdd" Background="#00000000" BorderBrush="#00000000" Height="60" Click="btnAdd_Click" Margin="10,10,10,10">
-                <Image Source="/ShaBiDi;component/Resources/sign-add.png"/>
+            <Button Grid.Column="6" x:Name="btnAdd" Background="#00000000" BorderBrush="#00000000" Click="btnAdd_Click" Margin="10,10,10,10">
+                <StackPanel Height="Auto">
+                    <Image Source="/ShaBiDi;component/Resources/sign-add.png" Height="50"/>
+                    <TextBlock HorizontalAlignment="Center" FontSize="15">Ajouter</TextBlock>
+                </StackPanel>
             </Button>
         </Grid>
-        <TabControl x:Name="tabMainWindow" ItemsSource="{Binding}" SelectionChanged="tabMainWindow_SelectionChanged" Height="1000">
-            <TabControl.Resources>
-                <DataTemplate x:Key="TabHeader" DataType="TabItem">
-                    <DockPanel>
-                        <Button x:Name="btnDelete" DockPanel.Dock="Right" Margin="5,0,0,0" Padding="0" Click="btnDelete_Click" CommandParameter="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}">
-                            <Image Source="/ShaBiDi;component/Resources/close.png" Height="11" Width="11"/>
-                        </Button>
-                        <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" FontFamily="Arial"/>
-                    </DockPanel>
-                </DataTemplate>
-            </TabControl.Resources>
-        </TabControl>
     </StackPanel>
 </Window>
