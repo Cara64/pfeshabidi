@@ -56,7 +56,7 @@ namespace ShaBiDi.ViewModels
             {
                 Position = AxisPosition.Left,
                 Minimum = 0.0,
-                Maximum = 1000.0,
+                Maximum = 1000000.0,
                 Title = "Aller-retour bandeau / image"
             };
             PlotModel.Axes.Add(valueAxis);
@@ -116,5 +116,5 @@ namespace ShaBiDi.ViewModels
             return res;
         }
     }
-    }
-}
+  }
+

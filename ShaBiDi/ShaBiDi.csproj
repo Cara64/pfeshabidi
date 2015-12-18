@@ -91,13 +91,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\I_AllerRetour.cs" />
     <Compile Include="Logic\I_DispersionPA.cs" />
+    <Compile Include="ViewModels\AllerRetourModel.cs" />
+    <Compile Include="ViewModels\CompAllerRetourModel.cs" />
+    <Compile Include="ViewModels\CompDispersionPAModel.cs" />
     <Compile Include="ViewModels\DispersionPAModel.cs" />
+    <Compile Include="Views\AllerRetourUC.xaml.cs">
+      <DependentUpon>AllerRetourUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CompAllerRetourUC.xaml.cs">
+      <DependentUpon>CompAllerRetourUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CompareIndicWindow.xaml.cs">
       <DependentUpon>CompareIndicWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CompDensiteRecouvrementUC.xaml.cs">
       <DependentUpon>CompDensiteRecouvrementUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CompDispersionPAUC.xaml.cs">
+      <DependentUpon>CompDispersionPAUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CompTauxRecouvrementUC.xaml.cs">
       <DependentUpon>CompTauxRecouvrementUC.xaml</DependentUpon>
@@ -128,11 +141,23 @@
     <Compile Include="ViewModels\CompTauxRecouvrementModel.cs" />
     <Compile Include="ViewModels\Model.cs" />
     <Compile Include="ViewModels\TauxRecouvrementModel.cs" />
+    <Page Include="Views\AllerRetourUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CompAllerRetourUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CompareIndicWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CompDensiteRecouvrementUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CompDispersionPAUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

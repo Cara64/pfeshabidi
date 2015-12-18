@@ -50,6 +50,18 @@ namespace ShaBiDi.Views
                     cbSelectIndic2.Items.Add((uc as DensiteRecouvrementUC).ToString());
                 }
 
+                if (uc is DispersionPAUC)
+                {
+                    cbSelectIndic1.Items.Add((uc as DispersionPAUC).ToString());
+                    cbSelectIndic2.Items.Add((uc as DispersionPAUC).ToString());
+                }
+
+                if (uc is AllerRetourUC)
+                {
+                    cbSelectIndic1.Items.Add((uc as AllerRetourUC).ToString());
+                    cbSelectIndic2.Items.Add((uc as AllerRetourUC).ToString());
+                }
+
 
             }
         }
@@ -64,8 +76,6 @@ namespace ShaBiDi.Views
             IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec1));
             IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec2));
 
-            Console.WriteLine(IndicateursSelectionnes[0].GetType());
-            Console.WriteLine(IndicateursSelectionnes[1].GetType());
             if (IndicateursSelectionnes[0].GetType().Equals(IndicateursSelectionnes[1].GetType()))
             {
                 TypeComparaison = convert(cbSelectModeComp.SelectedValue.ToString());
@@ -94,6 +104,26 @@ namespace ShaBiDi.Views
                     }
 
                     res.Show();
+                }
+
+                if (IndicateursSelectionnes[0].GetType().Equals(typeof(DispersionPAUC)))
+                {
+                    DispersionPAUC indDispPA1 = IndicateursSelectionnes[0] as DispersionPAUC;
+                    DispersionPAUC indDispPA2 = IndicateursSelectionnes[1] as DispersionPAUC;
+
+                    CompDispersionPAUC compDispPA = new CompDispersionPAUC();
+                    MainWindow.Comparateurs.Add(compDispPA);
+                    res.Content = compDispPA;
+                }
+
+                if (IndicateursSelectionnes[0].GetType().Equals(typeof(AllerRetourUC)))
+                {
+                    AllerRetourUC indAR1 = IndicateursSelectionnes[0] as AllerRetourUC;
+                    AllerRetourUC indAR2 = IndicateursSelectionnes[1] as AllerRetourUC;
+
+                    CompAllerRetourUC compAR = new CompAllerRetourUC();
+                    MainWindow.Comparateurs.Add(compAR);
+                    res.Content = compAR;
                 }
 
             } 
