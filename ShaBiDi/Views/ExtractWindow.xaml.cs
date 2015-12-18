@@ -35,6 +35,7 @@ namespace ShaBiDi.Views
                 if (uc is TauxRecouvrementUC) cbSelectIndicateur.Items.Add((uc as TauxRecouvrementUC).ToString());
                 if (uc is DensiteRecouvrementUC) cbSelectIndicateur.Items.Add((uc as DensiteRecouvrementUC).ToString());
                 if (uc is DispersionPAUC) cbSelectIndicateur.Items.Add((uc as DispersionPAUC).ToString());
+                if (uc is AllerRetourUC) cbSelectIndicateur.Items.Add((uc as AllerRetourUC).ToString());
             }      
         }
 
@@ -149,6 +150,32 @@ namespace ShaBiDi.Views
                 {
                     var id = key.Numero.ToString();
                     var value = dataDisp[key].ToString();
+                    var newLine = string.Join(delimiter, id, value);
+                    csv.AppendLine(newLine);
+                }
+
+                System.IO.File.WriteAllText(filePath, csv.ToString());
+
+                MessageBox.Show("Extraction output terminé");
+
+            }
+
+            if (IndicateurSelectionne is AllerRetourUC)
+            {
+                AllerRetourUC arUC = IndicateurSelectionne as AllerRetourUC;
+                Dictionary<ShaBiDi.Logic.Image, double> dataAR = arUC.ViewModel.Data;
+
+                var mesuresAR = dataAR.Keys.OrderBy(o => o.Numero).ToList();
+
+                title = arUC.ViewModel.ToString();
+                filePath = currentDir + "/" + title + "_OUTPUT.csv";
+
+                csv.AppendLine(string.Join(delimiter, "Image", "Nb A/R Bandeau/Image"));
+
+                foreach (var key in mesuresAR)
+                {
+                    var id = key.Numero.ToString();
+                    var value = dataAR[key].ToString();
                     var newLine = string.Join(delimiter, id, value);
                     csv.AppendLine(newLine);
                 }
