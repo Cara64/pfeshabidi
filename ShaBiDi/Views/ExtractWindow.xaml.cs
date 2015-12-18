@@ -32,14 +32,9 @@ namespace ShaBiDi.Views
             foreach (UserControl uc in MainWindow.Indicateurs)
             {
                 Indicateurs.Add(uc);
-                if (uc is TauxRecouvrementUC)
-                {
-                    cbSelectIndicateur.Items.Add((uc as TauxRecouvrementUC).ToString());
-                }
-                if (uc is DensiteRecouvrementUC)
-                {
-                    cbSelectIndicateur.Items.Add((uc as DensiteRecouvrementUC).ToString());
-                }
+                if (uc is TauxRecouvrementUC) cbSelectIndicateur.Items.Add((uc as TauxRecouvrementUC).ToString());
+                if (uc is DensiteRecouvrementUC) cbSelectIndicateur.Items.Add((uc as DensiteRecouvrementUC).ToString());
+                if (uc is DispersionPAUC) cbSelectIndicateur.Items.Add((uc as DispersionPAUC).ToString());
             }      
         }
 
@@ -130,10 +125,37 @@ namespace ShaBiDi.Views
                     var newLine = string.Join(delimiter, value);
                     csv.AppendLine(newLine);
 
-                    System.IO.File.WriteAllText(filePath, csv.ToString());
-
-                    MessageBox.Show("Extraction output terminé");
+                    
                 }
+
+                System.IO.File.WriteAllText(filePath, csv.ToString());
+                MessageBox.Show("Extraction output terminé");
+
+            }
+
+            if (IndicateurSelectionne is DispersionPAUC)
+            {
+                DispersionPAUC dispPAUC = IndicateurSelectionne as DispersionPAUC;
+                Dictionary<ShaBiDi.Logic.Image, double> dataDisp = dispPAUC.ViewModel.Data;
+
+                var mesuresDisp= dataDisp.Keys.OrderBy(o => o.Numero).ToList();
+
+                title = dispPAUC.ViewModel.ToString();
+                filePath = currentDir + "/" + title + "_OUTPUT.csv";
+
+                csv.AppendLine(string.Join(delimiter, "Image", "Taux de dispersion du PA"));
+
+                foreach (var key in mesuresDisp)
+                {
+                    var id = key.Numero.ToString();
+                    var value = dataDisp[key].ToString();
+                    var newLine = string.Join(delimiter, id, value);
+                    csv.AppendLine(newLine);
+                }
+
+                System.IO.File.WriteAllText(filePath, csv.ToString());
+
+                MessageBox.Show("Extraction output terminé");
 
             }
         }

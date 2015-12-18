@@ -96,7 +96,6 @@ namespace ShaBiDi.ViewModels
 
             indic = new I_DispersionPA(Positions, Ordres, ModPA, ModS, Groupes);
             Data = indic.determineDispersion();
-            int a = 0;
             
         }
 
