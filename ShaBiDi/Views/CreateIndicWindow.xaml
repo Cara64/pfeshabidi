@@ -9,6 +9,7 @@
             <ComboBoxItem IsSelected="True">Taux de recouvrement</ComboBoxItem>
             <ComboBoxItem>Densité de recouvrement (transparence)</ComboBoxItem>
             <ComboBoxItem>Densité de recouvrement (couleur)</ComboBoxItem>
+            <ComboBoxItem>Dispersion PA</ComboBoxItem>
         </ComboBox>
         <StackPanel Orientation="Horizontal">
             <Label Content="User :"></Label>

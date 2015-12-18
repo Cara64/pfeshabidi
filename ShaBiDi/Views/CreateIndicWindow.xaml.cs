@@ -84,6 +84,15 @@ namespace ShaBiDi.Views
 
                     break;
 
+                case "Dispersion PA":
+                    DispersionPAUC dispPA = new DispersionPAUC();
+                    MainWindow.Indicateurs.Add(dispPA);
+
+                    res.Title = dispPA.ToString();
+                    res.Content = dispPA;
+                    
+                    break;
+
 
 
                 default: break;

@@ -91,6 +91,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\I_DispersionPA.cs" />
+    <Compile Include="ViewModels\DispersionPAModel.cs" />
     <Compile Include="Views\CompareIndicWindow.xaml.cs">
       <DependentUpon>CompareIndicWindow.xaml</DependentUpon>
     </Compile>
@@ -105,6 +107,9 @@
     </Compile>
     <Compile Include="Views\DensiteRecouvrementUC.xaml.cs">
       <DependentUpon>DensiteRecouvrementUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DispersionPAUC.xaml.cs">
+      <DependentUpon>DispersionPAUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExtractWindow.xaml.cs">
       <DependentUpon>ExtractWindow.xaml</DependentUpon>
@@ -140,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DensiteRecouvrementUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DispersionPAUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

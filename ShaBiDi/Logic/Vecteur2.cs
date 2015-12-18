@@ -15,5 +15,10 @@ namespace ShaBiDi.Logic
             A = a;
             B = b;
         }
+
+        public double Distance(Vecteur2 other)
+        {
+            return Math.Sqrt((other.A - this.A) * (other.A - this.A) + (other.B - this.B) * (other.B - this.B));
+        }
     }
 }
