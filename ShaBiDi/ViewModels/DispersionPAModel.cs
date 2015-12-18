@@ -58,7 +58,7 @@ namespace ShaBiDi.ViewModels
                 Position = AxisPosition.Left,
                 Minimum = 0.0,
                 Maximum = 1000.0,
-                Title = "Taux de dispersion du PA"
+                Title = "Dispersion du PA en pixels"
             };
             PlotModel.Axes.Add(valueAxis);
         }
@@ -69,7 +69,7 @@ namespace ShaBiDi.ViewModels
 
             var lineSerie = new LineSeries
             {
-                Title = "Taux de recouvrement",
+                Title = "Taux de dispersion du PA",
                 StrokeThickness = 1,
                 MarkerType = MarkerType.Circle
             };
