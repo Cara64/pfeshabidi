@@ -93,6 +93,14 @@ namespace ShaBiDi.Views
                     
                     break;
 
+                case "Nombre d'allers retours bandeau / image":
+                    AllerRetourUC ar = new AllerRetourUC();
+                    MainWindow.Indicateurs.Add(ar);
+
+                    res.Title = ar.ToString();
+                    res.Content = ar;
+                    break;
+
 
 
                 default: break;

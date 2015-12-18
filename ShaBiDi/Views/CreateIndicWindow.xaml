@@ -10,6 +10,7 @@
             <ComboBoxItem>Densité de recouvrement (transparence)</ComboBoxItem>
             <ComboBoxItem>Densité de recouvrement (couleur)</ComboBoxItem>
             <ComboBoxItem>Dispersion PA</ComboBoxItem>
+            <ComboBoxItem>Nombre d'allers retours bandeau / image</ComboBoxItem>
         </ComboBox>
         <StackPanel Orientation="Horizontal">
             <Label Content="User :"></Label>
