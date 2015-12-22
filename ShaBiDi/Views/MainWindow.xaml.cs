@@ -65,8 +65,6 @@ namespace ShaBiDi.Views
 
         private void btnCompare_Click(object sender, RoutedEventArgs e)
         {
-
-            // TODO: Corriger bug d'affichage
             compareIndic.Show();
         }
 
@@ -76,6 +74,11 @@ namespace ShaBiDi.Views
         }
 
         #endregion
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Cette fonctionnalité n'est pas disponible");
+        }
 
 
     }
