@@ -14,10 +14,10 @@ namespace ShaBiDi.ViewModels
     public class CompTauxRecouvrementModel : Model
     {
        
-        private List<Dictionary<Image, double>> data;
+        private List<Dictionary<ImageExp, double>> data;
         private List<TauxRecouvrementUC> indicSelect;
        
-        public List<Dictionary<Image, double>> Data
+        public List<Dictionary<ImageExp, double>> Data
         {
             get { return data; }
             set { data = value;}
@@ -72,7 +72,7 @@ namespace ShaBiDi.ViewModels
             int i = 0;
             TauxRecouvrementUC indic = new TauxRecouvrementUC();
             MarkerType[] markers = { MarkerType.Circle, MarkerType.Cross, MarkerType.Square };
-            foreach(Dictionary<Image, double> dico in Data)
+            foreach(Dictionary<ImageExp, double> dico in Data)
             {
                 var mesures = dico.Keys.OrderBy(o=>o.Numero).ToList();
                 
@@ -97,7 +97,7 @@ namespace ShaBiDi.ViewModels
         // Normalise les données selon les critères sélectionnés
         protected override void GetData()
         {
-            Data = new List<Dictionary<Image, double>>();
+            Data = new List<Dictionary<ImageExp, double>>();
             
             // Récupération des données des deux indicateurs
            
@@ -105,8 +105,8 @@ namespace ShaBiDi.ViewModels
             TauxRecouvrementModel indic1Model = IndicSelect[0].ViewModel;
             TauxRecouvrementModel indic2Model = IndicSelect[1].ViewModel;
 
-            Dictionary<Image, double> dataIndic1 = indic1Model.Data;
-            Dictionary<Image, double> dataIndic2 = indic2Model.Data;
+            Dictionary<ImageExp, double> dataIndic1 = indic1Model.Data;
+            Dictionary<ImageExp, double> dataIndic2 = indic2Model.Data;
             
             Data.Add(dataIndic1);
             Data.Add(dataIndic2);
@@ -115,7 +115,7 @@ namespace ShaBiDi.ViewModels
             I_TauxRecouvrement indic1 = new I_TauxRecouvrement(indic1Model.Positions, indic1Model.Ordres, indic1Model.ModPA, indic1Model.ModS, indic1Model.Groupes);
             I_TauxRecouvrement indic2 = new I_TauxRecouvrement(indic2Model.Positions, indic2Model.Ordres, indic2Model.ModPA, indic2Model.ModS, indic2Model.Groupes);
            
-            Dictionary<Image, double> dataRes = indic1.compareTaux(CompareIndicWindow.TypeComparaison, indic2);
+            Dictionary<ImageExp, double> dataRes = indic1.compareTaux(CompareIndicWindow.TypeComparaison, indic2);
             
             Data.Add(dataRes);
         }

@@ -7,9 +7,9 @@ namespace ShaBiDi.Logic
 {
     public class I_TauxRecouvrement : Indicateur
     {
-        private Dictionary<Image, double> data;
+        private Dictionary<ImageExp, double> data;
 
-        public Dictionary<Image, double> Data
+        public Dictionary<ImageExp, double> Data
         {
             get { return data; }
             set { data = value; }
@@ -18,20 +18,20 @@ namespace ShaBiDi.Logic
         public I_TauxRecouvrement(List<int> mesUsers, List<OrdreGroupe> ordres, bool pa, bool s, List<Groupe> groupes)
             : base(mesUsers, ordres, pa, s, groupes)
         {
-            Data = new Dictionary<Image, double>();
+            Data = new Dictionary<ImageExp, double>();
         }
 
         // Permet de calculer le taux de recouvrement d'une image
         // Le dictionnaire des taux est en paramètre pour stocker le taux obtenu
-        private void calculeTaux(Image i, Dictionary<Image, List<double>> dico, List<Observation> listeObs)
+        private void calculeTaux(ImageExp i, Dictionary<ImageExp, List<double>> dico, List<Observation> listeObs)
         {
 
             // On fait le choix d'une grille qui fait la taille de l'image
-            bool[,] pixelsImage = new bool[Image.dimensionsImageLignes, Image.dimensionsImageCol];
+            bool[,] pixelsImage = new bool[ImageExp.dimensionsImageLignes, ImageExp.dimensionsImageCol];
 
-            for (int j = 0; j < Image.dimensionsImageLignes; j++)
+            for (int j = 0; j < ImageExp.dimensionsImageLignes; j++)
             {
-                for (int k = 0; k < Image.dimensionsImageCol; k++)
+                for (int k = 0; k < ImageExp.dimensionsImageCol; k++)
                 {
                     pixelsImage[j, k] = false;
                 }
@@ -67,9 +67,9 @@ namespace ShaBiDi.Logic
 
             // On trouve le nombre de pixels "true"
             int somme = 0;
-            for (int j = 0; j < Image.dimensionsImageLignes; j++)
+            for (int j = 0; j < ImageExp.dimensionsImageLignes; j++)
             {
-                for (int k = 0; k < Image.dimensionsImageCol; k++)
+                for (int k = 0; k < ImageExp.dimensionsImageCol; k++)
                 {
                     if (pixelsImage[j, k])
                     {
@@ -107,7 +107,7 @@ namespace ShaBiDi.Logic
         }
 
         // Obtention de la moyenne des taux de recouvrement pour chaque image
-        public Dictionary<Image, double> determineTaux()
+        public Dictionary<ImageExp, double> determineTaux()
         {
 
             // On crée la liste provisoire des observations de chaque image (à réinitialiser pour chaque groupe)
@@ -117,10 +117,10 @@ namespace ShaBiDi.Logic
             List<Sujet> sujParGr = new List<Sujet>();
 
             // Et la liste provisoire des observations associées à chaque image (par groupe)
-            Dictionary<Image, List<Observation>> dictionary = new Dictionary<Image, List<Observation>>();
+            Dictionary<ImageExp, List<Observation>> dictionary = new Dictionary<ImageExp, List<Observation>>();
 
             // On crée la liste où on va stocker tous les taux obtenus par image. Elle sera enrichie par chaque groupe
-            Dictionary<Image, List<double>> dictionaryTaux = new Dictionary<Image, List<double>>();
+            Dictionary<ImageExp, List<double>> dictionaryTaux = new Dictionary<ImageExp, List<double>>();
 
             // Sélection des bons sujets
             foreach (Groupe g in _mesGroupes)
@@ -163,7 +163,7 @@ namespace ShaBiDi.Logic
 
                 // Maintenant, toutes les observations sont triées par image, on va alors déterminer le taux par image que l'on va mettre dans la liste des taux
                 // Méthode à réaliser
-                foreach (Image i in dictionary.Keys)
+                foreach (ImageExp i in dictionary.Keys)
                 {
                     // La méthode range les taux dans le dictionnaire
                     calculeTaux(i, dictionaryTaux, dictionary[i]);
@@ -173,9 +173,9 @@ namespace ShaBiDi.Logic
 
             // Les taux de tous les groupes sont mentionnés dans dictionaryTaux, ne reste plus qu'à faire la moyenne
             // On crée la liste des taux par image sous forme de dictionnaire
-            Dictionary<Image, double> tauxParImage = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> tauxParImage = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dictionaryTaux.Keys)
+            foreach (ImageExp i in dictionaryTaux.Keys)
             {
                 // Calcul de la moyenne de tous les taux de l'image
                 tauxParImage.Add(i, calculeMoyenne(dictionaryTaux[i]));
@@ -186,16 +186,16 @@ namespace ShaBiDi.Logic
         }
 
         // Méthode de comparaison
-        public Dictionary<Image, double> compareTaux(TypeComp type, I_TauxRecouvrement i)
+        public Dictionary<ImageExp, double> compareTaux(TypeComp type, I_TauxRecouvrement i)
         {
             // Création du nouvel indicateur de comparaison
             I_TauxRecouvrement indicCompare = new I_TauxRecouvrement(fusionUsers(this, i), fusionOrdres(this, i), fusionPa(this, i), fusionS(this, i), fusionGroupes(this, i));
 
             // On cherche à comparer les deux dictionnaires
-            Dictionary<Image, List<double>> dico = new Dictionary<Image,List<double>>();
+            Dictionary<ImageExp, List<double>> dico = new Dictionary<ImageExp,List<double>>();
 
             // On remplit le dictionnaire avec les données du premier indicateur
-            foreach (Image img in this.Data.Keys)
+            foreach (ImageExp img in this.Data.Keys)
                 {
                     if (dico.ContainsKey(img))
                     {
@@ -209,7 +209,7 @@ namespace ShaBiDi.Logic
                     }
                 }
             // On remplit le dictionnaire avec les données du second indicateur
-            foreach (Image img in i.Data.Keys)
+            foreach (ImageExp img in i.Data.Keys)
                 {
                     if (dico.ContainsKey(img))
                     {
@@ -239,11 +239,11 @@ namespace ShaBiDi.Logic
             return indicCompare.Data ;
         }
 
-        private Dictionary<Image, double> additionner(Dictionary<Image, List<double>> dico)
+        private Dictionary<ImageExp, double> additionner(Dictionary<ImageExp, List<double>> dico)
         {
-            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dico.Keys)
+            foreach (ImageExp i in dico.Keys)
             {
 
                 // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable
@@ -260,11 +260,11 @@ namespace ShaBiDi.Logic
             }
             return dicoCompare;
         }
-        private Dictionary<Image, double> soustraire(Dictionary<Image, List<double>> dico)
+        private Dictionary<ImageExp, double> soustraire(Dictionary<ImageExp, List<double>> dico)
         {
-            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dico.Keys)
+            foreach (ImageExp i in dico.Keys)
             {
 
                 // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable
@@ -281,11 +281,11 @@ namespace ShaBiDi.Logic
             }
             return dicoCompare;
         }
-        private Dictionary<Image, double> moyenner(Dictionary<Image, List<double>> dico)
+        private Dictionary<ImageExp, double> moyenner(Dictionary<ImageExp, List<double>> dico)
         {
-            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dico.Keys)
+            foreach (ImageExp i in dico.Keys)
             {
 
                 // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable

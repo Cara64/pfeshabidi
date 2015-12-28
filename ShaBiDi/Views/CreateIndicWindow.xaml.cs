@@ -18,8 +18,7 @@ namespace ShaBiDi.Views
     /// Logique d'interaction pour CreateIndic.xaml
     /// </summary>
     public partial class CreateIndicWindow : Window
-    {
-       
+    { 
         public static List<int> Positions = new List<int>();
         public static List<OrdreGroupe> Ordres;
         public static List<Groupe> Groupes;
@@ -29,7 +28,8 @@ namespace ShaBiDi.Views
         public CreateIndicWindow()
         {
             InitializeComponent();
-    
+            
+            // Ajout de toutes les positions par défauts
             Positions.Add(1);
             Positions.Add(2);
             Positions.Add(3);
@@ -38,7 +38,7 @@ namespace ShaBiDi.Views
             ModS = false;
             ModPA = false;
 
-            Groupes = ImportWindow.GroupesExp;
+            Groupes = AppData.GroupesExp;
             lbGroup.ItemsSource = Groupes;
             lbGroup.SelectAll();
 
@@ -52,6 +52,7 @@ namespace ShaBiDi.Views
         }
 
 
+
         private void creerIndicateur(string typeIndicateur)
         {
             ResultWindow res = new ResultWindow();
@@ -59,50 +60,35 @@ namespace ShaBiDi.Views
             switch (typeIndicateur)
             {
                 case "Taux de recouvrement":
-
                     TauxRecouvrementUC tr = new TauxRecouvrementUC();
-                    MainWindow.Indicateurs.Add(tr);
-
+                    AppData.Indicateurs.Add(tr);
                     res.Title = tr.ViewModel.ToString();
                     res.Content = tr;
                     break;
-
                 case "Densité de recouvrement (transparence)":
                     DensiteRecouvrementUC drTransparent = new DensiteRecouvrementUC("gris");
-                    MainWindow.Indicateurs.Add(drTransparent);
-
+                    AppData.Indicateurs.Add(drTransparent);
                     res.Title = drTransparent.ToString();
                     res.Content = drTransparent;
                     break;
-
                 case "Densité de recouvrement (couleur)":
                     DensiteRecouvrementUC drCouleur = new DensiteRecouvrementUC("couleur");
-                    MainWindow.Indicateurs.Add(drCouleur);
-
+                    AppData.Indicateurs.Add(drCouleur);
                     res.Title = drCouleur.ToString();
                     res.Content = drCouleur;
-
                     break;
-
                 case "Dispersion PA":
                     DispersionPAUC dispPA = new DispersionPAUC();
-                    MainWindow.Indicateurs.Add(dispPA);
-
+                    AppData.Indicateurs.Add(dispPA);
                     res.Title = dispPA.ToString();
-                    res.Content = dispPA;
-                    
+                    res.Content = dispPA; 
                     break;
-
                 case "Nombre d'allers retours bandeau / image":
                     AllerRetourUC ar = new AllerRetourUC();
-                    MainWindow.Indicateurs.Add(ar);
-
+                    AppData.Indicateurs.Add(ar);
                     res.Title = ar.ToString();
                     res.Content = ar;
                     break;
-
-
-
                 default: break;
             }
 

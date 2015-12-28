@@ -23,7 +23,7 @@ namespace ShaBiDi.Views
 
         #region Attributs
         
-        private Dictionary<ShaBiDi.Logic.Image, double[,]> data;
+        private Dictionary<ShaBiDi.Logic.ImageExp, double[,]> data;
         private I_DensiteRecouvrement indic;
 
         private List<int> positions;
@@ -33,9 +33,9 @@ namespace ShaBiDi.Views
         private bool modPA;
 
         private string mode;                            // transparence ou couleurs
-        private List<ShaBiDi.Logic.Image> mesImages;    // images de l'indicateur
+        private List<ShaBiDi.Logic.ImageExp> mesImages;    // images de l'indicateur
         private int index;                              // ordre de l'image
-        private ShaBiDi.Logic.Image imageEnCours;   
+        private ShaBiDi.Logic.ImageExp imageEnCours;   
         private WriteableBitmap imageBmp;
 
         #endregion
@@ -48,7 +48,7 @@ namespace ShaBiDi.Views
             get { return mode; }
             set { mode = value; }
         }
-        public List<ShaBiDi.Logic.Image> MesImages
+        public List<ShaBiDi.Logic.ImageExp> MesImages
         {
             get { return mesImages; }
             set { mesImages = value; }
@@ -58,7 +58,7 @@ namespace ShaBiDi.Views
             get { return index; }
             set { index = value; }
         }
-        public ShaBiDi.Logic.Image ImageEnCours
+        public ShaBiDi.Logic.ImageExp ImageEnCours
         {
             get { return imageEnCours; }
             set { imageEnCours = value; }
@@ -69,7 +69,7 @@ namespace ShaBiDi.Views
             set { imageBmp = value; }
         }
 
-        public Dictionary<ShaBiDi.Logic.Image, double[,]> Data
+        public Dictionary<ShaBiDi.Logic.ImageExp, double[,]> Data
         {
             get { return data; }
             set { data = value; }
@@ -120,7 +120,7 @@ namespace ShaBiDi.Views
 
         private void GetData()
         {
-            Data = new Dictionary<ShaBiDi.Logic.Image, double[,]>();
+            Data = new Dictionary<ShaBiDi.Logic.ImageExp, double[,]>();
 
             Positions = CreateIndicWindow.Positions;
             Groupes = CreateIndicWindow.Groupes;
@@ -134,7 +134,7 @@ namespace ShaBiDi.Views
 
         private void LoadData()
         {
-            MesImages = new List<ShaBiDi.Logic.Image>();
+            MesImages = new List<ShaBiDi.Logic.ImageExp>();
             MesImages = Data.Keys.ToList().OrderBy(o => o.Numero).ToList();
         }
 
@@ -149,7 +149,7 @@ namespace ShaBiDi.Views
 
         // Prendra l'image et les booleens en parametres
         // Le mode peut être "gris" ou "couleur"
-        private void GenerateMask(string mode,ShaBiDi.Logic.Image img)
+        private void GenerateMask(string mode,ShaBiDi.Logic.ImageExp img)
         {
             ImageBmp = new WriteableBitmap(new BitmapImage(new Uri(img.Acces, UriKind.RelativeOrAbsolute)));
             imgBackground.Source = ImageBmp;
@@ -172,14 +172,14 @@ namespace ShaBiDi.Views
             byte[] pixelSource = new byte[sizeSource];
             bitmap.CopyPixels(pixelSource, strideSource, 0);
 
-            double max = Data[ImportWindow.ImagesExp[img.Numero-1]].Cast<double>().Max();
+            double max = Data[AppData.ImagesExp[img.Numero-1]].Cast<double>().Max();
 
             for (int row = 0; row < height; row++)
             {
                 for (int col = 0; col < width; col++)
                 {
                     // le numéro de l'image à indiquer est un en dessous
-                    double tps = Data[ImportWindow.ImagesExp[img.Numero-1]][row, col];
+                    double tps = Data[AppData.ImagesExp[img.Numero-1]][row, col];
                     
                         // Pixel d'origine
                         int indexSource = row * strideSource + 4 * col;
@@ -289,7 +289,7 @@ namespace ShaBiDi.Views
             if (Index <= 1) { }
             else
             {
-                ImageEnCours = ImportWindow.ImagesExp[nb - 1];
+                ImageEnCours = AppData.ImagesExp[nb - 1];
                 Index--;
                 GenerateMask(Mode, ImageEnCours);
                 lblNumImage.Content = "Image " + nb + " (" + Index + "e image sur " + MesImages.Count() + ")";
@@ -306,7 +306,7 @@ namespace ShaBiDi.Views
             }
             else
             {
-                ImageEnCours = ImportWindow.ImagesExp[nb - 1];
+                ImageEnCours = AppData.ImagesExp[nb - 1];
                 Index++;
                 GenerateMask(Mode, ImageEnCours);
                 lblNumImage.Content = "Image " + nb + " (" + index + "e image sur " + MesImages.Count() + ")";

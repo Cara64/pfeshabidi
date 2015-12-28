@@ -7,11 +7,11 @@ namespace ShaBiDi.Logic
 {
     public class Observation
     {
-        public Image Image { get; private set; }
+        public ImageExp Image { get; private set; }
 
         public List<PointAttention> PointsAttentions { get; private set; }
 
-        public Observation(Image image)
+        public Observation(ImageExp image)
         {
             Image = image;
             PointsAttentions = new List<PointAttention>();

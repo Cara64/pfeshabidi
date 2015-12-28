@@ -34,7 +34,7 @@ namespace ShaBiDi.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (UserControl uc in MainWindow.Indicateurs)
+            foreach (UserControl uc in AppData.Indicateurs)
             {
                 Indicateurs.Add(uc);
 
@@ -84,7 +84,7 @@ namespace ShaBiDi.Views
                 if (IndicateursSelectionnes[0].GetType().Equals(typeof(TauxRecouvrementUC)))
                 {
                     CompTauxRecouvrementUC compTR = new CompTauxRecouvrementUC();
-                    MainWindow.Comparateurs.Add(compTR);
+                    AppData.Comparateurs.Add(compTR);
                     res.Content = compTR;
                 }
 
@@ -95,7 +95,7 @@ namespace ShaBiDi.Views
                     if (indDR1.Mode.Equals(indDR2.Mode))
                     {
                         CompDensiteRecouvrementUC compDR = new CompDensiteRecouvrementUC(indDR1.Mode);
-                        MainWindow.Comparateurs.Add(compDR);
+                        AppData.Comparateurs.Add(compDR);
                         res.Content = compDR;
                     }
                     else
@@ -112,7 +112,7 @@ namespace ShaBiDi.Views
                     DispersionPAUC indDispPA2 = IndicateursSelectionnes[1] as DispersionPAUC;
 
                     CompDispersionPAUC compDispPA = new CompDispersionPAUC();
-                    MainWindow.Comparateurs.Add(compDispPA);
+                    AppData.Comparateurs.Add(compDispPA);
                     res.Content = compDispPA;
                 }
 
@@ -122,7 +122,7 @@ namespace ShaBiDi.Views
                     AllerRetourUC indAR2 = IndicateursSelectionnes[1] as AllerRetourUC;
 
                     CompAllerRetourUC compAR = new CompAllerRetourUC();
-                    MainWindow.Comparateurs.Add(compAR);
+                    AppData.Comparateurs.Add(compAR);
                     res.Content = compAR;
                 }
 
@@ -137,13 +137,13 @@ namespace ShaBiDi.Views
 
         private TypeComp convert(string s)
         {
-            TypeComp res;
+            TypeComp res = TypeComp.add;
             switch (s)
             {
                 case "Addition": res = TypeComp.add; break;
                 case "Soustraction": res = TypeComp.sous; break;
                 case "Moyenne": res = TypeComp.moy; break;
-                default: throw new Exception(); break;
+                default: break;
             }
             return res;
         }

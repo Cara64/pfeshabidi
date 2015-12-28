@@ -29,9 +29,10 @@ namespace ShaBiDi.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {    
-            foreach (UserControl uc in MainWindow.Indicateurs)
+            foreach (UserControl uc in AppData.Indicateurs)
             {
                 Indicateurs.Add(uc);
+
                 if (uc is TauxRecouvrementUC) cbSelectIndicateur.Items.Add((uc as TauxRecouvrementUC).ToString());
                 if (uc is DensiteRecouvrementUC) cbSelectIndicateur.Items.Add((uc as DensiteRecouvrementUC).ToString());
                 if (uc is DispersionPAUC) cbSelectIndicateur.Items.Add((uc as DispersionPAUC).ToString());
@@ -54,7 +55,7 @@ namespace ShaBiDi.Views
             if (IndicateurSelectionne is TauxRecouvrementUC)
             {
                 TauxRecouvrementUC tr = IndicateurSelectionne as TauxRecouvrementUC;
-                Dictionary<ShaBiDi.Logic.Image,double> dataTR = tr.ViewModel.Data;
+                Dictionary<ShaBiDi.Logic.ImageExp,double> dataTR = tr.ViewModel.Data;
                 
                 var mesuresTR = dataTR.Keys.OrderBy(o => o.Numero).ToList();
      
@@ -81,7 +82,7 @@ namespace ShaBiDi.Views
                 // TODO: Vérifier la lourdeur en mémoire
 
                 DensiteRecouvrementUC dr = IndicateurSelectionne as DensiteRecouvrementUC;
-                Dictionary<ShaBiDi.Logic.Image, double[,]> dataDR = dr.Data;
+                Dictionary<ShaBiDi.Logic.ImageExp, double[,]> dataDR = dr.Data;
 
                 var mesuresDR = dataDR.Keys.OrderBy(o => o.Numero).ToList();
 
@@ -89,15 +90,15 @@ namespace ShaBiDi.Views
                 filePath = currentDir + "/" + title + "_OUTPUT.csv";
 
                 // Pour déterminer le bandeau de titre
-                int sizeCsvTitle = ShaBiDi.Logic.Image.dimensionsImageLignes * ShaBiDi.Logic.Image.dimensionsImageCol + 1;
+                int sizeCsvTitle = ShaBiDi.Logic.ImageExp.dimensionsImageLignes * ShaBiDi.Logic.ImageExp.dimensionsImageCol + 1;
                 string[] csvTitle = new string[sizeCsvTitle];
                 csvTitle[0] = "Image";
                 int lignes = 0;
                 int col = 0;
                 for (int i = 1; i < csvTitle.Length; i++)
                 {
-                    if (lignes > ShaBiDi.Logic.Image.dimensionsImageLignes) lignes = 0;
-                    if (col > ShaBiDi.Logic.Image.dimensionsImageCol)
+                    if (lignes > ShaBiDi.Logic.ImageExp.dimensionsImageLignes) lignes = 0;
+                    if (col > ShaBiDi.Logic.ImageExp.dimensionsImageCol)
                     { 
                         col = 0;
                         lignes++;
@@ -137,7 +138,7 @@ namespace ShaBiDi.Views
             if (IndicateurSelectionne is DispersionPAUC)
             {
                 DispersionPAUC dispPAUC = IndicateurSelectionne as DispersionPAUC;
-                Dictionary<ShaBiDi.Logic.Image, double> dataDisp = dispPAUC.ViewModel.Data;
+                Dictionary<ShaBiDi.Logic.ImageExp, double> dataDisp = dispPAUC.ViewModel.Data;
 
                 var mesuresDisp= dataDisp.Keys.OrderBy(o => o.Numero).ToList();
 
@@ -163,7 +164,7 @@ namespace ShaBiDi.Views
             if (IndicateurSelectionne is AllerRetourUC)
             {
                 AllerRetourUC arUC = IndicateurSelectionne as AllerRetourUC;
-                Dictionary<ShaBiDi.Logic.Image, double> dataAR = arUC.ViewModel.Data;
+                Dictionary<ShaBiDi.Logic.ImageExp, double> dataAR = arUC.ViewModel.Data;
 
                 var mesuresAR = dataAR.Keys.OrderBy(o => o.Numero).ToList();
 

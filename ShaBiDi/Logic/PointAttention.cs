@@ -171,7 +171,7 @@ namespace ShaBiDi.Logic
         public void contributionTaux1(ref bool[,] grille)
         {
             double newX = Math.Floor(_coordPA.A);
-            double newY = Math.Floor(_coordPA.B) + Image.dimensionsBandeauLignes;
+            double newY = Math.Floor(_coordPA.B) + ImageExp.dimensionsBandeauLignes;
             if ((newX > 0) && (newX < grille.GetLength(1)) && (newY < 0) && (newY > -grille.GetLength(0)))
             {
                 // On met le pixel concerné à true
@@ -195,7 +195,7 @@ namespace ShaBiDi.Logic
             foreach (Vecteur2 pixel in listPixels)
             {
                 x = (int)pixel.A;
-                y = (int)(pixel.B * -1) + Image.dimensionsBandeauLignes;
+                y = (int)(pixel.B * -1) + ImageExp.dimensionsBandeauLignes;
                 if ((x > 0) && (x < grille.GetLength(1)) && (y > 0) && (y < grille.GetLength(0)))
                 {
                     grille[y, x] = true;
@@ -214,7 +214,7 @@ namespace ShaBiDi.Logic
             foreach (Vecteur2 pixel in listPixels)
             {
                 x = (int)pixel.A;
-                y = (int)(pixel.B*-1) + Image.dimensionsBandeauLignes;
+                y = (int)(pixel.B*-1) + ImageExp.dimensionsBandeauLignes;
                 if ((x > 0) && (x < grille.GetLength(1)) && (y > 0) && (y < grille.GetLength(0)))
                 {
                     grille[y, x] += temps;
@@ -226,7 +226,8 @@ namespace ShaBiDi.Logic
         // Méthode qui permet de déterminer si le point d'attention est dans le bandeau ou non
         public bool dansBandeau()
         {
-            if (this._coordPA.B > -Image.dimensionsBandeauLignes)
+            Console.WriteLine(this._coordPA.B);
+            if (this._coordPA.B > -ImageExp.dimensionsBandeauLignes)
                 return true;
             else
                 return false;

@@ -19,67 +19,115 @@ namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour ImportWindow.xaml
+    /// ImportWindow - Fenêtre pour importer les fichiers dans les classes métiers
     /// </summary>
     public partial class ImportWindow : Window
     {
-
-        private const double SCREEN_DISTANCE = 3.833;
-        private const double LOGICAL_HEIGHT = 1050;
-        private const double LOGICAL_WIDTH = 1680;
-        private const double PHYSICAL_HEIGHT = 1.61;
-        private const double PHYSICAL_WIDTH = 2.63;
+        private BackgroundWorker importWorker;  // thread pour l'import
+        private bool isImporting;               // booléen qui indique s'il y a une importation en cours
+        private List<String> addedFiles;        // fichiers ajoutés
         
-        public static List<String> ImportedFiles;                   // fichiers importés
-        public static List<ShaBiDi.Logic.Image> ImagesExp;          // images de l'expérience
-        public static List<Groupe> GroupesExp;                      // totalité des groupes ayant passé l'expérience
-
-        private string selectedFiles;                               // fichiers sélectionnés
-        public string SelectedFiles
+        public List<String> AddedFiles
         {
-            get { return selectedFiles; }
-            set { selectedFiles = value; }
+            get { return addedFiles; }
+            set { addedFiles = value; }
         }
 
         public ImportWindow()
         {
             InitializeComponent();
 
-            ImportedFiles = new List<String>();
-            GroupesExp = new List<Groupe>();
-            ImagesExp = new List<ShaBiDi.Logic.Image>();
-            SelectedFiles = "";
+            AddedFiles = new List<String>();
+            isImporting = false;
+
+            importWorker = new BackgroundWorker();
+            importWorker.WorkerReportsProgress = true;
+            importWorker.WorkerSupportsCancellation = true;
+            importWorker.DoWork += importWorker_DoWork;
+            importWorker.ProgressChanged += importWorker_ProgressChanged;
+            importWorker.RunWorkerCompleted += importWorker_RunWorkerCompleted;
         }
 
 
-        void worker_DoWork(object sender, DoWorkEventArgs e)
+        private void importWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            remplirClasses(sender);
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (worker.CancellationPending == true)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                remplirClasses(worker);
+            }
         }
 
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void importWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            pbImportFiles.Value = e.ProgressPercentage;
+            int nbImported = e.ProgressPercentage;
+            int nbToImport = AddedFiles.Count();
+            
+            lblInfoImport.Content = nbImported + " / " + nbToImport + ((nbImported == 1) ? " fichier importé" : "fichiers importés");
         }
 
         private void btnAddFiles_Click(object sender, RoutedEventArgs e)
         {
             ajouterFichiers();
-            pbImportFiles.Maximum = ImportedFiles.Count();
-            
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
+            int nbToImport = AddedFiles.Count();
+            lblInfoImport.Content = nbToImport + ((nbToImport == 1) ? " fichier à importer" : "fichiers importés");
 
-            worker.RunWorkerAsync();
+            if (AddedFiles.Count() > 0)
+            {
+                btnImportFiles.IsEnabled = true;
+            }
+
+
+        }
+
+        private void importWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            pbImportFiles.IsIndeterminate = false;
+
+            if (e.Error != null)
+            {
+                MessageBox.Show("Error : " + e.Error.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (e.Cancelled == true)
+            {
+                isImporting = false;
+                pbImportFiles.IsIndeterminate = false;
+                btnAddFiles.IsEnabled = true;
+                btnImportFiles.Content = "Importer";
+            }
+            else
+            {
+                MessageBox.Show("Importation terminée avec succès");
+            }
         }
 
 
-        private void btnDeleteFiles_Click(object sender, RoutedEventArgs e)
+        private void btnImportFiles_Click(object sender, RoutedEventArgs e)
         {
-            // TODO : Implémenter la suppression
-            supprimerFichier();
-            // viderClasses();
+            try
+            {
+                if (!isImporting)
+                {
+                    isImporting = true;
+                    pbImportFiles.IsIndeterminate = true;
+                    btnAddFiles.IsEnabled = false;
+                    btnImportFiles.Content = "Annuler";
+                    importWorker.RunWorkerAsync();
+                }
+                else
+                {
+                    importWorker.CancelAsync();
+                }
+             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private Modalite convert(string mod)
@@ -88,7 +136,7 @@ namespace ShaBiDi.Views
         }
 
         // On remplit les classes à partir des fichiers de données
-        private void remplirClasses(object sender)
+        private void remplirClasses(BackgroundWorker bw)
         {
             bool refFaite = false;
             double tpsEcoule = 0.0;             // colonne 00 de l'entête
@@ -106,26 +154,25 @@ namespace ShaBiDi.Views
 
             // On crée les images leur nombre est fixe
             // On pourra mettre cette valeur dans une variable
-            GroupesExp.Clear();
-            ImagesExp.Clear();
+            AppData.GroupesExp.Clear();
+            AppData.ImagesExp.Clear();
 
             string[] img = System.IO.Directory.GetFiles(@"..\..\Resources\ImagesExp");
 
             for (int i = 1; i <= img.Length; i++)
             {
-                ImagesExp.Add(new ShaBiDi.Logic.Image(i));
-                ImagesExp[i - 1].Acces = img[i - 1];
+                AppData.ImagesExp.Add(new ShaBiDi.Logic.ImageExp(i));
+                AppData.ImagesExp[i - 1].Acces = img[i - 1];
             }
             
-                for (int i = 0; i < users.Length; i++) users[i] = new Sujet(i + 1);
+            for (int i = 0; i < users.Length; i++) users[i] = new Sujet(i + 1);
            
-            foreach (string file in ImportedFiles)
+            foreach (string file in AddedFiles)
             {
-                Console.WriteLine("Remplissage nouveau fichier");
+
                 // On "nettoie" tous les sujets
                 foreach (Sujet user in users)
                 {
-                    Console.WriteLine("Nettoyage sujets");
                     user.ObservationsPA.Clear();
                     user.ObservationsS.Clear();
                 }
@@ -149,7 +196,7 @@ namespace ShaBiDi.Views
                     image = int.Parse(donneesGroupe[l, 3]);
 
                     // On initialise la nouvelle observation chez chaque sujet du groupe, puisqu'il y en a une par image
-                    foreach (Sujet user in users) user.AddObservation(new Observation(ImagesExp[image - 1]), modalite);
+                    foreach (Sujet user in users) user.AddObservation(new Observation(AppData.ImagesExp[image - 1]), modalite);
 
                     // On remplit la même liste d'observations tant qu'on ne change ps d'image
                     // Donc on commence par vérifier le numéro de l'image (on convertit la donnée du tableau)
@@ -167,7 +214,7 @@ namespace ShaBiDi.Views
                             if (!refFaite)
                             {
                                 PointAttention PA1 = new PointAttention(new Vecteur2(x[i], y[i]), tpsEcoule);
-                                PA1.pixelsEllipse(SCREEN_DISTANCE, LOGICAL_HEIGHT, LOGICAL_WIDTH, PHYSICAL_HEIGHT, PHYSICAL_WIDTH, y[i] = double.Parse(donneesGroupe[l, 6]));
+                                PA1.pixelsEllipse(AppData.SCREEN_DISTANCE, AppData.LOGICAL_HEIGHT, AppData.LOGICAL_WIDTH, AppData.PHYSICAL_HEIGHT, AppData.PHYSICAL_WIDTH, y[i] = double.Parse(donneesGroupe[l, 6]));
                                 refFaite = true;
                             }
 
@@ -184,21 +231,14 @@ namespace ShaBiDi.Views
 
                 foreach (Sujet user in users) groupe.AddSujet(user);
 
-                GroupesExp.Add(groupe);
-      
-                (sender as BackgroundWorker).ReportProgress(counterFiles);
+                AppData.GroupesExp.Add(groupe);
+
+                counterFiles++;
+                bw.ReportProgress(counterFiles);
                 
             } // Fin foreach, changement de fichier (donc de groupe)
-
-            MessageBox.Show("Importation réussie", "Fin de l'importation", MessageBoxButton.OK, MessageBoxImage.Information);
-        
+      
         }
-
-        private void lbImportedFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // TODO : Implémenter affichage infos fichiers
-        }
-
 
         private void ajouterFichiers()
         {
@@ -212,25 +252,19 @@ namespace ShaBiDi.Views
             {  
                 foreach(String file in ofd.FileNames)
                 {
-                    if (!ImportedFiles.Contains(file)) ImportedFiles.Add(file);
+                    if (!AddedFiles.Contains(file)) AddedFiles.Add(file);
                 }
             }
 
-            lbImportedFiles.ItemsSource = ImportedFiles;
+            lbImportedFiles.ItemsSource = AddedFiles;
         }
 
-        private void supprimerFichier()
-        {
-            lbImportedFiles.ItemsSource = null;
-            Console.WriteLine("Suppression fichiers");
-            ImportedFiles.Remove(SelectedFiles);
-            lbImportedFiles.ItemsSource = ImportedFiles;
-        }
 
-        private int getNumeroGroupeFichier(string nameFile)
+
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            String[] nameFileItems = nameFile.Split('-');
-            return Convert.ToInt32(nameFileItems.Last());
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
         }
 
     }

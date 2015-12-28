@@ -12,10 +12,10 @@ namespace ShaBiDi.ViewModels
 {
     public class AllerRetourModel : Model
     {
-        private Dictionary<Image, double> data;
+        private Dictionary<ImageExp, double> data;
         private I_AllerRetour indic;
 
-        public Dictionary<Image, double> Data
+        public Dictionary<ImageExp, double> Data
         {
             get { return data; }
             set { data = value; }
@@ -85,7 +85,7 @@ namespace ShaBiDi.ViewModels
         // Normalise les données selon les critères sélectionnés
         protected override void GetData()
         {
-            Data = new Dictionary<Image, double>();
+            Data = new Dictionary<ImageExp, double>();
 
             Positions = CreateIndicWindow.Positions;
             Groupes = CreateIndicWindow.Groupes;

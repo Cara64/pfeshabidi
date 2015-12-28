@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShaBiDi.Logic
 {
-    public class Image
+    public class ImageExp
     {
         // A voir s'il ne faut pas permettre de modifier les dimansions de l'image
         // C'est ici qu'il faut intervenir si les dimensions changent
@@ -26,7 +26,7 @@ namespace ShaBiDi.Logic
 
         // ex pour remplir l'accès : .jpg
 
-        public Image(int numero)
+        public ImageExp(int numero)
         {
             Numero = numero;
         }

@@ -16,18 +16,16 @@ namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
+    /// MainWindow - Ecran principal de l'application
     /// </summary>
 
     public partial class MainWindow : Window
     {
 
-        public static List<UserControl> Indicateurs;
-        public static List<UserControl> Comparateurs;
-
-        public ImportWindow import;
-        public CreateIndicWindow createIndic;
-        public CompareIndicWindow compareIndic;
-        public ExtractWindow extract;
+        private ImportWindow import;
+        private CreateIndicWindow createIndic;
+        private CompareIndicWindow compareIndic;
+        private ExtractWindow extract;
 
 
         public MainWindow()
@@ -35,8 +33,7 @@ namespace ShaBiDi.Views
             try
             {
                 InitializeComponent();
-                Indicateurs = new List<UserControl>();
-
+               
                 import = new ImportWindow();
                 createIndic = new CreateIndicWindow();
                 compareIndic = new CompareIndicWindow();
@@ -76,6 +73,11 @@ namespace ShaBiDi.Views
         #endregion
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Cette fonctionnalité n'est pas disponible");
+        }
+
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Cette fonctionnalité n'est pas disponible");
         }

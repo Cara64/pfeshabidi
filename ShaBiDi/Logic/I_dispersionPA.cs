@@ -7,9 +7,9 @@ namespace ShaBiDi.Logic
 {
     public class I_DispersionPA : Indicateur
     {
-        private Dictionary<Image, double> data;
+        private Dictionary<ImageExp, double> data;
 
-        public Dictionary<Image, double> Data
+        public Dictionary<ImageExp, double> Data
         {
             get { return data; }
             set { data = value; }
@@ -18,12 +18,12 @@ namespace ShaBiDi.Logic
         public I_DispersionPA(List<int> mesUsers, List<OrdreGroupe> ordres, bool pa, bool s, List<Groupe> groupes)
             : base(mesUsers, ordres, pa, s, groupes)
         {
-            Data = new Dictionary<Image, double>();
+            Data = new Dictionary<ImageExp, double>();
         }
 
         // Permet de calculer la dispersion des PA à chaque instant t d'une image d'une image
         // Le dictionnaire des dispersions est en paramètre pour stocker la dispersion obtenue
-        private void calculeDispersion(Image i, Dictionary<Image, List<double>> dico, List<Observation> listeObs)
+        private void calculeDispersion(ImageExp i, Dictionary<ImageExp, List<double>> dico, List<Observation> listeObs)
         {
             //Liste des distances entres les PA à un instant t
             List<double> distances = new List<double>();
@@ -83,7 +83,7 @@ namespace ShaBiDi.Logic
         }
 
         // Obtention de la moyenne des taux de recouvrement pour chaque image
-        public Dictionary<Image, double> determineDispersion()
+        public Dictionary<ImageExp, double> determineDispersion()
         {
 
             // On crée la liste provisoire des observations de chaque image (à réinitialiser pour chaque groupe)
@@ -93,10 +93,10 @@ namespace ShaBiDi.Logic
             List<Sujet> sujParGr = new List<Sujet>();
 
             // Et la liste provisoire des observations associées à chaque image (par groupe)
-            Dictionary<Image, List<Observation>> dictionary = new Dictionary<Image, List<Observation>>();
+            Dictionary<ImageExp, List<Observation>> dictionary = new Dictionary<ImageExp, List<Observation>>();
 
             // On crée la liste où on va stocker tous les taux obtenus par image. Elle sera enrichie par chaque groupe
-            Dictionary<Image, List<double>> dictionaryDispersion = new Dictionary<Image, List<double>>();
+            Dictionary<ImageExp, List<double>> dictionaryDispersion = new Dictionary<ImageExp, List<double>>();
 
             // Sélection des bons sujets
             foreach (Groupe g in _mesGroupes)
@@ -139,7 +139,7 @@ namespace ShaBiDi.Logic
 
                 // Maintenant, toutes les observations sont triées par image, on va alors déterminer la dispersion moyenne par image
 
-                foreach (Image i in dictionary.Keys)
+                foreach (ImageExp i in dictionary.Keys)
                 {
                     // La méthode range les taux dans le dictionnaire
                     calculeDispersion(i, dictionaryDispersion, dictionary[i]);
@@ -149,9 +149,9 @@ namespace ShaBiDi.Logic
 
             // Les taux de tous les groupes sont mentionnés dans dictionaryTaux, ne reste plus qu'à faire la moyenne
             // On crée la liste des taux par image sous forme de dictionnaire
-            Dictionary<Image, double> dispersionParImage = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> dispersionParImage = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dictionaryDispersion.Keys)
+            foreach (ImageExp i in dictionaryDispersion.Keys)
             {
                 // Calcul de la moyenne de tous les taux de l'image
                 dispersionParImage.Add(i, calculeMoyenne(dictionaryDispersion[i]));
@@ -162,16 +162,16 @@ namespace ShaBiDi.Logic
         }
 
         // Méthode de comparaison
-        public Dictionary<Image, double> compareDispersion(TypeComp type, I_DispersionPA i)
+        public Dictionary<ImageExp, double> compareDispersion(TypeComp type, I_DispersionPA i)
         {
             // Création du nouvel indicateur de comparaison
             I_DispersionPA indicCompare = new I_DispersionPA(fusionUsers(this, i), fusionOrdres(this, i), fusionPa(this, i), fusionS(this, i), fusionGroupes(this, i));
 
             // On cherche à comparer les deux dictionnaires
-            Dictionary<Image, List<double>> dico = new Dictionary<Image, List<double>>();
+            Dictionary<ImageExp, List<double>> dico = new Dictionary<ImageExp, List<double>>();
 
             // On remplit le dictionnaire avec les données du premier indicateur
-            foreach (Image img in this.Data.Keys)
+            foreach (ImageExp img in this.Data.Keys)
             {
                 if (dico.ContainsKey(img))
                 {
@@ -185,7 +185,7 @@ namespace ShaBiDi.Logic
                 }
             }
             // On remplit le dictionnaire avec les données du second indicateur
-            foreach (Image img in i.Data.Keys)
+            foreach (ImageExp img in i.Data.Keys)
             {
                 if (dico.ContainsKey(img))
                 {
@@ -215,11 +215,11 @@ namespace ShaBiDi.Logic
             return indicCompare.Data;
         }
 
-        private Dictionary<Image, double> additionner(Dictionary<Image, List<double>> dico)
+        private Dictionary<ImageExp, double> additionner(Dictionary<ImageExp, List<double>> dico)
         {
-            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dico.Keys)
+            foreach (ImageExp i in dico.Keys)
             {
 
                 // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable
@@ -236,11 +236,11 @@ namespace ShaBiDi.Logic
             }
             return dicoCompare;
         }
-        private Dictionary<Image, double> soustraire(Dictionary<Image, List<double>> dico)
+        private Dictionary<ImageExp, double> soustraire(Dictionary<ImageExp, List<double>> dico)
         {
-            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dico.Keys)
+            foreach (ImageExp i in dico.Keys)
             {
 
                 // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable
@@ -257,11 +257,11 @@ namespace ShaBiDi.Logic
             }
             return dicoCompare;
         }
-        private Dictionary<Image, double> moyenner(Dictionary<Image, List<double>> dico)
+        private Dictionary<ImageExp, double> moyenner(Dictionary<ImageExp, List<double>> dico)
         {
-            Dictionary<Image, double> dicoCompare = new Dictionary<Image, double>();
+            Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
 
-            foreach (Image i in dico.Keys)
+            foreach (ImageExp i in dico.Keys)
             {
 
                 // On fait la différence entre les deux éléments de la liste que l'on stocke dans une variable

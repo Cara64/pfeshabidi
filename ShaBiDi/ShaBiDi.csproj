@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{89EA7DF2-E311-4E06-B6B0-70DF35DDC353}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShaBiDi</RootNamespace>
     <AssemblyName>ShaBiDi</AssemblyName>
@@ -53,6 +53,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <HintPath>..\packages\OxyPlot.Core.1.0.0-unstable1870\lib\net40-client\OxyPlot.dll</HintPath>
@@ -91,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppData.cs" />
     <Compile Include="Logic\I_AllerRetour.cs" />
     <Compile Include="Logic\I_DispersionPA.cs" />
     <Compile Include="ViewModels\AllerRetourModel.cs" />
@@ -194,7 +198,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\Groupe.cs" />
-    <Compile Include="Logic\Image.cs" />
+    <Compile Include="Logic\ImageExp.cs" />
     <Compile Include="Views\ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
     </Compile>
@@ -315,6 +319,15 @@
     <Resource Include="Resources\ImagesExp\7_marchefruits.jpg" />
     <Resource Include="Resources\ImagesExp\8_formescolores.jpg" />
     <Resource Include="Resources\ImagesExp\9_villequebec.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
