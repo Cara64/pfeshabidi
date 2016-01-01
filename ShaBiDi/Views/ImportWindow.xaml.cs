@@ -20,71 +20,89 @@ namespace ShaBiDi.Views
     /// <summary>
     /// Logique d'interaction pour ImportWindow.xaml
     /// ImportWindow - Fenêtre pour importer les fichiers dans les classes métiers
+    /// TODO: Feedback utilisateur pour chaque fichier importé (retour couleur dans la ListBox)
     /// </summary>
     public partial class ImportWindow : Window
     {
-        private BackgroundWorker importWorker;  // thread pour l'import
-        private bool isImporting;               // booléen qui indique s'il y a une importation en cours
-        private List<String> addedFiles;        // fichiers ajoutés
-        
-        public List<String> AddedFiles
-        {
-            get { return addedFiles; }
-            set { addedFiles = value; }
-        }
 
+        #region Attributs
+
+        /// <summary>
+        /// Thread pour l'importation
+        /// </summary>
+        private BackgroundWorker importWorker; 
+        /// <summary>
+        /// Liste de chaînes de caractères contenant les fichiers à ajouter
+        /// </summary>
+        private List<String> addedFiles;        // fichiers ajoutés (non importés)
+
+        #endregion
+
+
+        #region Constructeurs
+
+        /// <summary>
+        /// Constructeur de la classe ImportWindow
+        /// </summary>
         public ImportWindow()
         {
             InitializeComponent();
 
-            AddedFiles = new List<String>();
-            isImporting = false;
-
+            addedFiles = new List<String>();
             importWorker = new BackgroundWorker();
+
+            SetUpImportWorker();
+        }
+
+        #endregion
+
+
+        #region Méthodes de gestion du thread
+
+        /// <summary>
+        /// Méthode pour paramétrer le thread d'import
+        /// </summary>
+        private void SetUpImportWorker()
+        {
             importWorker.WorkerReportsProgress = true;
             importWorker.WorkerSupportsCancellation = true;
+
             importWorker.DoWork += importWorker_DoWork;
             importWorker.ProgressChanged += importWorker_ProgressChanged;
             importWorker.RunWorkerCompleted += importWorker_RunWorkerCompleted;
         }
 
-
+        /// <summary>
+        /// Méthode d'exécution du thread
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void importWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-
-            if (worker.CancellationPending == true)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                remplirClasses(worker);
-            }
+            
+            remplirClasses(worker, e);
+            
         }
 
+        /// <summary>
+        /// Méthode qui modifie le pourcentage affichée dans la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void importWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int nbImported = e.ProgressPercentage;
-            int nbToImport = AddedFiles.Count();
+            int nbToImport = addedFiles.Count();
             
-            lblInfoImport.Content = nbImported + " / " + nbToImport + ((nbImported == 1) ? " fichier importé" : "fichiers importés");
+            lblInfoImport.Content = nbImported + " / " + nbToImport + ((nbImported == 1) ? " fichier importé" : " fichiers importés");
         }
-
-        private void btnAddFiles_Click(object sender, RoutedEventArgs e)
-        {
-            ajouterFichiers();
-            int nbToImport = AddedFiles.Count();
-            lblInfoImport.Content = nbToImport + ((nbToImport == 1) ? " fichier à importer" : "fichiers importés");
-
-            if (AddedFiles.Count() > 0)
-            {
-                btnImportFiles.IsEnabled = true;
-            }
-
-
-        }
-
+        
+        /// <summary>
+        /// Méthode déclenchée lorsque le thread se termine (succès, erreur ou annulation)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void importWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             pbImportFiles.IsIndeterminate = false;
@@ -95,10 +113,7 @@ namespace ShaBiDi.Views
             }
             else if (e.Cancelled == true)
             {
-                isImporting = false;
-                pbImportFiles.IsIndeterminate = false;
-                btnAddFiles.IsEnabled = true;
-                btnImportFiles.Content = "Importer";
+                MessageBox.Show("L'import a été interrompu", "Annulation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
@@ -106,37 +121,89 @@ namespace ShaBiDi.Views
             }
         }
 
+        #endregion
 
-        private void btnImportFiles_Click(object sender, RoutedEventArgs e)
+
+        #region Méthodes événements
+
+        /// <summary>
+        /// Méthode déclenchée lors du clic sur le bouton d'ajout de fichiers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAddFiles_Click(object sender, RoutedEventArgs e)
         {
-            try
+            ajouterFichiers();
+
+            int nbToImport = addedFiles.Count();
+            lblInfoImport.Content = nbToImport + ((nbToImport == 1) ? " fichier à importer" : " fichiers à importer");
+
+            if (addedFiles.Count() > 0)
             {
-                if (!isImporting)
-                {
-                    isImporting = true;
-                    pbImportFiles.IsIndeterminate = true;
-                    btnAddFiles.IsEnabled = false;
-                    btnImportFiles.Content = "Annuler";
-                    importWorker.RunWorkerAsync();
-                }
-                else
-                {
-                    importWorker.CancelAsync();
-                }
-             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erreur : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                btnImportFiles.IsEnabled = true;
             }
+
+
         }
 
+        /// <summary>
+        /// Méthode déclenchée lors du clic sur le bouton d'importation ou d'annulation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnImportFiles_Click(object sender, RoutedEventArgs e)
+        {
+        
+            // Si l'import n'est pas en cours : on affiche le bouton "Importer"
+            if (importWorker.IsBusy != true)
+            {
+                pbImportFiles.IsIndeterminate = true;
+                btnAddFiles.IsEnabled = false;
+                btnImportFiles.Content = "Annuler";
+                importWorker.RunWorkerAsync();
+            }
+            else if (importWorker.WorkerSupportsCancellation == true && importWorker.IsBusy == true)
+            {
+                pbImportFiles.IsIndeterminate = false;
+                btnAddFiles.IsEnabled = true;
+                btnImportFiles.Content = "Importer";
+                importWorker.CancelAsync();
+            }           
+        }
+
+        /// <summary>
+        /// Méthode déclenchée lors de la fermeture de fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
+        }
+
+        #endregion
+
+
+        #region Helpers et méthodes internes
+
+        /// <summary>
+        /// Méthode pour convertir un chaîne de caractère en une modalité (PA ou S)
+        /// </summary>
+        /// <param name="mod">Chaîne de caractère à convertir (PA ou S)</param>
+        /// <returns>Une valeur de type Modalité (PA ou S)</returns>
         private Modalite convert(string mod)
         {
             return (mod.Equals("PA")) ? Modalite.PA : Modalite.S;
         }
 
-        // On remplit les classes à partir des fichiers de données
-        private void remplirClasses(BackgroundWorker bw)
+        /// <summary>
+        /// Méthode d'importation des données des fichiers dans les classes objets*
+        /// TODO: Déplacer la méthode dans la classe AppData et la découper en sous-méthodes
+        /// </summary>
+        /// <param name="bw">Thread BackgroundWorker dans lequel s'effectue l'opération</param>
+        /// <param name="e">Evénements de gestion du thread</param>
+        private void remplirClasses(BackgroundWorker bw, DoWorkEventArgs e)
         {
             bool refFaite = false;
             double tpsEcoule = 0.0;             // colonne 00 de l'entête
@@ -166,10 +233,9 @@ namespace ShaBiDi.Views
             }
             
             for (int i = 0; i < users.Length; i++) users[i] = new Sujet(i + 1);
-           
-            foreach (string file in AddedFiles)
-            {
 
+            foreach (string file in addedFiles)
+            {
                 // On "nettoie" tous les sujets
                 foreach (Sujet user in users)
                 {
@@ -178,15 +244,15 @@ namespace ShaBiDi.Views
                 }
 
                 string[] lignes = System.IO.File.ReadAllLines(file);
-                
+
                 // On va remplir le tableau avec chaque ligne
                 string[,] donneesGroupe = new string[lignes.Length, 29];
 
-                for (int i = 0; i < lignes.Length; i++) 
+                for (int i = 0; i < lignes.Length; i++)
                 {
                     string[] ligneDecoupee = lignes[i].Split(';');
 
-                    for (int j = 0; j < ligneDecoupee.Length; j++) donneesGroupe[i, j] = ligneDecoupee[j]; 
+                    for (int j = 0; j < ligneDecoupee.Length; j++) donneesGroupe[i, j] = ligneDecoupee[j];
                 }
 
                 int l = 0;
@@ -203,14 +269,14 @@ namespace ShaBiDi.Views
                     while ((l < lignes.Length) && (int.Parse(donneesGroupe[l, 3]) == image))
                     {
                         tpsEcoule = double.Parse(donneesGroupe[l, 0]);
-                       
+
                         image = int.Parse(donneesGroupe[l, 3]);
                         int[] colEntetes = { 10, 11 };
                         for (int i = 0; i < x.Length; i++)
                         {
                             x[i] = double.Parse(donneesGroupe[l, colEntetes[0]]);
                             y[i] = double.Parse(donneesGroupe[l, colEntetes[1]]);
-                            
+
                             if (!refFaite)
                             {
                                 PointAttention PA1 = new PointAttention(new Vecteur2(x[i], y[i]), tpsEcoule);
@@ -219,7 +285,7 @@ namespace ShaBiDi.Views
                             }
 
                             for (int j = 0; j < colEntetes.Length; j++) colEntetes[j] += 8;
-                            users[i].AddPA(image, modalite, x[i], y[i], tpsEcoule);    
+                            users[i].AddPA(image, modalite, x[i], y[i], tpsEcoule);
                         }
                         l++;
                     } // Fin boucle while, changement d'image
@@ -233,15 +299,26 @@ namespace ShaBiDi.Views
 
                 AppData.GroupesExp.Add(groupe);
 
+                if (bw.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+
                 counterFiles++;
                 bw.ReportProgress(counterFiles);
-                
+
             } // Fin foreach, changement de fichier (donc de groupe)
+            
       
         }
 
+        /// <summary>
+        /// Méthode d'ajout des fichiers dans la liste
+        /// </summary>
         private void ajouterFichiers()
         {
+            addedFiles.Clear();
             lbImportedFiles.ItemsSource = null;
 
             OpenFileDialog ofd = new OpenFileDialog();
@@ -252,20 +329,14 @@ namespace ShaBiDi.Views
             {  
                 foreach(String file in ofd.FileNames)
                 {
-                    if (!AddedFiles.Contains(file)) AddedFiles.Add(file);
+                    if (!addedFiles.Contains(file)) addedFiles.Add(file);
                 }
             }
 
-            lbImportedFiles.ItemsSource = AddedFiles;
+            lbImportedFiles.ItemsSource = addedFiles;
         }
 
-
-
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            e.Cancel = true;
-            this.Visibility = Visibility.Hidden;
-        }
+        #endregion
 
     }
 }
