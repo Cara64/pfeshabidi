@@ -40,7 +40,12 @@ namespace ShaBiDi.Views
 
             Groupes = AppData.GroupesExp;
             lbGroup.ItemsSource = Groupes;
-            lbGroup.SelectAll();
+
+            foreach (ListBoxItem item in lbGroup.Items)
+            {
+                item.IsSelected = true;
+            }
+            
 
         }
 

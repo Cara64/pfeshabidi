@@ -20,7 +20,6 @@ namespace ShaBiDi.Views
     /// <summary>
     /// Logique d'interaction pour ImportWindow.xaml
     /// ImportWindow - Fenêtre pour importer les fichiers dans les classes métiers
-    /// TODO: Feedback utilisateur pour chaque fichier importé (retour couleur dans la ListBox)
     /// </summary>
     public partial class ImportWindow : Window
     {
@@ -94,6 +93,9 @@ namespace ShaBiDi.Views
         {
             int nbImported = e.ProgressPercentage;
             int nbToImport = addedFiles.Count();
+
+            ListBoxItem selectedListBoxItem = lbImportedFiles.ItemContainerGenerator.ContainerFromIndex(nbImported-1) as ListBoxItem;
+            selectedListBoxItem.Background = Brushes.LightGreen ;
             
             lblInfoImport.Content = nbImported + " / " + nbToImport + ((nbImported == 1) ? " fichier importé" : " fichiers importés");
         }
@@ -117,7 +119,7 @@ namespace ShaBiDi.Views
             }
             else
             {
-                MessageBox.Show("Importation terminée avec succès");
+                MessageBox.Show("Importation terminée avec succès", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -304,6 +306,8 @@ namespace ShaBiDi.Views
                     e.Cancel = true;
                     break;
                 }
+
+
 
                 counterFiles++;
                 bw.ReportProgress(counterFiles);
