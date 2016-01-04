@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="ed9db0ca-7a00-41dd-a455-338b9c47f5c4"
+  name="Logic"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="ed579cb5-bc9d-4a50-99e4-0410b5100bb6"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DShaBiDi.Logic"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="e084cca0-ff7a-4410-ad83-d651d41e4d90"
+        name="ImageExp"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="91f2b1a4-6d33-43d1-8bcb-fae5dcebd930"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FDocuments%2FENSC%2F3A%2FPFE%2FShaBiDi%2FShaBiDi%2Fbin%2FDebug%2FShaBiDi.exe Namespace%3DShaBiDi.Logic Type%3DImageExp"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="5df6db2b-eb10-47e8-add3-891ceb254b1f"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bd01172c-d3bc-4958-88ca-d76d32b4e5fa">
+                <propertyInstance
+                  Id="31b09ac4-acf7-450b-8916-8cb1b9b762dd"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3d3b430d-5992-4db6-ab80-f8b19439b1f4">
+                <propertyInstance
+                  Id="d944651b-81dd-4df6-bbdd-365bf439307b"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2d1755e5-8c5c-42da-a50a-80770bd7cf2e">
+                <propertyInstance
+                  Id="715921f8-b30f-49a2-8468-0ee0386f8790"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="12ba6f32-bfd7-42e9-8ad2-56f078359b74">
+                <propertyInstance
+                  Id="6b5ba165-da3f-45f1-8c44-ab6ec77c53b8"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a13ef7cc-cc93-4ac4-88c4-0b4569394da5">
+                <propertyInstance
+                  Id="3cb54fbb-d95c-4011-a9d6-0c51a276879e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e74345d2-7851-4e75-aed4-8b18d0af1e15"
+        name="Groupe"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="be917833-3a59-43ba-880d-ccf432cf3de3"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FDocuments%2FENSC%2F3A%2FPFE%2FShaBiDi%2FShaBiDi%2Fbin%2FDebug%2FShaBiDi.exe Namespace%3DShaBiDi.Logic Type%3DGroupe"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e1b4e85b-0e8a-4648-a734-e92eac4b4ec0"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2720c25c-acee-4e7e-9659-7876ef9ac54c">
+                <propertyInstance
+                  Id="cd759b99-c32f-4ad9-91dc-00a02ff2654d"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ac4452ba-c897-4507-8067-ace1c7c9c46a">
+                <propertyInstance
+                  Id="8a37efb9-3cc2-46a1-8bbe-e799fe6cd870"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a96b2ea4-068a-40a9-b0bc-344849428126">
+                <propertyInstance
+                  Id="43a54b46-5bb7-4b2e-a8ae-e38ef197ab29"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="26535cb7-4120-44b6-b9cd-b82392162fff">
+                <propertyInstance
+                  Id="bc674f84-61eb-4875-9861-37035f1752f8"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d3a4ea46-7b00-4ace-bb1e-a5ae6dd5be1d">
+                <propertyInstance
+                  Id="73069053-6210-4da3-8ec1-6edfa829b9e9"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

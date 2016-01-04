@@ -15,7 +15,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <PublishUrl>publier\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>D:\Documents\ENSC\3A\ShaBiDi-DataVizTool\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -27,8 +28,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -55,6 +56,24 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>3B3AF9327560603246653567BA2D2ABEDF92ED9A</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>ShaBiDi_CléTemporaire.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
@@ -95,8 +114,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppData.cs" />
-    <Compile Include="Logic\I_AllerRetour.cs" />
-    <Compile Include="Logic\I_DispersionPA.cs" />
+    <Compile Include="Logic\IndicateurAllerRetour.cs" />
+    <Compile Include="Logic\IndicateurDispersionPA.cs" />
     <Compile Include="ViewModels\AllerRetourModel.cs" />
     <Compile Include="ViewModels\CompAllerRetourModel.cs" />
     <Compile Include="ViewModels\CompDispersionPAModel.cs" />
@@ -131,8 +150,8 @@
     <Compile Include="Views\ExtractWindow.xaml.cs">
       <DependentUpon>ExtractWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logic\I_DensiteRecouvrement.cs" />
-    <Compile Include="Logic\I_TauxRecouvrement.cs" />
+    <Compile Include="Logic\IndicateurDensiteRecouvrement.cs" />
+    <Compile Include="Logic\IndicateurTauxRecouvrement.cs" />
     <Compile Include="Logic\PointAttention.cs" />
     <Compile Include="Views\ResultWindow.xaml.cs">
       <DependentUpon>ResultWindow.xaml</DependentUpon>
@@ -145,6 +164,9 @@
     <Compile Include="ViewModels\CompTauxRecouvrementModel.cs" />
     <Compile Include="ViewModels\Model.cs" />
     <Compile Include="ViewModels\TauxRecouvrementModel.cs" />
+    <Compile Include="Views\WaitWindow.xaml.cs">
+      <DependentUpon>WaitWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\AllerRetourUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,6 +237,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WaitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\Observation.cs" />
@@ -236,12 +262,15 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="ShaBiDi_CléTemporaire.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\sign-add.png" />
@@ -287,40 +316,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ImagesExp\1_bigbang.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ImagesExp\10_bigbigbang.jpg" />
-    <Resource Include="Resources\ImagesExp\11_bureaudésordre.jpg" />
-    <Resource Include="Resources\ImagesExp\12_japaneeseTags.jpg" />
-    <Resource Include="Resources\ImagesExp\13_messyDirty.jpg" />
-    <Resource Include="Resources\ImagesExp\14_bureauordi.jpg" />
-    <Resource Include="Resources\ImagesExp\15_DirtyRoom.jpg" />
-    <Resource Include="Resources\ImagesExp\16_frenchNuage.jpg" />
-    <Resource Include="Resources\ImagesExp\17_dirtyfloor.jpg" />
-    <Resource Include="Resources\ImagesExp\18_DirtyTable.jpg" />
-    <Resource Include="Resources\ImagesExp\19_bureauwindows.jpg" />
-    <Resource Include="Resources\ImagesExp\20_DirtyDesk.png" />
-    <Resource Include="Resources\ImagesExp\21_frenchTags.jpg" />
-    <Resource Include="Resources\ImagesExp\22_GarageOutils.jpg" />
-    <Resource Include="Resources\ImagesExp\23_mess.jpg" />
-    <Resource Include="Resources\ImagesExp\24_DirtyWall.jpg" />
-    <Resource Include="Resources\ImagesExp\25_englishNuage.jpg" />
-    <Resource Include="Resources\ImagesExp\26_messyRoom.jpg" />
-    <Resource Include="Resources\ImagesExp\27_DirtyBibli.jpg" />
-    <Resource Include="Resources\ImagesExp\28_latinTags.jpg" />
-    <Resource Include="Resources\ImagesExp\29_room.jpg" />
-    <Resource Include="Resources\ImagesExp\2_blueRoom.jpg" />
-    <Resource Include="Resources\ImagesExp\30_Workspace.jpg" />
-    <Resource Include="Resources\ImagesExp\3_chineeseTags.jpg" />
-    <Resource Include="Resources\ImagesExp\4_messy-office3d.jpg" />
-    <Resource Include="Resources\ImagesExp\5_dirty.jpg" />
-    <Resource Include="Resources\ImagesExp\6_englishTags.jpg" />
-    <Resource Include="Resources\ImagesExp\7_marchefruits.jpg" />
-    <Resource Include="Resources\ImagesExp\8_formescolores.jpg" />
-    <Resource Include="Resources\ImagesExp\9_villequebec.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +323,38 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImagesExp\_01bigbang.jpg" />
+    <Resource Include="Resources\ImagesExp\_02blueRoom.jpg" />
+    <Resource Include="Resources\ImagesExp\_03chineeseTags.jpg" />
+    <Resource Include="Resources\ImagesExp\_04messy-office3d.jpg" />
+    <Resource Include="Resources\ImagesExp\_05dirty.jpg" />
+    <Resource Include="Resources\ImagesExp\_06englishTags.jpg" />
+    <Resource Include="Resources\ImagesExp\_07marchefruits.jpg" />
+    <Resource Include="Resources\ImagesExp\_08formescolores.jpg" />
+    <Resource Include="Resources\ImagesExp\_09villequebec.jpg" />
+    <Resource Include="Resources\ImagesExp\_10bigbigbang.jpg" />
+    <Resource Include="Resources\ImagesExp\_11bureaudésordre.jpg" />
+    <Resource Include="Resources\ImagesExp\_12japaneeseTags.jpg" />
+    <Resource Include="Resources\ImagesExp\_13messyDirty.jpg" />
+    <Resource Include="Resources\ImagesExp\_14bureauordi.jpg" />
+    <Resource Include="Resources\ImagesExp\_15DirtyRoom.jpg" />
+    <Resource Include="Resources\ImagesExp\_16frenchNuage.jpg" />
+    <Resource Include="Resources\ImagesExp\_17dirtyfloor.jpg" />
+    <Resource Include="Resources\ImagesExp\_18DirtyTable.jpg" />
+    <Resource Include="Resources\ImagesExp\_19bureauwindows.jpg" />
+    <Resource Include="Resources\ImagesExp\_20DirtyDesk.png" />
+    <Resource Include="Resources\ImagesExp\_21frenchTags.jpg" />
+    <Resource Include="Resources\ImagesExp\_22GarageOutils.jpg" />
+    <Resource Include="Resources\ImagesExp\_23mess.jpg" />
+    <Resource Include="Resources\ImagesExp\_24DirtyWall.jpg" />
+    <Resource Include="Resources\ImagesExp\_25englishNuage.jpg" />
+    <Resource Include="Resources\ImagesExp\_26messyRoom.jpg" />
+    <Resource Include="Resources\ImagesExp\_27DirtyBibli.jpg" />
+    <Resource Include="Resources\ImagesExp\_28latinTags.jpg" />
+    <Resource Include="Resources\ImagesExp\_29room.jpg" />
+    <Resource Include="Resources\ImagesExp\_30Workspace.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

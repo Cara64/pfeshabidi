@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="mainTitle" xml:space="preserve">
-    <value>ShaBiDi</value>
-    <comment>Titre de l'application</comment>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="box_in" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\box-in.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,17 +132,5 @@
   </data>
   <data name="sign_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\sign-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="toolTipAdd" xml:space="preserve">
-    <value>Ajouter un indicateur</value>
-  </data>
-  <data name="toolTipImport" xml:space="preserve">
-    <value>Importer les fichiers</value>
-  </data>
-  <data name="toolTipNotes1" xml:space="preserve">
-    <value>Ajouter un commentaire pour l'onglet</value>
-  </data>
-  <data name="toolTipSave" xml:space="preserve">
-    <value>Sauvegarder les données</value>
   </data>
 </root>

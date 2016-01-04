@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="46382079-dc6a-42fb-ba74-c8c00cf9f733"
+  name="ShaBiDi"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="90c9f313-8432-4a78-8f8c-eb80a245d6e5"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DShaBiDi"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="4167e4fd-4bf1-4031-8256-eaa7cb7f3225"
+        LastKnownName="ViewModels"
+        LastKnownLocation="Package1_1309.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="ed9db0ca-7a00-41dd-a455-338b9c47f5c4"
+        LastKnownName="Logic"
+        LastKnownLocation="Package5_1309.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="dffa640a-ac1c-4db5-96f6-5d5e18a21764"
+        LastKnownName="Views"
+        LastKnownLocation="Package6_1309.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="51faa3de-90b7-48dc-855b-0689e43eb1fb"
+        name="OrdreGroupe"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="81ace7e4-bd77-4a5e-bbdb-508b1f15fbae"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3Dfile:%2F%2F%2FD:%2FDocuments%2FENSC%2F3A%2FPFE%2FShaBiDi%2FShaBiDi%2Fbin%2FDebug%2FShaBiDi.exe Namespace%3DShaBiDi Type%3DOrdreGroupe"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="06b3e592-59b6-4df8-a93a-aa06e0eedbb5"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7a0134d2-c944-4541-9b1d-98e391cbc7c1">
+                <propertyInstance
+                  Id="ee4f72ad-9de6-4e8e-8f75-4d8d3609fdae"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bbbb3ffd-af04-45b5-8f55-582881059de3">
+                <propertyInstance
+                  Id="81867788-eb8a-4c13-b9e3-7de45642721d"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7890f204-5142-4a10-8b83-3f3ae7dbc330">
+                <propertyInstance
+                  Id="634036fc-12b0-44e8-9d0d-4a417f13a328"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

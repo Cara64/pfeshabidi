@@ -14,12 +14,12 @@ using System.Windows.Shapes;
 namespace ShaBiDi.Views
 {
     /// <summary>
-    /// Logique d'interaction pour ResultWindow.xaml
-    /// Fenêtre de résultat qui contient le contrôle utilisateur de l'indicateur ou du comparateur calculé
+    /// Logique d'interaction pour WaitWindow.xaml
+    /// WaitWindow - Fenêtre de chargement
     /// </summary>
-    public partial class ResultWindow : Window
+    public partial class WaitWindow : Window
     {
-        public ResultWindow()
+        public WaitWindow()
         {
             InitializeComponent();
         }

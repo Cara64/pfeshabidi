@@ -18,6 +18,10 @@
             <Button Content="&lt;" Height="23" HorizontalAlignment="Left" Name="btnRetour" VerticalAlignment="Top" Width="75" Margin="0,0,20,0" Click="btnRetour_Click"/>
             <Label Content="Image 1" Height="28" HorizontalAlignment="Left" Name="lblNumImage" VerticalAlignment="Top" />
             <Button Content="&gt;" Height="23" HorizontalAlignment="Right" Name="btnSuivant" VerticalAlignment="Top" Width="75" Margin="20,0,0,0" Click="btnSuivant_Click"/>
+            <ComboBox Margin="10,0,10,10" Name="cbTypeDensite" SelectionChanged="cbTypeDensite_SelectionChanged">
+                <ComboBoxItem Content="Transparence" IsSelected="True"/>
+                <ComboBoxItem Content="Couleur" />
+            </ComboBox>
         </StackPanel>
 
     </Grid>

@@ -5,15 +5,30 @@ using System.Text;
 
 namespace ShaBiDi.Logic
 {
+    /// <summary>
+    /// PointAttention - Classe qui permet de modéliser le point d'attention
+    /// </summary>
     public class PointAttention
     {
-        // Dans l'immédiat on va créer des variables statiques
-        // Point d'attention de référence
+
+        #region Attributs et propriétées
+     
+        /// <summary>
+        /// Point d'attention de référence pour le calcul de l'ellipse de reference
+        /// </summary>
         public static Vecteur2 PAref;
+        /// <summary>
+        /// Dimension de l'ellipse
+        /// </summary>
         public static Vecteur2 dimEllipse = new Vecteur2(0,0);
+        /// <summary>
+        /// Liste des pixels de référence
+        /// </summary>
         public static List<Vecteur2> pixelsRef;
 
-        // Il s'agit du temps écoulé (en ms) depuis le début de l'expérience pour l'enregistrment de ce point d'attention
+        /// <summary>
+        /// Temps écoulé en ms depuis le début de l'expérience pour l'enregistrement de ce point d'attention
+        /// </summary>
         private double _tempsEcoule;
         public double TempsEcoule
         {
@@ -21,8 +36,10 @@ namespace ShaBiDi.Logic
             set { _tempsEcoule = value; }
         }
 
-        // Coordonées du point d'attention
-        // Elles sont obtenues grâce à la méthode de calcul lancée dans le constructeur
+        /// <summary>
+        /// Coordonnées du point d'attention
+        /// Obtenues grâce à la méthode de calcul lancée dans le constructeur
+        /// </summary>
         private Vecteur2 _coordPA;
         public Vecteur2 CoordPA
         {
@@ -30,6 +47,9 @@ namespace ShaBiDi.Logic
             set { _coordPA = value; }
         }
 
+        /// <summary>
+        /// Coordonnée X du point d'attention récupérée dans le fichier d'origine
+        /// </summary>
         private double _PAX; // en px
         public double PAX
         {
@@ -37,6 +57,9 @@ namespace ShaBiDi.Logic
             set { _PAX = value; }
         }
 
+        /// <summary>
+        /// Coordonnée Y du PA récupére dans le fichier d'origine
+        /// </summary>
         private double _PAY; // en px
         public double PAY
         {
@@ -44,7 +67,16 @@ namespace ShaBiDi.Logic
             set { _PAY = value; }
         }
 
-        // Le vecteur fourni est celui qui est mentionné dans le fichier de données
+        #endregion
+
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur de la classe PointAttention
+        /// </summary>
+        /// <param name="vect">Vecteur fourni mentionné dans le fichier de données</param>
+        /// <param name="tps">Temps depuis le début de l'enregistrement</param>
         public PointAttention(Vecteur2 vect, double tps)
         {
             _tempsEcoule = tps;
@@ -55,17 +87,32 @@ namespace ShaBiDi.Logic
             _coordPA = initialiseCoordPA(vect);
         }
 
-        // Trouve le bon point d'attention à partir du "mauvais"
+        #endregion
+
+
+        #region Méthodes
+
+        /// <summary>
+        /// Méthode qui trouve le bon point d'attention à partir du "mauvais"
+        /// </summary>
+        /// <param name="vect">Le vecteur mauvais PA</param>
+        /// <returns>Le bon vecteur PA</returns>
         public Vecteur2 initialiseCoordPA(Vecteur2 vect)
         {
             return new Vecteur2(vect.A + dimEllipse.A / 2, vect.B + dimEllipse.B / 2);
             // On a besoin de valeurs rondes donc on arrondit
         }
 
-
-
-        // Méthode qui permet de déterminer les pixels qui sont dans une ellipse de centre le point d'attention de référence
-        // L'ellipse étant la zone d'attention
+        /// <summary>
+        /// Méthode qui permet de déterminer les pixels qui sont dans une ellipse de centre le point d'attention de référence
+        /// L'ellipse étant la zone d'attention
+        /// </summary>
+        /// <param name="screenDistance">Distance à l'écran</param>
+        /// <param name="logicalHeight">Hauteur logique en px</param>
+        /// <param name="logicalWidth">Longueur logique en px</param>
+        /// <param name="physicalHeight">Hauteur physique en m</param>
+        /// <param name="physicalWidth">Longueur logique en m</param>
+        /// <param name="userY">Y du PA</param>
         public void pixelsEllipse(double screenDistance, double logicalHeight, double logicalWidth, double physicalHeight, double physicalWidth, double userY)
         {
             // Le PA avec lequel on fait le calcul devient el PA de référence :
@@ -92,26 +139,34 @@ namespace ShaBiDi.Logic
 
         }
 
-        // Détermine la taille de l'ellipse du point d'attention
-        //screenDistance en px, logicalHeight en px, logicalWidth en px, physicalHeight en m, physicalWidth en m, userZ en m
-        //physicalWidth = 2.63 ; physicalHeight = 1.61 ; logicalWidth = 1680 ; logicalHeight = 1050 ;screenDistance = 3.833 ;
-        public Vecteur2 trouveEllipse(double screenDistance, double logicalHeight, double logicalWidth, double physicalHeight, double physicalWidth, double userZ)
+        /// <summary>
+        /// Détermine la taille de l'ellipse du point d'attention
+        /// </summary>
+        /// <param name="screenDistance">Distance à l'écran</param>
+        /// <param name="logicalHeight">Hauteur logique en px</param>
+        /// <param name="logicalWidth">Longueur logique en px</param>
+        /// <param name="physicalHeight">Hauteur physique en m</param>
+        /// <param name="physicalWidth">Longueur logique en m</param>
+        /// <param name="userY">Y du PA</param>    
+        public Vecteur2 trouveEllipse(double screenDistance, double logicalHeight, double logicalWidth, double physicalHeight, double physicalWidth, double userY)
         {
             //Pour commencer on applique ce calcul (avec le calcul de la Tangente en radian)
             double tan = Math.Tan(Math.PI * 12 / 180); // calcul angle de vision à voir 
             double tan2 = Math.Tan((Math.PI * 15 / 180));
 
-            double hauteurEllipse = (tan * (screenDistance - userZ));
-            double largeurEllipse = (tan2 * (screenDistance - userZ));
+            double hauteurEllipse = (tan * (screenDistance - userY));
+            double largeurEllipse = (tan2 * (screenDistance - userY));
             hauteurEllipse = (hauteurEllipse / physicalHeight) * logicalHeight;
             largeurEllipse = (largeurEllipse / physicalWidth) * logicalWidth;
 
             return new Vecteur2(largeurEllipse, hauteurEllipse);
         }
 
-        // Méthode qui définit si un pixel est dans une ellipse ou non, de centre (0,0,0)
-        // Le premier vecteur a comme première coord la largeur
-        // Le second vecteur a comme seconde coord la hauteur
+        /// <summary>
+        /// Méthode qui définit si un pixel est dans une ellispe ou non, de centre (0,0,0)
+        /// </summary>
+        /// <param name="pixel">Pixel à déterminé</param>
+        /// <returns>Booléen qui indique si le pixel est dans l'ellipse ou non</returns>
         public bool dansEllipse(Vecteur2 pixel)
         {
 
@@ -141,13 +196,21 @@ namespace ShaBiDi.Logic
                 return false;
         }
 
-        // Méthode pour translater les coordonnées d'un pixel dans un repère pour origine le centre de l'ellipse
+        /// <summary>
+        /// Méthode pour translater les coordonnées d'un pixel dans un repère ayant pour origine le centre de l'ellipse
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>Un vecteur translaté</returns>
         private Vecteur2 translatePixel(int x, int y)
         {
             return new Vecteur2(x - _coordPA.A, y - _coordPA.B);
         }
 
-        // Méthode pour translater tous les pixels de l'ellipse de référence vers la nouvelle ellipse
+        /// <summary>
+        /// Méthode pour translater tous les pixels de l'ellipse de référence vers la nouvelle ellipse
+        /// </summary>
+        /// <returns>Une liste de vecteur translaté</returns>
         private List<Vecteur2> translatePixelsEllipse()
         {
             int transX = (int)Math.Floor(this._coordPA.A - PAref.A);
@@ -162,16 +225,14 @@ namespace ShaBiDi.Logic
             return liste;
         }
 
-
-
-        // Choix 1 on fait le choix de calculer les taux avec le PA seuls
-        // x en premiers dans le tableau, y en seconds
-
-        // Cette contribution au taux ne prend en compte que le point d'attention
-        public void contributionTaux1(ref bool[,] grille)
+        /// <summary>
+        /// Contribution au taux qui ne prend en compte que le point d'attention
+        /// </summary>
+        /// <param name="grille">grille de booléen en référence</param>
+        public void contributionTauxPointAttention(ref bool[,] grille)
         {
             double newX = Math.Floor(_coordPA.A);
-            double newY = Math.Floor(_coordPA.B) + ImageExp.dimensionsBandeauLignes;
+            double newY = Math.Floor(_coordPA.B) + ImageExp.DIM_BANDEAU_ROW;
             if ((newX > 0) && (newX < grille.GetLength(1)) && (newY < 0) && (newY > -grille.GetLength(0)))
             {
                 // On met le pixel concerné à true
@@ -183,8 +244,11 @@ namespace ShaBiDi.Logic
 
         }
 
-        // Cette contribution prend en compte l'ellipse en entier
-        public void contributionTaux2(ref bool[,] grille)
+        /// <summary>
+        /// Contribution au taux prend en compte l'ellipse en entier
+        /// </summary>
+        /// <param name="grille">Grille de booléen passé en référence</param>
+        public void contributionTauxEllipse(ref bool[,] grille)
         {
             // On incrémente le nombre de millisecondes sur le pixel concerné sur tous les pixels contenus dans l'ellipse
             // Pour cela on réduit la zone de recherche des pixels
@@ -195,7 +259,7 @@ namespace ShaBiDi.Logic
             foreach (Vecteur2 pixel in listPixels)
             {
                 x = (int)pixel.A;
-                y = (int)(pixel.B * -1) + ImageExp.dimensionsBandeauLignes;
+                y = (int)(pixel.B * -1) + ImageExp.DIM_BANDEAU_ROW;
                 if ((x > 0) && (x < grille.GetLength(1)) && (y > 0) && (y < grille.GetLength(0)))
                 {
                     grille[y, x] = true;
@@ -204,17 +268,22 @@ namespace ShaBiDi.Logic
 
         }
 
-        // Choix 1 : On considère que le temps passé sur un pixel correspond à la moitié du temps depuis le temps précédent
-        // + la moitié du temps avec le temps suivant
+        /// <summary>
+        /// Contribution à la densité
+        /// </summary>
+        /// <param name="grille">grille de booléen en référence</param>
+        /// <param name="temps"></param>
         public void contributionDensite(ref double[,] grille, double temps)
         {
+            // Choix 1 : On considère que le temps passé sur un pixel correspond à la moitié du temps depuis le temps précédent
+            // + la moitié du temps avec le temps suivant
             int x, y;
             
             List<Vecteur2> listPixels = translatePixelsEllipse();
             foreach (Vecteur2 pixel in listPixels)
             {
                 x = (int)pixel.A;
-                y = (int)(pixel.B*-1) + ImageExp.dimensionsBandeauLignes;
+                y = (int)(pixel.B*-1) + ImageExp.DIM_BANDEAU_ROW;
                 if ((x > 0) && (x < grille.GetLength(1)) && (y > 0) && (y < grille.GetLength(0)))
                 {
                     grille[y, x] += temps;
@@ -223,15 +292,16 @@ namespace ShaBiDi.Logic
                     
         }
 
-        // Méthode qui permet de déterminer si le point d'attention est dans le bandeau ou non
+        /// <summary>
+        /// Méthode qui permet de déterminer si le PA est dans le bandeau ou non
+        /// </summary>
+        /// <returns></returns>
         public bool dansBandeau()
         {
-            Console.WriteLine(this._coordPA.B);
-            if (this._coordPA.B > -ImageExp.dimensionsBandeauLignes)
-                return true;
-            else
-                return false;
+            return (this._coordPA.B > -ImageExp.DIM_BANDEAU_ROW);
         }
+
+        #endregion
 
     }
 }

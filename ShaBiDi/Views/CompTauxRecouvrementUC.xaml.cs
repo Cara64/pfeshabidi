@@ -16,25 +16,46 @@ using ShaBiDi.ViewModels;
 namespace ShaBiDi.Views
 {
     /// <summary>
-    /// Logique d'interaction pour TauxRecouvrement.xaml
+    /// Logique d'interaction pour CompTauxRecouvrementUC.xaml
+    /// CompTauxRecouvrementUC - Contrôle utilisateur pour l'affichage de la comparaison du taux de recouvrement
     /// </summary>
     public partial class CompTauxRecouvrementUC : UserControl
     {
 
-        private CompTauxRecouvrementModel viewModel;
+        #region Attribut et propriétés
 
+        /// <summary>
+        /// Modèle pour le graphique
+        /// </summary>
+        private CompTauxRecouvrementModel viewModel;
         public CompTauxRecouvrementModel ViewModel
         {
             get { return viewModel; }
             set { viewModel = value; }
         }
 
+        /// <summary>
+        /// Fenêtre de résultat
+        /// </summary>
+        private ResultWindow res;
+
+        #endregion
+
+
+        #region Constructeur
 
         public CompTauxRecouvrementUC()
         {
             ViewModel = new CompTauxRecouvrementModel();
             DataContext = ViewModel;
             InitializeComponent();
+
+            res = new ResultWindow();
+            res.Title = this.ToString();
+            res.Content = this;
+            res.Show();
         }
+
+        #endregion 
     }
 }

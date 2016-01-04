@@ -17,21 +17,44 @@ namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour CompAllerRetourUC.xaml
+    /// CompAllerRetourUC - Contrôle utilisateur pour l'affichage de la comparaison du nombre d'aller retour
     /// </summary>
     public partial class CompAllerRetourUC : UserControl
     {
-        private CompAllerRetourModel viewModel;
+        #region Attributs et propriétés
 
+        /// <summary>
+        /// Modèle pour le graphique
+        /// </summary>
+        private CompAllerRetourModel viewModel;
         public CompAllerRetourModel ViewModel
         {
             get { return viewModel; }
             set { viewModel = value; }
         }
+
+        /// <summary>
+        /// Fenêtre de résultat
+        /// </summary>
+        private ResultWindow res;
+
+        #endregion
+
+
+        #region Constructeur
+
         public CompAllerRetourUC()
         {
             ViewModel = new CompAllerRetourModel();
             DataContext = ViewModel;
             InitializeComponent();
+
+            res = new ResultWindow();
+            res.Title = this.ToString();
+            res.Content = this;
+            res.Show();
         }
+
+        #endregion
     }
 }

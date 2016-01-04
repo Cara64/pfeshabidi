@@ -11,178 +11,223 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ShaBiDi.Logic;
+using System.Threading;
+using System.ComponentModel;
 
 namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour CreateIndic.xaml
+    /// CreateIndicWindow - Fenêtre pour la création d'indicateur
+    /// TODO: Corriger pb de highlight de la sélection des groupes
     /// </summary>
     public partial class CreateIndicWindow : Window
-    { 
-        public static List<int> Positions = new List<int>();
-        public static List<OrdreGroupe> Ordres;
-        public static List<Groupe> Groupes;
-        public static bool ModS;
-        public static bool ModPA;
-      
+    {
+
+        #region Attributs
+
+        /// <summary>
+        /// Indicateur sélectionné 
+        /// </summary>
+        private string typeIndicateur;
+
+        /// <summary>
+        /// Liste contenant les positions des joueurs filtrées
+        /// </summary>
+        private List<int> positions = new List<int>();
+        /// <summary>
+        /// Liste contenant les ordres de modalité filtrées
+        /// </summary>
+        private List<OrdreGroupe> ordres;
+        /// <summary>
+        /// Liste contenant les groupes filtrés
+        /// </summary>
+        private List<Groupe> groupes;
+        /// <summary>
+        /// Booléen pour le filtrage des groupes en modalité sans point d'attention
+        /// </summary>
+        private bool modS;
+        /// <summary>
+        /// Booléen pour le filtrage des groupes en modalité avec point d'attention
+        /// </summary>
+        private bool modPA;
+
+
+        #endregion
+
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur de la  classe CreateIndicWindow
+        /// </summary>
         public CreateIndicWindow()
         {
             InitializeComponent();
             
             // Ajout de toutes les positions par défauts
-            Positions.Add(1);
-            Positions.Add(2);
-            Positions.Add(3);
+            positions.Add(1);
+            positions.Add(2);
+            positions.Add(3);
 
-            Ordres = new List<OrdreGroupe>();
-            ModS = false;
-            ModPA = false;
+            // Les ordres et les modalités sont initialisés à 0
+            ordres = new List<OrdreGroupe>();
+            modS = false;
+            modPA = false;
 
-            Groupes = AppData.GroupesExp;
-            lbGroup.ItemsSource = Groupes;
+            // Sélection de l'ensemble des groupes
+            groupes = AppData.GroupesExp;
+            lbGroup.ItemsSource = groupes;
+            lbGroup.SelectAll();
 
-            foreach (ListBoxItem item in lbGroup.Items)
-            {
-                item.IsSelected = true;
-            }
-            
-
-        }
-
-        private void btnCreateIndic_Click(object sender, RoutedEventArgs e)
-        {
-            ComboBoxItem typeItem = (ComboBoxItem) cbSelectIndic.SelectedItem;
-            string typeIndicateur = typeItem.Content.ToString();
-            creerIndicateur(typeIndicateur);
-        }
-
-
-
-        private void creerIndicateur(string typeIndicateur)
-        {
-            ResultWindow res = new ResultWindow();
-
-            switch (typeIndicateur)
-            {
-                case "Taux de recouvrement":
-                    TauxRecouvrementUC tr = new TauxRecouvrementUC();
-                    AppData.Indicateurs.Add(tr);
-                    res.Title = tr.ViewModel.ToString();
-                    res.Content = tr;
-                    break;
-                case "Densité de recouvrement (transparence)":
-                    DensiteRecouvrementUC drTransparent = new DensiteRecouvrementUC("gris");
-                    AppData.Indicateurs.Add(drTransparent);
-                    res.Title = drTransparent.ToString();
-                    res.Content = drTransparent;
-                    break;
-                case "Densité de recouvrement (couleur)":
-                    DensiteRecouvrementUC drCouleur = new DensiteRecouvrementUC("couleur");
-                    AppData.Indicateurs.Add(drCouleur);
-                    res.Title = drCouleur.ToString();
-                    res.Content = drCouleur;
-                    break;
-                case "Dispersion PA":
-                    DispersionPAUC dispPA = new DispersionPAUC();
-                    AppData.Indicateurs.Add(dispPA);
-                    res.Title = dispPA.ToString();
-                    res.Content = dispPA; 
-                    break;
-                case "Nombre d'allers retours bandeau / image":
-                    AllerRetourUC ar = new AllerRetourUC();
-                    AppData.Indicateurs.Add(ar);
-                    res.Title = ar.ToString();
-                    res.Content = ar;
-                    break;
-                default: break;
-            }
-
-            res.Show();
-                   
-        }
-
-        #region Gestion des éléments d'interface
-
-        private void cbUser1_Checked(object sender, RoutedEventArgs e)
-        {
-            Positions.Add(1);
-        }
-
-        private void cbUser1_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Positions.Remove(1);
-        }
-
-        private void cbUser2_Checked(object sender, RoutedEventArgs e)
-        {
-            Positions.Add(2);
-        }
-
-        private void cbUser2_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Positions.Remove(2);
-        }
-
-        private void cbUser3_Checked(object sender, RoutedEventArgs e)
-        {
-            Positions.Add(3);
-        }
-
-        private void cbUser3_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Positions.Remove(3);
-        }
-
-        private void cbSPA_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Ordres.Remove(OrdreGroupe.SPA);
-        }
-
-        private void cbSPA_Checked(object sender, RoutedEventArgs e)
-        {
-            Ordres.Add(OrdreGroupe.SPA);
-        }
-
-        private void cbPAS_Checked(object sender, RoutedEventArgs e)
-        {
-            Ordres.Add(OrdreGroupe.PAS);
-        }
-
-        private void cbPAS_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Ordres.Remove(OrdreGroupe.PAS);
-        }
-
-        private void cbS_Checked(object sender, RoutedEventArgs e)
-        {
-            ModS = true;
-        }
-
-        private void cbS_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ModS = false;
-        }
-
-        private void cbPA_Checked(object sender, RoutedEventArgs e)
-        {
-            ModPA = true;
-        }
-
-        private void cbPA_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ModPA = false;
+            typeIndicateur = "Taux de recouvrement";
         }
 
         #endregion
 
+
+        #region Méthodes indicateurs
+
+        /// <summary>
+        /// Méthode qui permet de créer l'indicateur et l'ajouter en fonction du type d'indicateur
+        /// </summary>
+        private void creerIndicateur()
+        {
+
+            switch (typeIndicateur)
+            {
+                case "Taux de recouvrement":
+                    IndicateurTauxRecouvrement tauxRecouvrement = new IndicateurTauxRecouvrement(positions, ordres, modPA, modS, groupes);
+                    AppData.IndicateursTauxRecouvrement.Add(tauxRecouvrement);
+                    AppData.IndicateursTauxRecouvrement.Last().determineTaux();
+                    break;
+                case "Densité de recouvrement":
+                    IndicateurDensiteRecouvrement densiteRecouvrement = new IndicateurDensiteRecouvrement(positions, ordres, modPA, modS, groupes);
+                    AppData.IndicateursDensiteRecouvrement.Add(densiteRecouvrement);
+                    AppData.IndicateursDensiteRecouvrement.Last().determineDensite();
+                    break;
+                case "Dispersion PA":
+                    IndicateurDispersionPA dispersionPA = new IndicateurDispersionPA(positions, ordres, modPA, modS, groupes);
+                    AppData.IndicateursDispersionPA.Add(dispersionPA);
+                    AppData.IndicateursDispersionPA.Last().determineDispersion();
+                    break;
+                case "Nombre d'allers retours bandeau / image":
+                    IndicateurAllerRetour allerRetour = new IndicateurAllerRetour(positions, ordres, modPA, modS, groupes);
+                    AppData.IndicateursAllerRetour.Add(allerRetour);
+                    AppData.IndicateursAllerRetour.Last().determineAllerRetour();
+                    break;
+                default: break;
+            }
+             
+        }
+
+        #endregion
+
+
+        #region Gestion des éléments d'interface
+
+        private void btnCreateIndic_Click(object sender, RoutedEventArgs e)
+        {
+            creerIndicateur();
+        }
+
+        private void cbUser1_Checked(object sender, RoutedEventArgs e)
+        {
+            positions.Add(1);
+        }
+
+        private void cbUser1_Unchecked(object sender, RoutedEventArgs e)
+        {
+            positions.Remove(1);
+        }
+
+        private void cbUser2_Checked(object sender, RoutedEventArgs e)
+        {
+            positions.Add(2);
+        }
+
+        private void cbUser2_Unchecked(object sender, RoutedEventArgs e)
+        {
+            positions.Remove(2);
+        }
+
+        private void cbUser3_Checked(object sender, RoutedEventArgs e)
+        {
+            positions.Add(3);
+        }
+
+        private void cbUser3_Unchecked(object sender, RoutedEventArgs e)
+        {
+            positions.Remove(3);
+        }
+
+        private void cbSPA_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ordres.Remove(OrdreGroupe.SPA);
+        }
+
+        private void cbSPA_Checked(object sender, RoutedEventArgs e)
+        {
+            ordres.Add(OrdreGroupe.SPA);
+        }
+
+        private void cbPAS_Checked(object sender, RoutedEventArgs e)
+        {
+            ordres.Add(OrdreGroupe.PAS);
+        }
+
+        private void cbPAS_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ordres.Remove(OrdreGroupe.PAS);
+        }
+
+        private void cbS_Checked(object sender, RoutedEventArgs e)
+        {
+            modS = true;
+        }
+
+        private void cbS_Unchecked(object sender, RoutedEventArgs e)
+        {
+            modS = false;
+        }
+
+        private void cbPA_Checked(object sender, RoutedEventArgs e)
+        {
+            modPA = true;
+        }
+
+        private void cbPA_Unchecked(object sender, RoutedEventArgs e)
+        {
+            modPA = false;
+        }
+
         private void lbGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Groupes.Clear();
+            groupes.Clear();
             foreach (Groupe groupe in lbGroup.SelectedItems)
             {
-                Groupes.Add(groupe);
+                groupes.Add(groupe);
             }
         }
+
+        private void cbSelectIndic_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem typeIndicateurItem = (sender as ComboBox).SelectedItem as ComboBoxItem;
+            typeIndicateur = typeIndicateurItem.Content as string;
+        }
+
+        /// <summary>
+        /// Méthode déclenchée lors de la fermeture de fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
+        }
+
+        #endregion
 
     }
 }

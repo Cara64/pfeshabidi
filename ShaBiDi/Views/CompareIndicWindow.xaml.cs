@@ -16,136 +16,131 @@ namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour CompareIndicWindow.xaml
+    /// CompareIndicWindow - Fenêtre pour créer une comparaison entre les indicateurs
+    /// TODO: Rafraichir la liste à la création d'un nouvel indicateur
     /// </summary>
-
     public partial class CompareIndicWindow : Window
     {
-        public List<UserControl> Indicateurs;
-        
-        public static List<UserControl> IndicateursSelectionnes;
-        public static TypeComp TypeComparaison;
+
+        #region Attributs
+
+        /// <summary>
+        /// Type de comparaison sélectionné
+        /// </summary>
+        private TypeComp typeComparaison;
+
+        #endregion
+
+
+        #region Constructeur
 
         public CompareIndicWindow()
         {
             InitializeComponent();
-            Indicateurs = new List<UserControl>();
-            IndicateursSelectionnes = new List<UserControl>();
+
+            typeComparaison = TypeComp.Add;
+            cbSelectModeComp.Items.Add("Addition");
+            cbSelectModeComp.Items.Add("Soustraction");
+            cbSelectModeComp.Items.Add("Moyenne");
+            cbSelectModeComp.SelectedIndex = 0;
         }
+
+        #endregion
+
+
+        #region Méthodes événementielles
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (UserControl uc in AppData.Indicateurs)
-            {
-                Indicateurs.Add(uc);
-
-                if (uc is TauxRecouvrementUC)
-                {
-                    cbSelectIndic1.Items.Add((uc as TauxRecouvrementUC).ToString());
-                    cbSelectIndic2.Items.Add((uc as TauxRecouvrementUC).ToString());
-                }
-
-                if (uc is DensiteRecouvrementUC)
-                {
-                    cbSelectIndic1.Items.Add((uc as DensiteRecouvrementUC).ToString());
-                    cbSelectIndic2.Items.Add((uc as DensiteRecouvrementUC).ToString());
-                }
-
-                if (uc is DispersionPAUC)
-                {
-                    cbSelectIndic1.Items.Add((uc as DispersionPAUC).ToString());
-                    cbSelectIndic2.Items.Add((uc as DispersionPAUC).ToString());
-                }
-
-                if (uc is AllerRetourUC)
-                {
-                    cbSelectIndic1.Items.Add((uc as AllerRetourUC).ToString());
-                    cbSelectIndic2.Items.Add((uc as AllerRetourUC).ToString());
-                }
-
-
-            }
+            // Génération de la liste d'indicateur
+            cbSelectIndic1.ItemsSource = null;
+            cbSelectIndic1.ItemsSource = AppData.genererListeIndicateurs();
         }
 
         private void btnCreateCompareIndic_Click(object sender, RoutedEventArgs e)
         {
-            IndicateursSelectionnes.Clear();
+            Indicateur indSel1 = cbSelectIndic1.SelectedItem as Indicateur;
+            Indicateur indSel2 = cbSelectIndic2.SelectedItem as Indicateur;
+            typeComparaison = AppData.convertStringToTypeComp(cbSelectModeComp.SelectedItem as string);
 
-            int indexSelec1 = cbSelectIndic1.SelectedIndex;
-            int indexSelec2 = cbSelectIndic2.SelectedIndex;
-            
-            IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec1));
-            IndicateursSelectionnes.Add(Indicateurs.ElementAt(indexSelec2));
+            /* Méthodologie de la création de comparaison :
+             * On cast les deux indicateurs vers le type d'indicateur voulu
+             * On définit l'indicateur comparé au second indicateur pour le premier indicateur
+             * On appelle la méthode de comparaison du premier indicateur
+             * On ajoute l'indicateur 1 à la liste des indicateurs comparateurs
+             * On génère l'UC de l'indicateur comparateur
+             */
 
-            if (IndicateursSelectionnes[0].GetType().Equals(IndicateursSelectionnes[1].GetType()))
+            if (indSel1 != null && indSel2 != null)
             {
-                TypeComparaison = convert(cbSelectModeComp.SelectedValue.ToString());
-                ResultWindow res = new ResultWindow();
-
-                if (IndicateursSelectionnes[0].GetType().Equals(typeof(TauxRecouvrementUC)))
+                if (indSel1 is IndicateurTauxRecouvrement)  // Taux recouvrement
                 {
-                    CompTauxRecouvrementUC compTR = new CompTauxRecouvrementUC();
-                    AppData.Comparateurs.Add(compTR);
-                    res.Content = compTR;
+                    Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
+                    IndicateurTauxRecouvrement indTR1 = indSel1 as IndicateurTauxRecouvrement;
+                    IndicateurTauxRecouvrement indTR2 = indSel2 as IndicateurTauxRecouvrement;
+
+                    indTR1.IndicCompare = indTR2;
+                    indTR1.compareTaux(typeComparaison);
+                    AppData.ComparateursTauxRecouvrement.Add(indTR1);
+                    CompTauxRecouvrementUC compTauxRecouvrement = new CompTauxRecouvrementUC();
+
+                }
+                else if (indSel1 is IndicateurDensiteRecouvrement)      // Densité de recouvrement
+                {
+                    Dictionary<ImageExp, double[,]> dicoCompare = new Dictionary<ImageExp, double[,]>();
+                    IndicateurDensiteRecouvrement indTR1 = indSel1 as IndicateurDensiteRecouvrement;
+                    IndicateurDensiteRecouvrement indTR2 = indSel2 as IndicateurDensiteRecouvrement;
+
+                    indTR1.IndicCompare = indTR2;
+                    indTR1.compareDensite(typeComparaison);
+                    AppData.ComparateursDensiteRecouvrement.Add(indTR1);
+                    CompDensiteRecouvrementUC compDispersionPA = new CompDensiteRecouvrementUC("gris");
+                }
+                else if (indSel1 is IndicateurDispersionPA)             // Dispersion PA
+                {
+                    Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
+                    IndicateurDispersionPA indTR1 = indSel1 as IndicateurDispersionPA;
+                    IndicateurDispersionPA indTR2 = indSel2 as IndicateurDispersionPA;
+
+                    indTR1.IndicCompare = indTR2;
+                    indTR1.compareDispersion(typeComparaison);
+                    AppData.ComparateursDispersionPA.Add(indTR1);
+                    CompDispersionPAUC compDispersionPA = new CompDispersionPAUC();
                 }
 
-                if (IndicateursSelectionnes[0].GetType().Equals(typeof(DensiteRecouvrementUC)))
+                else if (indSel1 is IndicateurAllerRetour)          // Aller Retour
                 {
-                    DensiteRecouvrementUC indDR1 = IndicateursSelectionnes[0] as DensiteRecouvrementUC;
-                    DensiteRecouvrementUC indDR2 = IndicateursSelectionnes[1] as DensiteRecouvrementUC;
-                    if (indDR1.Mode.Equals(indDR2.Mode))
-                    {
-                        CompDensiteRecouvrementUC compDR = new CompDensiteRecouvrementUC(indDR1.Mode);
-                        AppData.Comparateurs.Add(compDR);
-                        res.Content = compDR;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Vous devez comparer deux indicateurs du même type", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    Dictionary<ImageExp, double> dicoCompare = new Dictionary<ImageExp, double>();
+                    IndicateurAllerRetour indTR1 = indSel1 as IndicateurAllerRetour;
+                    IndicateurAllerRetour indTR2 = indSel2 as IndicateurAllerRetour;
 
-                    res.Show();
+                    indTR1.IndicCompare = indTR2;
+                    indTR1.compareAllerRetour(typeComparaison);
+                    AppData.ComparateursAllerRetour.Add(indTR1);
+                    CompAllerRetourUC compDispersionPA = new CompAllerRetourUC();
                 }
-
-                if (IndicateursSelectionnes[0].GetType().Equals(typeof(DispersionPAUC)))
-                {
-                    DispersionPAUC indDispPA1 = IndicateursSelectionnes[0] as DispersionPAUC;
-                    DispersionPAUC indDispPA2 = IndicateursSelectionnes[1] as DispersionPAUC;
-
-                    CompDispersionPAUC compDispPA = new CompDispersionPAUC();
-                    AppData.Comparateurs.Add(compDispPA);
-                    res.Content = compDispPA;
-                }
-
-                if (IndicateursSelectionnes[0].GetType().Equals(typeof(AllerRetourUC)))
-                {
-                    AllerRetourUC indAR1 = IndicateursSelectionnes[0] as AllerRetourUC;
-                    AllerRetourUC indAR2 = IndicateursSelectionnes[1] as AllerRetourUC;
-
-                    CompAllerRetourUC compAR = new CompAllerRetourUC();
-                    AppData.Comparateurs.Add(compAR);
-                    res.Content = compAR;
-                }
-
-            } 
+            }
             else
             {
-                MessageBox.Show("Vous devez comparer deux indicateurs de même type", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Veuillez sélectionner correctement les indicateurs", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-   
-
         }
 
-        private TypeComp convert(string s)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            TypeComp res = TypeComp.add;
-            switch (s)
-            {
-                case "Addition": res = TypeComp.add; break;
-                case "Soustraction": res = TypeComp.sous; break;
-                case "Moyenne": res = TypeComp.moy; break;
-                default: break;
-            }
-            return res;
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
         }
+
+        private void cbSelectIndic1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cbSelectIndic2.ItemsSource = null;
+            cbSelectIndic2.ItemsSource = AppData.genererListeIndicateursDetermines(e.AddedItems[0] as Indicateur); 
+        }
+        
+        #endregion
+
+
+
     }
 }

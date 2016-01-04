@@ -11,27 +11,46 @@ using OxyPlot.Series;
 
 namespace ShaBiDi.ViewModels
 {
+    /// <summary>
+    /// DispersionPAModel - Modèle pour l'indicateur de la dispersion du PA
+    /// </summary>
     public class DispersionPAModel : Model
     {
-        private Dictionary<ImageExp, double> data;
-        private I_DispersionPA indic;
 
+        #region Attributs et propriétés
+
+        /// <summary>
+        /// Dictionnaire de donnée pour chaque image
+        /// </summary>
+        private Dictionary<ImageExp, double> data;
         public Dictionary<ImageExp, double> Data
         {
             get { return data; }
             set { data = value; }
         }
 
-        public I_DispersionPA Indic
-        {
-            get { return indic; }
-            set { indic = value; }
-        }
-       
+        #endregion
+
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur par défaut pour la classe de calcul du taux de dispersion
+        /// </summary>
         public DispersionPAModel()
             : base()
-        {}
+        {
+            Data = new Dictionary<ImageExp, double>();
+        }
 
+        #endregion
+
+
+        #region Méthodes surchargées
+
+        /// <summary>
+        /// Mise en place de l'UI
+        /// </summary>
         protected override void SetUpModel()
         {
             PlotModel.Title = this.ToString();
@@ -63,6 +82,9 @@ namespace ShaBiDi.ViewModels
             PlotModel.Axes.Add(valueAxis);
         }
 
+        /// <summary>
+        /// Mise en place des données
+        /// </summary>
         protected override void LoadData()
         {
             var mesures = Data.Keys.OrderBy(o => o.Numero).ToList();
@@ -82,39 +104,20 @@ namespace ShaBiDi.ViewModels
             PlotModel.Series.Add(lineSerie);
         }
 
-
-        // Normalise les données selon les critères sélectionnés
+        /// <summary>
+        /// Récupération des données
+        /// </summary>
         protected override void GetData()
         {
-            Data = new Dictionary<ImageExp, double>();
-
-            Positions = CreateIndicWindow.Positions;
-            Groupes = CreateIndicWindow.Groupes;
-            Ordres = CreateIndicWindow.Ordres;
-            ModS = CreateIndicWindow.ModS;
-            ModPA = CreateIndicWindow.ModPA;
-
-            indic = new I_DispersionPA(Positions, Ordres, ModPA, ModS, Groupes);
-            Data = indic.determineDispersion();
-            
+            Data = AppData.IndicateursDispersionPA.Last().Data;   
         }
 
         public override string ToString()
         {
-            string res = "DispersionPA_GR";
-            foreach (Groupe groupe in Groupes)
-                res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U";
-            foreach (int pos in Positions)
-                res += (!pos.Equals(Positions.Last())) ? pos + "-" : pos + "_ORD";
-            foreach (OrdreGroupe ordre in Ordres)
-                res += (!ordre.Equals(Ordres.Last())) ? ordre.ToString() + "-" : ordre.ToString() + "_MOD";
-            if (ModS && ModPA)
-                res += "S-PA";
-            else
-                if (ModS) res += "S";
-                else res += "PA";
-
-            return res;
+            return AppData.IndicateursDispersionPA.Last().ToString();
         }
+
+        #endregion
+
     }
 }

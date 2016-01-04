@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="dffa640a-ac1c-4db5-96f6-5d5e18a21764"
+  name="Views"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="4e499201-5aff-43f9-851b-552c46bbd9c0"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DShaBiDi.Views"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="d1f71fba-de28-4cac-a8aa-44e4eb2eef03"
+        name="AllerRetourUC"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="d2b91852-ec23-49b8-8c15-70db713e1f69"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FDocuments%2FENSC%2F3A%2FPFE%2FShaBiDi%2FShaBiDi%2Fbin%2FDebug%2FShaBiDi.exe Namespace%3DShaBiDi.Views Type%3DAllerRetourUC"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="aac7f37d-284d-444a-9d84-8cf84fec213c"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="484a8cb1-382d-4c46-9d9e-a3113624dfed">
+                <propertyInstance
+                  Id="0095f321-0754-4344-8967-dbb9f4a0854a"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="aa122b55-97b2-41cd-9c1c-50830090e9a3">
+                <propertyInstance
+                  Id="90461e21-e092-4dea-a645-31484a46e809"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1c42f6d3-8507-434f-b1a4-ebb75765c3eb">
+                <propertyInstance
+                  Id="cbf244b2-be3c-472f-949f-d7e6e4d0bc80"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5ccd88f8-ed39-49fb-a050-1eeb1581454a">
+                <propertyInstance
+                  Id="93be060b-98ad-4a03-b01c-8cb859facbe4"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f7e1f9f4-c2c1-4790-9275-c549130424e2">
+                <propertyInstance
+                  Id="e34fb0b6-57c6-48ad-8f14-f40535b5fffc"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

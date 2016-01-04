@@ -12,28 +12,46 @@ using ShaBiDi.Logic;
 
 namespace ShaBiDi.ViewModels
 {
+    /// <summary>
+    /// TauxRecouvrementModel - Modèle pour le taux de recouvrement
+    /// </summary>
     public class TauxRecouvrementModel : Model
     {
 
-        private Dictionary<ImageExp, double> data;
-        private I_TauxRecouvrement indic;
+        #region Attributs et propriétés
 
+        /// <summary>
+        /// Dictionnaires de données pour chaque image
+        /// </summary>
+        private Dictionary<ImageExp, double> data;
         public Dictionary<ImageExp, double> Data
         {
             get { return data; }
             set { data = value; }
         }
 
-        public I_TauxRecouvrement Indic
-        {
-            get { return indic; }
-            set { indic = value; }
-        }
-       
+        #endregion
+
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur par défaut pour la classe de taux de recouvrement modèle
+        /// </summary>
         public TauxRecouvrementModel()
             : base()
-        {}
+        {
+            Data = new Dictionary<ImageExp, double>();
+        }
 
+        #endregion
+
+
+        #region Méthodes surchargées
+
+        /// <summary>
+        /// Mise en place de l'UI
+        /// </summary>
         protected override void SetUpModel()
         {
             PlotModel.Title = this.ToString();
@@ -65,6 +83,9 @@ namespace ShaBiDi.ViewModels
             PlotModel.Axes.Add(valueAxis);
         }
 
+        /// <summary>
+        /// Mise en place des données
+        /// </summary>
         protected override void LoadData()
         {
             var mesures = data.Keys.OrderBy(o => o.Numero).ToList();
@@ -78,45 +99,30 @@ namespace ShaBiDi.ViewModels
 
             foreach (var key in mesures)
             {
-                lineSerie.Points.Add(new DataPoint(key.Numero, data[key] * 100));
+                lineSerie.Points.Add(new DataPoint(key.Numero, data[key]));
             }
 
             PlotModel.Series.Add(lineSerie);
         }
 
-
-        // Normalise les données selon les critères sélectionnés
+        /// <summary>
+        /// Récupération des données
+        /// </summary>
         protected override void GetData()
         {
-            Data = new Dictionary<ImageExp, double>();
-
-            Positions = CreateIndicWindow.Positions;
-            Groupes = CreateIndicWindow.Groupes;
-            Ordres = CreateIndicWindow.Ordres;
-            ModS = CreateIndicWindow.ModS;
-            ModPA = CreateIndicWindow.ModPA;
-
-            indic = new I_TauxRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
-            Data = indic.determineTaux();
+            Data = AppData.IndicateursTauxRecouvrement.Last().Data;
         }
 
+        /// <summary>
+        /// Nom de l'indicateur
+        /// </summary>
+        /// <returns>Nom de l'indicateur</returns>
         public override string ToString()
         {
-            string res = "TauxRecouvrement_GR";
-            foreach (Groupe groupe in Groupes)
-                res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U";
-            foreach (int pos in Positions)
-                res += (!pos.Equals(Positions.Last())) ? pos + "-" : pos + "_ORD";
-            foreach (OrdreGroupe ordre in Ordres)
-                res += (!ordre.Equals(Ordres.Last())) ? ordre.ToString() + "-" : ordre.ToString() + "_MOD";
-            if (ModS && ModPA)
-                res += "S-PA";
-            else
-                if (ModS) res += "S";
-                else res += "PA";
-
-            return res;
+            return AppData.IndicateursTauxRecouvrement.Last().ToString();
         }
+
+        #endregion
 
     }
 

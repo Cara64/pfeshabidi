@@ -22,12 +22,33 @@ namespace ShaBiDi.Views
     public partial class MainWindow : Window
     {
 
+        #region Attributs
+
+        /// <summary>
+        /// Fenêtre d'importation
+        /// </summary>
         private ImportWindow import;
+        /// <summary>
+        /// Fenêtre de création d'indicateur
+        /// </summary>
         private CreateIndicWindow createIndic;
+        /// <summary>
+        /// Fenêtre de comparaison d'indicateur
+        /// </summary>
         private CompareIndicWindow compareIndic;
+        /// <summary>
+        /// Fenêtre d'extraction d'indicateur
+        /// </summary>
         private ExtractWindow extract;
 
+        #endregion
 
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur de la classe MainWindow
+        /// </summary>
         public MainWindow()
         {
             try
@@ -45,7 +66,9 @@ namespace ShaBiDi.Views
                 MessageBox.Show(ex.Message);
             }
         }
-        
+
+        #endregion
+
 
 
         #region Bouton menu principal
@@ -70,8 +93,6 @@ namespace ShaBiDi.Views
             extract.Show();
         }
 
-        #endregion
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Cette fonctionnalité n'est pas disponible");
@@ -82,7 +103,7 @@ namespace ShaBiDi.Views
             MessageBox.Show("Cette fonctionnalité n'est pas disponible");
         }
 
-
+        #endregion
     }
 
     

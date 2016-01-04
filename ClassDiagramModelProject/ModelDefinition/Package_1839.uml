@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="6cf71c04-40ef-40b7-b25a-efa484c1f498"
+  name="OxyPlot"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="84ce4ecf-d450-43cf-b791-946b65c869b1"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DOxyPlot"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="25250ea3-ec20-4d9d-9890-427243a7c8b2"
+        name="PlotModel"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="5380c854-a8a4-4d60-a3e8-176118ee8436"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FDocuments%2FENSC%2F3A%2FPFE%2FShaBiDi%2Fpackages%2FOxyPlot.Core.1.0.0-unstable1870%2Flib%2Fnet40-client%2FOxyPlot.dll Namespace%3DOxyPlot Type%3DPlotModel"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="245765ce-8edd-4555-8b87-07a7f7d9b069"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="94245a0e-1904-4d88-b3d5-12d3fe4990c4">
+                <propertyInstance
+                  Id="89ec6e73-714e-470e-a0ac-4bbd2fd2337d"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a865f81e-fa6d-4e50-b1f5-a0740d91b87e">
+                <propertyInstance
+                  Id="825c76d4-7ed5-47e2-b82d-a688cdba8d96"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b78c667a-a17e-4728-a940-72b77177c7be">
+                <propertyInstance
+                  Id="c8ec4024-22bb-4e5d-a653-b38dad909c03"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a0f4babe-89ab-4e88-8f45-58a8dc2034ff">
+                <propertyInstance
+                  Id="e2b2f180-fda1-4a27-b0ab-426b4a0ad07f"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f4cfe6da-e666-4390-9b8e-bc827c739968">
+                <propertyInstance
+                  Id="4a675b55-6b21-4cac-9d96-660690526859"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

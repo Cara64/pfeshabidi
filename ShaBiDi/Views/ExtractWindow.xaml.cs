@@ -10,190 +10,97 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ShaBiDi.Logic;
 
 namespace ShaBiDi.Views
 {
     /// <summary>
-    /// Logique d'interaction pour ExtractionDonnees.xaml
+    /// Logique d'interaction pour ExtractWindow.xaml
+    /// ExtractWindow - Fenêtre pour la réalisation d'extraction de données
     /// </summary>
     public partial class ExtractWindow : Window
     {
-        public List<UserControl> Indicateurs;
 
-        public static UserControl IndicateurSelectionne;
+        #region Attributs
+
+        /// <summary>
+        /// Répertoire courant dans lequel on génère le CSV
+        /// </summary>
+        private string currentDir;
+        /// <summary>
+        /// Indicateur sélectionné par l'utilisateur
+        /// </summary>
+        private Indicateur indicSelectionne;
+
+        #endregion
+
+
+        #region Constructeur
+
         public ExtractWindow()
         {
             InitializeComponent();
-            Indicateurs = new List<UserControl>();
         }
+
+        #endregion
+
+
+        #region Méthodes de gestion des événements
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {    
-            foreach (UserControl uc in AppData.Indicateurs)
-            {
-                Indicateurs.Add(uc);
-
-                if (uc is TauxRecouvrementUC) cbSelectIndicateur.Items.Add((uc as TauxRecouvrementUC).ToString());
-                if (uc is DensiteRecouvrementUC) cbSelectIndicateur.Items.Add((uc as DensiteRecouvrementUC).ToString());
-                if (uc is DispersionPAUC) cbSelectIndicateur.Items.Add((uc as DispersionPAUC).ToString());
-                if (uc is AllerRetourUC) cbSelectIndicateur.Items.Add((uc as AllerRetourUC).ToString());
-            }      
+        {
+            cbSelectIndicateur.ItemsSource = null;
+            cbSelectIndicateur.ItemsSource = AppData.genererListeIndicateurs();
         }
-
 
         private void btnExtract_Click(object sender, RoutedEventArgs e)
         {
-            int indexSelect = cbSelectIndicateur.SelectedIndex;
-            string currentDir = tbSelectedPath.Text;
-            StringBuilder csv = new StringBuilder();
-            string title = "";
-            string filePath = "";
-            string delimiter = ";";
-
-            IndicateurSelectionne = Indicateurs.ElementAt(indexSelect);
-
-            if (IndicateurSelectionne is TauxRecouvrementUC)
+            try
             {
-                TauxRecouvrementUC tr = IndicateurSelectionne as TauxRecouvrementUC;
-                Dictionary<ShaBiDi.Logic.ImageExp,double> dataTR = tr.ViewModel.Data;
-                
-                var mesuresTR = dataTR.Keys.OrderBy(o => o.Numero).ToList();
-     
-                title = tr.ViewModel.ToString();
-                filePath = currentDir + "/" + title + "_OUTPUT.csv";
-               
-                csv.AppendLine(string.Join(delimiter, "Image", "Taux de recouvrement"));
-                
-                foreach (var key in mesuresTR)
+                currentDir = tbSelectedPath.Text;
+                indicSelectionne = cbSelectIndicateur.SelectedItem as Indicateur;
+
+                if (indicSelectionne is IndicateurTauxRecouvrement)
                 {
-                    var id = key.Numero.ToString();
-                    var value = dataTR[key].ToString();
-                    var newLine = string.Join(delimiter, id, value);
-                    csv.AppendLine(newLine);
+                    (indicSelectionne as IndicateurTauxRecouvrement).extractOutputTauxToCSV(currentDir);
+                }
+                else if (indicSelectionne is IndicateurDensiteRecouvrement)
+                {
+                    (indicSelectionne as IndicateurDensiteRecouvrement).extractOutputDensiteRecouvrementToCSV(currentDir);
+                }
+                else if (indicSelectionne is IndicateurDispersionPA)
+                {
+                    (indicSelectionne as IndicateurDispersionPA).extractOutputDispersionToCSV(currentDir);
+                }
+                else if (indicSelectionne is IndicateurAllerRetour)
+                {
+                    (indicSelectionne as IndicateurAllerRetour).extractOutputAllerRetourToCSV(currentDir);
                 }
 
-                System.IO.File.WriteAllText(filePath, csv.ToString());
-
-                MessageBox.Show("Extraction output terminé");
+                MessageBox.Show("L'extraction a été réalisée avec succès pour l'indicateur " + indicSelectionne.Title + " dans le répertoire " + currentDir, "Extraction terminée", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Information);
             }
-
-            if (IndicateurSelectionne is DensiteRecouvrementUC)
+            catch (Exception ex)
             {
-                // TODO: Vérifier la lourdeur en mémoire
-
-                DensiteRecouvrementUC dr = IndicateurSelectionne as DensiteRecouvrementUC;
-                Dictionary<ShaBiDi.Logic.ImageExp, double[,]> dataDR = dr.Data;
-
-                var mesuresDR = dataDR.Keys.OrderBy(o => o.Numero).ToList();
-
-                title = dr.ToString();
-                filePath = currentDir + "/" + title + "_OUTPUT.csv";
-
-                // Pour déterminer le bandeau de titre
-                int sizeCsvTitle = ShaBiDi.Logic.ImageExp.dimensionsImageLignes * ShaBiDi.Logic.ImageExp.dimensionsImageCol + 1;
-                string[] csvTitle = new string[sizeCsvTitle];
-                csvTitle[0] = "Image";
-                int lignes = 0;
-                int col = 0;
-                for (int i = 1; i < csvTitle.Length; i++)
-                {
-                    if (lignes > ShaBiDi.Logic.ImageExp.dimensionsImageLignes) lignes = 0;
-                    if (col > ShaBiDi.Logic.ImageExp.dimensionsImageCol)
-                    { 
-                        col = 0;
-                        lignes++;
-                    }
-                    csvTitle[i] = "[" + lignes + "," + col + "]";
-                    col++;
-                }
-
-                csv.AppendLine(string.Join(delimiter, csvTitle));
-
-                foreach (var key in mesuresDR)
-                {
-                    int k = 0;
-                    string[] value = new string[sizeCsvTitle];
-                    value[k] = key.Numero.ToString();
-                    
-                    for (int i = 0; i < dataDR[key].GetLength(0); i++)
-                    {
-                        for (int j = 0; j < dataDR[key].GetLength(1); j++)
-                        {
-                            k++;
-                            value[k] = dataDR[key][i,j].ToString();
-                        }
-                    }
-
-                    var newLine = string.Join(delimiter, value);
-                    csv.AppendLine(newLine);
-
-                    
-                }
-
-                System.IO.File.WriteAllText(filePath, csv.ToString());
-                MessageBox.Show("Extraction output terminé");
-
-            }
-
-            if (IndicateurSelectionne is DispersionPAUC)
-            {
-                DispersionPAUC dispPAUC = IndicateurSelectionne as DispersionPAUC;
-                Dictionary<ShaBiDi.Logic.ImageExp, double> dataDisp = dispPAUC.ViewModel.Data;
-
-                var mesuresDisp= dataDisp.Keys.OrderBy(o => o.Numero).ToList();
-
-                title = dispPAUC.ViewModel.ToString();
-                filePath = currentDir + "/" + title + "_OUTPUT.csv";
-
-                csv.AppendLine(string.Join(delimiter, "Image", "Taux de dispersion du PA"));
-
-                foreach (var key in mesuresDisp)
-                {
-                    var id = key.Numero.ToString();
-                    var value = dataDisp[key].ToString();
-                    var newLine = string.Join(delimiter, id, value);
-                    csv.AppendLine(newLine);
-                }
-
-                System.IO.File.WriteAllText(filePath, csv.ToString());
-
-                MessageBox.Show("Extraction output terminé");
-
-            }
-
-            if (IndicateurSelectionne is AllerRetourUC)
-            {
-                AllerRetourUC arUC = IndicateurSelectionne as AllerRetourUC;
-                Dictionary<ShaBiDi.Logic.ImageExp, double> dataAR = arUC.ViewModel.Data;
-
-                var mesuresAR = dataAR.Keys.OrderBy(o => o.Numero).ToList();
-
-                title = arUC.ViewModel.ToString();
-                filePath = currentDir + "/" + title + "_OUTPUT.csv";
-
-                csv.AppendLine(string.Join(delimiter, "Image", "Nb A/R Bandeau/Image"));
-
-                foreach (var key in mesuresAR)
-                {
-                    var id = key.Numero.ToString();
-                    var value = dataAR[key].ToString();
-                    var newLine = string.Join(delimiter, id, value);
-                    csv.AppendLine(newLine);
-                }
-
-                System.IO.File.WriteAllText(filePath, csv.ToString());
-
-                MessageBox.Show("Extraction output terminé");
-
+                MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+                   
         private void btnSelectFiles_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
             System.Windows.Forms.DialogResult result = fbd.ShowDialog();
 
-            tbSelectedPath.Text = fbd.SelectedPath;       
+            tbSelectedPath.Text = fbd.SelectedPath;
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
+        }
+
+        #endregion
     }
 }

@@ -17,136 +17,159 @@ namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour CompDensiteRecouvrement.xaml
+    /// CompDensiteRecouvrementUC - Contrôle utilisateur pour la comparaison de la densité de recouvrement
     /// </summary>
     public partial class CompDensiteRecouvrementUC : UserControl
     {
-        #region Attributs
 
-        private Dictionary<ShaBiDi.Logic.ImageExp, double[,]> data;
-        private List<DensiteRecouvrementUC> indicSelect;
+        #region Attributs et propriétés
 
-        private List<int> positions;
-        private List<OrdreGroupe> ordres;
-        private List<Groupe> groupes;
-        private bool modS;
-        private bool modPA;
+        /// <summary>
+        /// Ensemble des données pour la comparaison
+        /// </summary>
+        private Dictionary<ImageExp, double[,]> data;
+        public Dictionary<ImageExp, double[,]> Data
+        {
+            get { return data; }
+            set { data = value; }
+        }
 
-        private string mode;                            // transparence ou couleurs
-        private List<ShaBiDi.Logic.ImageExp> mesImages;    // images de l'indicateur
-        private int index;                              // ordre de l'image
-        private ShaBiDi.Logic.ImageExp imageEnCours;
-        private WriteableBitmap imageBmp;
-
-        #endregion
-
-
-        # region Propriétés
-
+        /// <summary>
+        /// Mode transparence ou couleur
+        /// </summary>
+        private string mode;
         public string Mode
         {
             get { return mode; }
             set { mode = value; }
         }
-        public List<ShaBiDi.Logic.ImageExp> MesImages
+
+        /// <summary>
+        /// Images de l'indicateur
+        /// </summary> 
+        private List<ImageExp> mesImages;
+        public List<ImageExp> MesImages
         {
             get { return mesImages; }
             set { mesImages = value; }
         }
+
+        /// <summary>
+        /// Ordre de l'image
+        /// </summary>
+        private int index;
         public int Index
         {
             get { return index; }
             set { index = value; }
         }
-        public ShaBiDi.Logic.ImageExp ImageEnCours
+
+        /// <summary>
+        /// Image en cours
+        /// </summary>
+        private ImageExp imageEnCours;
+        public ImageExp ImageEnCours
         {
             get { return imageEnCours; }
             set { imageEnCours = value; }
         }
+
+        /// <summary>
+        /// Bitmap de l'image
+        /// </summary>
+        private WriteableBitmap imageBmp;
         public WriteableBitmap ImageBmp
         {
             get { return imageBmp; }
             set { imageBmp = value; }
         }
 
-        public Dictionary<ShaBiDi.Logic.ImageExp, double[,]> Data
-        {
-            get { return data; }
-            set { data = value; }
-        }
-        public List<DensiteRecouvrementUC> IndicSelect
-        {
-            get { return indicSelect; }
-            set { indicSelect = value; }
-        }
+        /// <summary>
+        /// Fenêtre de résultat
+        /// </summary>
+        private ResultWindow res;
 
-        public List<int> Positions
+        #endregion
+
+
+        #region Constructeurs
+
+        /// <summary>
+        /// Constructeur de la classe CompDensiteRecouvrementUC
+        /// </summary>
+        /// <param name="mode"></param>
+        public CompDensiteRecouvrementUC(string mode)
         {
-            get { return positions; }
-            set { positions = value; }
-        }
-        public List<OrdreGroupe> Ordres
-        {
-            get { return ordres; }
-            set { ordres = value; }
-        }
-        public List<Groupe> Groupes
-        {
-            get { return groupes; }
-            set { groupes = value; }
-        }
-        public bool ModS
-        {
-            get { return modS; }
-            set { modS = value; }
-        }
-        public bool ModPA
-        {
-            get { return modPA; }
-            set { modPA = value; }
+            GetData();
+            LoadData();
+
+            InitializeComponent();
+            Mode = mode;
+
+            Index = 1;
+            lblNumImage.Content = "Image " + ImageEnCours.Numero + " (" + Index + "e image sur " + MesImages.Count() + ")";
+            lblTitleIndicateur.Content = this.ToString();
+
+            SetUpModel();
+
+            res = new ResultWindow();
+            res.Title = this.ToString();
+            res.Content = this;
+            res.Show();
         }
 
         #endregion
 
-        public CompDensiteRecouvrementUC(string mode)
-        {
-            InitializeComponent();
-            Mode = mode;
 
-            IndicSelect = new List<DensiteRecouvrementUC>();
-            foreach (System.Windows.Controls.UserControl uc in CompareIndicWindow.IndicateursSelectionnes)
-                IndicSelect.Add(uc as DensiteRecouvrementUC);
+        #region Méthodes surchargées
 
-            GetData();
-            LoadData();
-            SetUpModel();
-        }
-
+        /// <summary>
+        /// Récupération des données
+        /// </summary>
         private void GetData()
         {
-            Data = new Dictionary<ShaBiDi.Logic.ImageExp, double[,]>();
-
-            I_DensiteRecouvrement indic1 = IndicSelect[0].Indic;
-            I_DensiteRecouvrement indic2 = IndicSelect[1].Indic;
-
-            Data = indic1.compareDensite(CompareIndicWindow.TypeComparaison, indic2);
+            Data = new Dictionary<ImageExp, double[,]>();
+            Data = AppData.ComparateursDensiteRecouvrement.Last().DataComparaison[2];
         }
 
+        /// <summary>
+        /// Mise en place des données
+        /// </summary>
         private void LoadData()
         {
-            MesImages = new List<ShaBiDi.Logic.ImageExp>();
+            MesImages = new List<ImageExp>();
             MesImages = Data.Keys.ToList().OrderBy(o => o.Numero).ToList();
+            ImageEnCours = MesImages[0];
         }
 
+        /// <summary>
+        /// Mise en place de l'image et du masque
+        /// </summary>
         private void SetUpModel()
         {
-            imageEnCours = MesImages[0];
-            index = 1;
-            lblNumImage.Content = "Image " + ImageEnCours.Numero + " (" + Index + "e image sur " + MesImages.Count() + ")";
-            lblTitleIndicateur.Content = this.ToString();
             GenerateMask(Mode, ImageEnCours);
         }
 
-         private void GenerateMask(string mode,ShaBiDi.Logic.ImageExp img)
+        public override string ToString()
+        {
+            string res = "CompDensiteRecouvrement";
+            res += AppData.ComparateursDensiteRecouvrement.Last().Title + "_";
+            res += AppData.ComparateursDensiteRecouvrement.Last().IndicCompare.Title;
+
+            return res;
+        }
+
+        #endregion
+
+
+        #region Algorithmes de calcul
+
+        /// <summary>
+        /// Méthode qui permet de générer la carte de chaleur ou de transparence de l'image
+        /// </summary>
+        /// <param name="mode">Mode sélectionné</param>
+        /// <param name="img">Image sur laquelle on appose le masque</param>
+        private void GenerateMask(string mode, ImageExp img)
         {
             ImageBmp = new WriteableBitmap(new BitmapImage(new Uri(img.Acces, UriKind.RelativeOrAbsolute)));
             imgBackground.Source = ImageBmp;
@@ -260,21 +283,16 @@ namespace ShaBiDi.Views
             imgMask.Source = bitmap;
         }
 
-        public override string ToString()
-        {
-            string res = "CompDensiteRecouvrement";
-            res += IndicSelect[0].ToString() + "_";
-            res += IndicSelect[1].ToString();
+        #endregion
 
-            return res;
-        }
+
+        #region Méthodes événementielles
 
         private void btnRetour_Click(object sender, RoutedEventArgs e)
         {
             int nb = ImageEnCours.Numero - 1;
 
-            if (Index <= 1) { }
-            else
+            if (Index > 1)
             {
                 ImageEnCours = AppData.ImagesExp[nb - 1];
                 Index--;
@@ -287,11 +305,7 @@ namespace ShaBiDi.Views
         {
             int nb = ImageEnCours.Numero + 1;
 
-            if (Index >= Data.Keys.Count())
-            {
-                int a = 0;
-            }
-            else
+            if (Index < Data.Keys.Count())
             {
                 ImageEnCours = AppData.ImagesExp[nb - 1];
                 Index++;
@@ -300,6 +314,17 @@ namespace ShaBiDi.Views
             }
         }
 
+        private void cbTypeDensite_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            ComboBoxItem valueItem = comboBox.SelectedItem as ComboBoxItem;
+            string value = valueItem.Content as string;
+
+            Mode = (value.Equals("Transparence")) ? "gris" : "couleur";
+            GenerateMask(Mode, ImageEnCours);
+        }
+
+        #endregion
 
     }
 }

@@ -17,22 +17,44 @@ namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour CompDispersionPAUC.xaml
+    /// CompDispersionPAUC - Contrôle utilisateur pour l'affichage de la comparaison de la dispersion en PA
     /// </summary>
     public partial class CompDispersionPAUC : UserControl
     {
-        private CompDispersionPAModel viewModel;
+        #region Attributs et propriétés
 
+        /// <summary>
+        /// Modèle pour le graphique
+        /// </summary>
+        private CompDispersionPAModel viewModel;
         public CompDispersionPAModel ViewModel
         {
             get { return viewModel; }
             set { viewModel = value; }
         }
 
+        /// <summary>
+        /// Fenêtre de résultat
+        /// </summary>
+        private ResultWindow res;
+
+        #endregion
+
+
+        #region Constructeur
+
         public CompDispersionPAUC()
         {
             ViewModel = new CompDispersionPAModel();
             DataContext = ViewModel;
             InitializeComponent();
+
+            res = new ResultWindow();
+            res.Title = this.ToString();
+            res.Content = this;
+            res.Show();
         }
+
+        #endregion
     }
 }

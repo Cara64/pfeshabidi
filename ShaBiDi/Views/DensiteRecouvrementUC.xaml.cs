@@ -17,138 +17,146 @@ namespace ShaBiDi.Views
 {
     /// <summary>
     /// Logique d'interaction pour DensiteRecouvrementUC.xaml
+    /// DensiteRecouvrementUC - Contrôle utilisateur pour l'affichage de l'indicateur de densité de recouvrement
     /// </summary>
     public partial class DensiteRecouvrementUC : UserControl
     {
 
-        #region Attributs
+        #region Attributs et propriétés
         
-        private Dictionary<ShaBiDi.Logic.ImageExp, double[,]> data;
-        private I_DensiteRecouvrement indic;
+        /// <summary>
+        /// Données liées à l'indicateur
+        /// </summary>
+        private Dictionary<ImageExp, double[,]> data;
+        public Dictionary<ImageExp, double[,]> Data
+        {
+            get { return data; }
+            set { data = value; }
+        }
 
-        private List<int> positions;
-        private List<OrdreGroupe> ordres;
-        private List<Groupe> groupes;
-        private bool modS;
-        private bool modPA;
-
-        private string mode;                            // transparence ou couleurs
-        private List<ShaBiDi.Logic.ImageExp> mesImages;    // images de l'indicateur
-        private int index;                              // ordre de l'image
-        private ShaBiDi.Logic.ImageExp imageEnCours;   
-        private WriteableBitmap imageBmp;
-
-        #endregion
-
-
-        # region Propriétés
-
+        /// <summary>
+        /// Mode transparence ou couleur
+        /// </summary>
+        private string mode;
         public string Mode
         {
             get { return mode; }
             set { mode = value; }
         }
-        public List<ShaBiDi.Logic.ImageExp> MesImages
+
+        /// <summary>
+        /// Images de l'indicateur
+        /// </summary> 
+        private List<ImageExp> mesImages;
+        public List<ImageExp> MesImages
         {
             get { return mesImages; }
             set { mesImages = value; }
         }
+       
+        /// <summary>
+        /// Ordre de l'image
+        /// </summary>
+        private int index;                              
         public int Index
         {
             get { return index; }
             set { index = value; }
         }
-        public ShaBiDi.Logic.ImageExp ImageEnCours
+
+        /// <summary>
+        /// Image en cours
+        /// </summary>
+        private ImageExp imageEnCours;
+        public ImageExp ImageEnCours
         {
             get { return imageEnCours; }
             set { imageEnCours = value; }
-        }
+        }    
+
+        /// <summary>
+        /// Bitmap de l'image
+        /// </summary>
+        private WriteableBitmap imageBmp;
         public WriteableBitmap ImageBmp
         {
             get { return imageBmp; }
             set { imageBmp = value; }
         }
 
-        public Dictionary<ShaBiDi.Logic.ImageExp, double[,]> Data
-        {
-            get { return data; }
-            set { data = value; }
-        }
-        public ShaBiDi.Logic.I_DensiteRecouvrement Indic
-        {
-            get { return indic; }
-            set { indic = value; }
-        }
+        private ResultWindow res;
 
-        public List<int> Positions
+        #endregion
+
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur de la classe DensiteRecouvrementUC
+        /// </summary>
+        /// <param name="mode">Type de heatmap (transparence ou couleur)</param>
+        public DensiteRecouvrementUC(string mode)
         {
-            get { return positions; }
-            set { positions = value; }
-        }
-        public List<OrdreGroupe> Ordres
-        {
-            get { return ordres; }
-            set { ordres = value; }
-        }
-        public List<Groupe> Groupes
-        {
-            get { return groupes; }
-            set { groupes = value; }
-        }
-        public bool ModS
-        {
-            get { return modS; }
-            set { modS = value; }
-        }
-        public bool ModPA
-        {
-            get { return modPA; }
-            set { modPA = value; }
+            GetData();
+            LoadData();
+
+            InitializeComponent();
+            Mode = mode;
+
+            Index = 1;
+            lblNumImage.Content = "Image " + ImageEnCours.Numero + " (" + Index + "e image sur " + MesImages.Count() + ")";
+            lblTitleIndicateur.Content = this.ToString();
+
+            SetUpModel();
+
+            res = new ResultWindow();
+            res.Title = this.ToString();
+            res.Content = this;
+            res.Show();
         }
 
         #endregion
 
-        public DensiteRecouvrementUC(string mode)
-        {
-            InitializeComponent();
-            Mode = mode;
 
-            GetData();
-            LoadData();
-            SetUpModel();
-        }
+        #region Méthodes de mise en place des données
 
+        /// <summary>
+        /// Récupération des données
+        /// </summary>
         private void GetData()
         {
-            Data = new Dictionary<ShaBiDi.Logic.ImageExp, double[,]>();
-
-            Positions = CreateIndicWindow.Positions;
-            Groupes = CreateIndicWindow.Groupes;
-            Ordres = CreateIndicWindow.Ordres;
-            ModS = CreateIndicWindow.ModS;
-            ModPA = CreateIndicWindow.ModPA;
-
-            Indic = new I_DensiteRecouvrement(Positions, Ordres, ModPA, ModS, Groupes);
-            Data = Indic.determineDensite();
+            Data = new Dictionary<ImageExp, double[,]>();
+            Data = AppData.IndicateursDensiteRecouvrement.Last().Data;
         }
 
+        /// <summary>
+        /// Mise en place des données
+        /// </summary>
         private void LoadData()
         {
-            MesImages = new List<ShaBiDi.Logic.ImageExp>();
+            MesImages = new List<ImageExp>();
             MesImages = Data.Keys.ToList().OrderBy(o => o.Numero).ToList();
+            ImageEnCours = MesImages[0];
         }
 
+        /// <summary>
+        /// Mise en place dee l'UI
+        /// </summary>
         private void SetUpModel()
         {
-            imageEnCours = MesImages[0];
-            index = 1;
-            lblNumImage.Content = "Image " + ImageEnCours.Numero + " (" + Index + "e image sur " + MesImages.Count() + ")";
-            lblTitleIndicateur.Content = this.ToString();
             GenerateMask(Mode, ImageEnCours);
         }
 
-        // Prendra l'image et les booleens en parametres
-        // Le mode peut être "gris" ou "couleur"
+        #endregion
+
+
+        #region Algorithmes de création des heatmaps
+        
+        /// <summary>
+        /// Génération du masque de heatmap
+        /// </summary>
+        /// <param name="mode">Mode transparence ou couleur</param>
+        /// <param name="img">Image sur laquelle on créé le masque</param>
         private void GenerateMask(string mode,ShaBiDi.Logic.ImageExp img)
         {
             ImageBmp = new WriteableBitmap(new BitmapImage(new Uri(img.Acces, UriKind.RelativeOrAbsolute)));
@@ -263,31 +271,21 @@ namespace ShaBiDi.Views
             imgMask.Source = bitmap;
         }
 
-        public override string ToString()
-        {
-            string res = "DensiteRecouvrement";
-            res += (this.Mode.Equals("gris")) ? "Transparent_GR" : "Couleur_GR";
-            foreach (Groupe groupe in Groupes)
-                res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U";
-            foreach (int pos in Positions)
-                res += (!pos.Equals(Positions.Last())) ? pos + "-" : pos + "_ORD";
-            foreach (OrdreGroupe ordre in Ordres)
-                res += (!ordre.Equals(Ordres.Last())) ? ordre.ToString() + "-" : ordre.ToString() + "_MOD";
-            if (ModS && ModPA)
-                res += "S-PA";
-            else
-                if (ModS) res += "S";
-                else res += "PA";
+        #endregion
 
-            return res;
-        }
 
+        #region Méthodes d'événements d'interface
+
+        /// <summary>
+        /// Méthode de clic sur le bouton précédent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRetour_Click(object sender, RoutedEventArgs e)
         {
             int nb = ImageEnCours.Numero - 1;
 
-            if (Index <= 1) { }
-            else
+            if (Index > 1)
             {
                 ImageEnCours = AppData.ImagesExp[nb - 1];
                 Index--;
@@ -296,15 +294,16 @@ namespace ShaBiDi.Views
             }
         }
 
+        /// <summary>
+        /// Méthode de clic sur le bouton suivant
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSuivant_Click(object sender, RoutedEventArgs e)
         {
             int nb = ImageEnCours.Numero + 1;
 
-            if (Index >= Data.Keys.Count())
-            {
-                int a = 0;
-            }
-            else
+            if (Index < Data.Keys.Count())
             {
                 ImageEnCours = AppData.ImagesExp[nb - 1];
                 Index++;
@@ -312,6 +311,34 @@ namespace ShaBiDi.Views
                 lblNumImage.Content = "Image " + nb + " (" + index + "e image sur " + MesImages.Count() + ")";
             }
         }
+
+        #endregion
+
+        /// <summary>
+        /// Méthode pour le changement de type de heatmap
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbTypeDensite_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            ComboBoxItem valueItem = comboBox.SelectedItem as ComboBoxItem;
+            string value = valueItem.Content as string;
+
+            Mode = (value.Equals("Transparence")) ? "gris" : "couleur";
+            GenerateMask(Mode, ImageEnCours);
+     
+        }
+
+
+        #region Helpers
+
+        public override string ToString()
+        {
+            return AppData.IndicateursDensiteRecouvrement.Last().ToString();
+        }
+
+        #endregion
 
 
     }

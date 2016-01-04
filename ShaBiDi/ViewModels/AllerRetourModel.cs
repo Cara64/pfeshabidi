@@ -10,27 +10,46 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 namespace ShaBiDi.ViewModels
 {
+    /// <summary>
+    /// AllerRetourModel - Modèle pour le nombre d'aller retour 
+    /// </summary>
     public class AllerRetourModel : Model
     {
-        private Dictionary<ImageExp, double> data;
-        private I_AllerRetour indic;
 
+        #region Attributs et propriétés
+
+        /// <summary>
+        /// Dictionnaire de données pour chaque image
+        /// </summary>
+        private Dictionary<ImageExp, double> data;
         public Dictionary<ImageExp, double> Data
         {
             get { return data; }
             set { data = value; }
         }
 
-        public I_AllerRetour Indic
-        {
-            get { return indic; }
-            set { indic = value; }
-        }
-       
+        #endregion
+
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur par défaut pour la classe de calcul de nombre d'aller-retour
+        /// </summary>
         public AllerRetourModel()
             : base()
-        {}
+        {
+            Data = new Dictionary<ImageExp, double>();
+        }
 
+        #endregion
+
+
+        #region Méthodes surchargées
+
+        /// <summary>
+        /// Mise en place de l'UI
+        /// </summary>
         protected override void SetUpModel()
         {
             PlotModel.Title = this.ToString();
@@ -62,6 +81,9 @@ namespace ShaBiDi.ViewModels
             PlotModel.Axes.Add(valueAxis);
         }
 
+        /// <summary>
+        /// Mise en place des données
+        /// </summary>
         protected override void LoadData()
         {
             var mesures = Data.Keys.OrderBy(o => o.Numero).ToList();
@@ -81,40 +103,21 @@ namespace ShaBiDi.ViewModels
             PlotModel.Series.Add(lineSerie);
         }
 
-
-        // Normalise les données selon les critères sélectionnés
+        /// <summary>
+        /// Récupération des données
+        /// </summary>
         protected override void GetData()
         {
-            Data = new Dictionary<ImageExp, double>();
-
-            Positions = CreateIndicWindow.Positions;
-            Groupes = CreateIndicWindow.Groupes;
-            Ordres = CreateIndicWindow.Ordres;
-            ModS = CreateIndicWindow.ModS;
-            ModPA = CreateIndicWindow.ModPA;
-
-            indic = new I_AllerRetour(Positions, Ordres, ModPA, ModS, Groupes);
-            Data = indic.determineAllerRetour();
-            
+            Data = AppData.IndicateursAllerRetour.Last().Data;
         }
 
         public override string ToString()
         {
-            string res = "AllerRetour_GR";
-            foreach (Groupe groupe in Groupes)
-                res += (!groupe.Equals(Groupes.Last())) ? groupe.Identifiant + "-" : groupe.Identifiant + "_U";
-            foreach (int pos in Positions)
-                res += (!pos.Equals(Positions.Last())) ? pos + "-" : pos + "_ORD";
-            foreach (OrdreGroupe ordre in Ordres)
-                res += (!ordre.Equals(Ordres.Last())) ? ordre.ToString() + "-" : ordre.ToString() + "_MOD";
-            if (ModS && ModPA)
-                res += "S-PA";
-            else
-                if (ModS) res += "S";
-                else res += "PA";
-
-            return res;
+            return AppData.IndicateursAllerRetour.Last().ToString();
         }
+
+        #endregion
+
     }
   }
 

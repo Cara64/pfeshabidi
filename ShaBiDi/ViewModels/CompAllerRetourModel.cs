@@ -12,30 +12,41 @@ using ShaBiDi.Logic;
 
 namespace ShaBiDi.ViewModels
 {
+    /// <summary>
+    /// CompAllerRetourModel - Classe pour le modèle de comparaison du nombre aller-retour bandeau / image
+    /// </summary>
     public class CompAllerRetourModel : Model
     {
+
+        #region Attributs et propriétés
+
+        /// <summary>
+        /// Ensemble des dictionnaires nécessaires pour les données
+        /// </summary>
         private List<Dictionary<ImageExp, double>> data;
-        private List<AllerRetourUC> indicSelect;
-       
         public List<Dictionary<ImageExp, double>> Data
         {
             get { return data; }
             set { data = value;}
         }
 
-        public List<AllerRetourUC> IndicSelect
-        {
-            get { return indicSelect; }
-            set { indicSelect = value; }
-        }
+        #endregion
 
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur pour la classe CompAllerRetourModel
+        /// </summary>
         public CompAllerRetourModel() : base()
         {
-            IndicSelect = new List<AllerRetourUC>();
-            foreach (System.Windows.Controls.UserControl uc in CompareIndicWindow.IndicateursSelectionnes)
-                IndicSelect.Add(uc as AllerRetourUC);
         }
-            
+
+        #endregion
+
+
+        #region Méthodes surchargées
+
         protected override void SetUpModel()
         {
             PlotModel.Title = this.ToString();
@@ -70,17 +81,17 @@ namespace ShaBiDi.ViewModels
         protected override void LoadData()
         {
             int i = 0;
-            AllerRetourUC indic = new AllerRetourUC();
+            string indicTitle;
             MarkerType[] markers = { MarkerType.Circle, MarkerType.Cross, MarkerType.Square };
             foreach(Dictionary<ImageExp, double> dico in Data)
             {
                 var mesures = dico.Keys.OrderBy(o=>o.Numero).ToList();
-                
-                if (i != 2) indic = CompareIndicWindow.IndicateursSelectionnes[i] as AllerRetourUC;
+
+                indicTitle = (i == 0) ? AppData.ComparateursAllerRetour.Last().ToString() : AppData.ComparateursAllerRetour.Last().IndicCompare.ToString();
                 
                 var lineSerie = new LineSeries
                 {
-                    Title = (i != 2) ? indic.ToString() : "Comparaison",
+                    Title = (i != 2) ? indicTitle : "Comparaison",
                     StrokeThickness = 1,
                     MarkerType = markers[i]
                 };
@@ -93,39 +104,26 @@ namespace ShaBiDi.ViewModels
             }
         }
 
-
-        // Normalise les données selon les critères sélectionnés
         protected override void GetData()
         {
             Data = new List<Dictionary<ImageExp, double>>();
             
             // Récupération des données des deux indicateurs
-          
-            AllerRetourModel indic1Model = IndicSelect[0].ViewModel;
-            AllerRetourModel indic2Model = IndicSelect[1].ViewModel;
-
-            Dictionary<ImageExp, double> dataIndic1 = indic1Model.Data;
-            Dictionary<ImageExp, double> dataIndic2 = indic2Model.Data;
-            
-            Data.Add(dataIndic1);
-            Data.Add(dataIndic2);
-
-            I_AllerRetour indic1 = new I_AllerRetour(indic1Model.Positions, indic1Model.Ordres, indic1Model.ModPA, indic1Model.ModS, indic1Model.Groupes);
-            I_AllerRetour indic2 = new I_AllerRetour(indic2Model.Positions, indic2Model.Ordres, indic2Model.ModPA, indic2Model.ModS, indic2Model.Groupes);
+            Data.Add(AppData.ComparateursAllerRetour.Last().DataComparaison[0]);
+            Data.Add(AppData.ComparateursAllerRetour.Last().DataComparaison[1]);
+            Data.Add(AppData.ComparateursAllerRetour.Last().DataComparaison[2]);
            
-            Dictionary<ImageExp, double> dataRes = indic1.compareAllerRetour(CompareIndicWindow.TypeComparaison, indic2);
-            
-            Data.Add(dataRes);
         }
 
         public override string ToString()
         {
-           
             string res = "CompAllerRetour_";
-            res += IndicSelect[0].ViewModel.ToString() + "_";
-            res += IndicSelect[1].ViewModel.ToString();
+            res += AppData.ComparateursAllerRetour.Last().ToString() + "_";
+            res += AppData.ComparateursAllerRetour.Last().IndicCompare.ToString();
    
             return res;
         }
+
+        #endregion
     }
 }

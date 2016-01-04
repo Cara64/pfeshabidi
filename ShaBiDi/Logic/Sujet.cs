@@ -5,14 +5,36 @@ using System.Text;
 
 namespace ShaBiDi.Logic
 {
-    public enum Modalite { PA, S };
+    /// <summary>
+    /// Classe qui permet de modéliser le sujet de l'expérience
+    /// </summary>
     public class Sujet
     {
-        public int Position { get; private set; }
 
+        #region Attributs et données
+
+        /// <summary>
+        /// Position du sujet dans le groupe
+        /// </summary>
+        public int Position { get; private set; }
+        /// <summary>
+        /// Liste des observations enregistrées en mode PA
+        /// </summary>
         public List<Observation> ObservationsPA { get; private set; }
+        /// <summary>
+        /// Liste des observations enregistrées en mode S
+        /// </summary>
         public List<Observation> ObservationsS { get; private set; }
 
+        #endregion
+
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur de la classe Sujet
+        /// </summary>
+        /// <param name="position">Position du sujet</param>
         public Sujet(int position)
         {
             Position = position;
@@ -20,6 +42,16 @@ namespace ShaBiDi.Logic
             ObservationsS = new List<Observation>();
         }
 
+        #endregion
+
+
+        #region Méthodes
+
+        /// <summary>
+        /// Permet d'ajouter une observation selon la modalité
+        /// </summary>
+        /// <param name="obs">Observation à ajouter</param>
+        /// <param name="mod">Modalité</param>
         public void AddObservation(Observation obs, Modalite mod)
         {
             switch (mod)
@@ -35,7 +67,14 @@ namespace ShaBiDi.Logic
             }
         }
 
-        //i est le numéro d el'image concernée
+        /// <summary>
+        /// Ajouter un point d'attention
+        /// </summary>
+        /// <param name="i">Numéro de l'image concernée</param>
+        /// <param name="mod">Modalité</param>
+        /// <param name="x">Coordonnées X du PA</param>
+        /// <param name="y">Coordonnées Y du PA</param>
+        /// <param name="tps">Temps de l'observation</param>
         public void AddPA(int i, Modalite mod, double x, double y, double tps)
         {
             // Il faut trouver le rang de l'observation concernée par l'image donnée
@@ -50,7 +89,6 @@ namespace ShaBiDi.Logic
                     {
                         indice = ObservationsPA.IndexOf(o);
                     }
-                    else { }
                 }
 
                 ObservationsPA[indice].AddPA(x, y, tps);
@@ -64,11 +102,12 @@ namespace ShaBiDi.Logic
                     {
                         indice = ObservationsS.IndexOf(o);
                     }
-                    else { }
                 }
 
                 ObservationsS[indice].AddPA(x, y, tps);
             }
         }
+
+        #endregion
     }
 }

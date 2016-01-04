@@ -1,0 +1,9 @@
+﻿<Window x:Class="ShaBiDi.Views.WaitWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Chargement de l'indicateur" Height="150" Width="300" WindowStyle="ToolWindow" ResizeMode="NoResize">
+    <StackPanel>
+        <Label Name="lblProgression" Margin="10,10,10,10"></Label>
+        <ProgressBar Name="pbProgression" Margin="10,10,10,10" Height="20"></ProgressBar>
+    </StackPanel>
+</Window>
